@@ -1,0 +1,38 @@
+.side-header {
+    width: 15.3em;
+    height: 100vh;
+    border-right: solid $gray3 1px;
+
+
+    & .content {
+
+        & .options {}
+
+        & .logo {
+            display: flex;
+            margin-bottom: 19px;
+            padding: 25px 12px 16px;
+        }
+
+        & .icon {
+            width: 1.5em;
+        }
+
+
+        &> :not(:first-child) {
+            margin: 8px 12px 20px;
+
+            & div {
+
+                @include headerBtns;
+                display: flex;
+                padding: 12px;
+                width: 100%;
+            }
+
+        }
+
+
+
+    }
+}

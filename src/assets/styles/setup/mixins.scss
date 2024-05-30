@@ -1,0 +1,18 @@
+@mixin headerBtns {
+
+
+    &:hover {
+      background-color: $gray4;
+
+      & img{
+        transition: 0.3s;
+        scale: 1.1;
+      }
+    }
+
+    &.selected {
+        background-color: $cyan1;
+        color: white;
+    }
+}
+
