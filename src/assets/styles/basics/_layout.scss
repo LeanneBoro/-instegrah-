@@ -1,0 +1,12 @@
+.main-layout {
+    display: grid;
+    grid-template-columns: minmax(auto, 200px) minmax(auto, 1400px) minmax(auto, 200px);
+}
+
+.main-layout>* {
+    grid-column: 2;
+}
+
+.main-layout .full {
+    grid-column: 1/-1;
+}
