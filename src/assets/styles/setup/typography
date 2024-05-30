@@ -1,0 +1,10 @@
+@font-face {
+    font-family: openSans-italic;
+    src: url('src/assets/fonts/OpenSans-Italic-VariableFont_wdth,wght.ttf');
+}
+
+@font-face {
+    font-family: circular-bold;
+    src: url('/src/assets/fonts/Circular-Bold.ttf');
+}
+
