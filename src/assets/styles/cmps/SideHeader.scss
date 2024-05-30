@@ -1,12 +1,11 @@
 .side-header {
-    width: 15.3em;
+    width: var(--side-header-width);
     height: 100vh;
     border-right: solid $gray3 1px;
 
 
     & .content {
 
-        & .options {}
 
         & .logo {
             display: flex;
@@ -23,6 +22,10 @@
             margin: 8px 12px 20px;
 
             & div {
+
+                & .title{
+                    display: var(--side-header-title-display);
+                }
 
                 @include headerBtns;
                 display: flex;

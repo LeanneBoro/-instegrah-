@@ -37,7 +37,7 @@ export function SideHeader() {
 
                 <div>
                     <img className="icon" src="src\assets\svgs\More.svg" alt="" />
-                    <div>More</div>
+                    <div className="title">More</div>
                 </div>
 
             </section>
