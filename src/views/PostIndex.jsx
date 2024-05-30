@@ -22,7 +22,7 @@ export function PostIndex() {
 
     if (!posts) return <h1>Loading....</h1>
     return (
-        <section>
+        <section className="main-layout">
             <h1>I am a post index</h1>
             <PostList posts={posts} />
         </section>
