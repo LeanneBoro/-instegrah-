@@ -7,7 +7,7 @@ function App() {
 
   return <section>
     <SideHeader />
-    <PostIndex />
+    {/* <PostIndex /> */}
   </section>
 
 }

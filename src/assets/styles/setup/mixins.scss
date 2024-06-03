@@ -1,18 +1,91 @@
 @mixin headerBtns {
 
 
-    &:hover {
-      background-color: $gray4;
+  &:hover {
+    background-color: $gray4;
 
-      & img{
-        transition: 0.3s;
-        scale: 1.1;
+    & img {
+      transition: 0.3s;
+      scale: 1.1;
+    }
+  }
+
+  &.selected {
+    background-color: $cyan1;
+    color: white;
+  }
+}
+
+
+@mixin compact-side-bar {
+
+  & .side-header {
+    width: 73px;
+
+    & .content {
+
+      & .options {
+        flex-direction: column;
+
+        & div {
+
+          & .title {
+            display: none;
+          }
+        }
+      }
+
+      & .small-logo {
+        display: block;
+      }
+
+      & .logo {
+        display: none;
       }
     }
 
-    &.selected {
-        background-color: $cyan1;
-        color: white;
-    }
+  }
 }
 
+
+@mixin bottom-bar {
+
+  .side-header {
+    width:  100%;
+    height: 3em;
+    border-right: none;
+    border-top: solid $gray3 1px;
+    bottom: 0;
+
+
+    align-items: center;
+    flex-direction: row;
+
+    & .content {
+
+      & .small-logo {
+        display: none;
+      }
+
+      & .options {
+        display: flex;
+        justify-content: space-around;
+        margin: 0;
+        flex-direction: row;
+
+        & div {
+          width: 3em;
+
+          & .title {
+            display: none;
+          }
+        }
+
+      }
+
+    }
+
+
+  }
+
+}

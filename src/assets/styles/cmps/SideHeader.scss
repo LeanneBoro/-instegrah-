@@ -1,14 +1,26 @@
 .side-header {
-    width: var(--side-header-width);
+    width: 15.3em;
     height: 100vh;
     border-right: solid $gray3 1px;
-
+    position: fixed;
+    z-index: 100;
 
     & .content {
+        height: 0;
 
+        & .options {
+            display: flex;
+            flex-direction: column;
+        }
 
         & .logo {
             display: flex;
+            margin-bottom: 19px;
+            padding: 25px 12px 16px;
+        }
+
+        & .small-logo {
+            display: none;
             margin-bottom: 19px;
             padding: 25px 12px 16px;
         }
@@ -23,9 +35,6 @@
 
             & div {
 
-                & .title{
-                    display: var(--side-header-title-display);
-                }
 
                 @include headerBtns;
                 display: flex;

@@ -7,6 +7,10 @@ export function SideHeader() {
                 <img src="src\imgs\InstagramLogo.PNG" alt="" />
             </div>
 
+            <div className="small-logo">
+                <img src="src\imgs\instagramsmallLogo.PNG" alt="" />
+            </div>
+
 
             <section className="options">
 
