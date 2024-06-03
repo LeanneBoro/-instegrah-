@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { SideHeader } from './cmps/SideHeader'
+import { NavBar } from './cmps/NavBar'
 import { PostIndex } from './views/PostIndex'
 
 
 function App() {
 
   return <section>
-    <SideHeader />
+    <NavBar />
     {/* <PostIndex /> */}
   </section>
 
