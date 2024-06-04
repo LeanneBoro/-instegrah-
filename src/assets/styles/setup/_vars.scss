@@ -18,12 +18,14 @@ $gray1: #737373;
 $gray1: #737373;
 
 :root {
-    --side-header-width: 15.3em;
-    --side-header-title-display: block;
+
+    @media (width < 1250px) {
+        @include compact-side-bar
+    }
 
     @media (width < 780px) {
-        --side-header-width: 73px;
-        --side-header-title-display: none;
+        @include bottom-bar
+
     }
 
 }

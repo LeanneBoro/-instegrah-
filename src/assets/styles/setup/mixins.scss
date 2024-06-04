@@ -1,18 +1,99 @@
 @mixin headerBtns {
 
+  &:hover {
+    background-color: $gray4;
 
-    &:hover {
-      background-color: $gray4;
-
-      & img{
-        transition: 0.3s;
-        scale: 1.1;
-      }
+    & img {
+      transition: 0.3s;
+      scale: 1.1;
     }
+  }
 
-    &.selected {
-        background-color: $cyan1;
-        color: white;
-    }
+  &.selected {
+    background-color: $cyan1;
+    color: white;
+  }
 }
 
+
+@mixin compact-side-bar {
+
+  & .nav-bar {
+    width: 73px;
+
+    & .content {
+
+      & .options {
+        flex-direction: column;
+
+        & div {
+
+
+          & .title {
+            display: none;
+          }
+        }
+      }
+
+      & .logo-container {
+
+        & .small-logo {
+          display: block;
+
+        }
+
+        & .logo {
+          display: none;
+        }
+
+      }
+
+
+    }
+
+  }
+}
+
+
+@mixin bottom-bar {
+
+  .nav-bar {
+    width: 100%;
+    height: 3em;
+    border-right: none;
+    border-top: solid $gray3 1px;
+    bottom: 0;
+
+
+    align-items: center;
+    flex-direction: row;
+
+    & .content {
+
+      & .logo-container {
+        display: none;
+      }
+
+
+      & .options {
+        display: flex;
+        justify-content: space-around;
+        margin: 0;
+        flex-direction: row;
+
+        & div {
+          width: 3em;
+
+          & .title {
+            display: none;
+          }
+        }
+
+      }
+
+    }
+
+
+  }
+
+}

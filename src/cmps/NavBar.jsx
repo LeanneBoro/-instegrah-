@@ -1,26 +1,39 @@
-export function SideHeader() {
-    return <section className="side-header">
+import { useState, useEffect } from 'react'
+
+export function NavBar() {
+    const [expandedSection, setExpandedSection] = useState('')
+
+
+
+    return <section className={"nav-bar" + (expandedSection === "search" || expandedSection === "notification" ? " compact-nav-bar" : "")}>
 
         <div className="content">
 
-            <div className="logo">
-                <img src="src\imgs\InstagramLogo.PNG" alt="" />
-            </div>
+            <div className='logo-container'>
 
+                <div className="logo" >
+                    <img src="src\assets\svgs\IntagramLogo.svg" alt="" />
+                </div>
+
+                <div className="small-logo">
+                    <img src="src\assets\svgs\instagramsmallLogo.svg" alt="" />
+                </div>
+
+            </div>
 
             <section className="options">
 
-                <div>
+                <div onClick={() => setExpandedSection(expandedSection === 'home' ? null : 'home')}>
                     <img className="icon" src="src\assets\svgs\Home.svg" alt="" />
                     <div className="title">Home</div>
                 </div>
 
-                <div>
+                <div onClick={() => setExpandedSection(expandedSection === 'search' ? null : 'search')}>
                     <img className="icon" src="src\assets\svgs\Search.svg" alt="" />
                     <div className="title">Search</div>
                 </div>
 
-                <div>
+                <div onClick={() => setExpandedSection('notifications')}>
                     <img className="icon" src="src\assets\svgs\Heart.svg" alt="" />
                     <div className="title">Notifications</div>
                 </div>

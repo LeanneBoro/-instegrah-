@@ -39,3 +39,11 @@
 .grid {
     display: grid;
 }
+
+.compact-side-bar {
+    @include compact-side-bar
+}
+
+.bottom-bar {
+    @include bottom-bar
+}
