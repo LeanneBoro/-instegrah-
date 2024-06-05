@@ -5,9 +5,9 @@ import { PostIndex } from './views/PostIndex'
 
 function App() {
 
-  return <section>
+  return <section className='flex'>
     <NavBar />
-    {/* <PostIndex /> */}
+    <PostIndex />
   </section>
 
 }
