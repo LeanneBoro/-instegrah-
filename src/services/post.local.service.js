@@ -74,7 +74,7 @@ function _createPosts() {
         by: {
             _id: "u101",
             fullname: "Ulash Ulashi",
-            imgUrl: "http://some-img"
+            imgUrl: "https://randomuser.me/api/portraits/men/80.jpg"
         },
         loc: { // Optional
             lat: 11.11,
@@ -183,7 +183,7 @@ function _createPosts() {
         by: {
             _id: "u103",
             fullname: "Becky Beach",
-            imgUrl: "http://beach-img"
+            imgUrl: "https://randomuser.me/api/portraits/men/80.jpg"
         },
         loc: { // Optional
             lat: 55.55,
@@ -238,7 +238,7 @@ function _createPosts() {
         by: {
             _id: "u104",
             fullname: "Mike Mount",
-            imgUrl: "http://mountain-img"
+            imgUrl: "https://randomuser.me/api/portraits/men/80.jpg"
         },
         loc: { // Optional
             lat: 77.77,

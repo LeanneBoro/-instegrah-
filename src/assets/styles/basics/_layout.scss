@@ -1,6 +1,6 @@
 .main-layout {
     display: grid;
-    grid-template-columns: minmax(auto, 200px) minmax(auto, 1400px) minmax(auto, 200px);
+    grid-template-columns: minmax(20px, 200px) minmax(auto, 500px) minmax(20px, 200px);
 }
 
 .main-layout>* {
