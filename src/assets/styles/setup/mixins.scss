@@ -2,10 +2,11 @@
 
   &:hover {
     background-color: $gray4;
+    cursor: pointer;
 
     & img {
-      transition: 0.3s;
-      scale: 1.1;
+      transform: scale(1.1);
+      transition: transform 0.3s; 
     }
   }
 

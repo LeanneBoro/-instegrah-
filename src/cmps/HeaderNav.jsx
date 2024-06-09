@@ -6,13 +6,13 @@ export function HeaderNav() {
         <div>
 
             <div className="imput-container">
-                <img src="src\assets\svgs\Search.svg" alt="" />
-                <div>search</div>
-            <input type="text" />
-            <div>X</div>
+                <img className="search-icon" src="src\assets\svgs\Search.svg" alt="" />
+
+                <input type="text" placeholder="Search" />
+                <div className="clear-search">X</div>
             </div>
 
-          
+
 
             <div>
                 <img className="notifications" src="src\assets\svgs\heart.svg" alt="" />

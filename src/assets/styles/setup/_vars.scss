@@ -19,12 +19,26 @@ $gray1: #737373;
 
 :root {
 
+    --header-display:none;
+    --logo-width: 130px;
+    --header-alignment: space-between;
+    --logo-padding: 1em;
+
     @media (width < 1250px) {
         @include compact-side-bar
     }
 
     @media (width < 780px) {
+        --header-display:flex;
         @include bottom-bar
+        
+    }
+
+    @media (width < 442px) {
+
+        --logo-width: 0;
+        --header-alignment: center;
+        --logo-padding:0;
 
     }
 
