@@ -10,6 +10,7 @@ export const postService = {
     getById,
     save,
     remove,
+    getLatestComment
 
 }
 
@@ -64,6 +65,12 @@ async function save(post) {
 
 function _savePosts(posts) {
     localStorage.setItem(POST_DB, JSON.stringify(posts))
+}
+
+function getLatestComment(comments) {
+    const latestComment = { user: comments[comments.length - 1].by.fullname, comment: comments[comments.length - 1].txt }
+
+    return latestComment
 }
 
 function _createPosts() {

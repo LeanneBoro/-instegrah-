@@ -1,6 +1,10 @@
+import { postService } from "../services/post.local.service";
 
 
 export function PostPreview({ post, idx }) {
+
+
+
     return (
         <div className="post-preview">
             <div className="flex post-title">
@@ -13,7 +17,7 @@ export function PostPreview({ post, idx }) {
                             <h2>{post.by.fullname} </h2>
                             <div>
                                 <span className="time">19 h</span>
-                            </div> 
+                            </div>
                         </div>
                         <h3>{post.loc.name}</h3>
                     </div>
@@ -42,8 +46,26 @@ export function PostPreview({ post, idx }) {
             <h2 className="likes">
                 <span>{post.likedBy.length}</span> likes
             </h2>
-            <h2>{post.by.fullname}<span>{post.txt}</span></h2>
-            <h2>view all {post.comments.length} comments </h2>
+
+            <div className="title">
+                <h2>{post.by.fullname}</h2>
+                <div>{post.txt}</div>
+            </div>
+
+
+            <div className="view-all">view all {post.comments.length} comments </div>
+
+
+
+            <div className="latest-comment">
+                <h2> {postService.getLatestComment(post.comments).user}</h2>
+                <div >{postService.getLatestComment(post.comments).comment}</div>
+            </div>
+
+
+
+
+
         </div>
     )
 }
