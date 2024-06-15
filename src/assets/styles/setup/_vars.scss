@@ -19,26 +19,32 @@ $gray1: #737373;
 
 :root {
 
-    --header-display:none;
+    --header-display: none;
     --logo-width: 130px;
     --header-alignment: space-between;
     --logo-padding: 1em;
+    --list-margin-top: 0;
+
+    --post-list-positioning: minmax(20px, 650px) minmax(auto, 500px) 400px;
 
     @media (width < 1250px) {
-        @include compact-side-bar
+        @include compact-side-bar;
+
+        --post-list-positioning: minmax(20px, auto) minmax(auto, 500px) minmax(20px, auto);
+
     }
 
     @media (width < 780px) {
-        --header-display:flex;
+        --header-display: flex;
+        --list-margin-top: 4em;
         @include bottom-bar
-        
     }
 
     @media (width < 442px) {
 
         --logo-width: 0;
         --header-alignment: center;
-        --logo-padding:0;
+        --logo-padding: 0;
 
     }
 

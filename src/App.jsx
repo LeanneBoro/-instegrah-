@@ -9,7 +9,7 @@ function App() {
   return <section>
     <HeaderNav/>
     <NavBar />
-    {/* <PostIndex /> */}
+    <PostIndex />
   </section>
 
 }

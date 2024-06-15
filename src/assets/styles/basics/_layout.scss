@@ -1,6 +1,6 @@
 .main-layout {
     display: grid;
-    grid-template-columns: minmax(20px, 200px) minmax(auto, 500px) minmax(20px, 200px);
+    grid-template-columns: var( --post-list-positioning)
 }
 
 .main-layout>* {
