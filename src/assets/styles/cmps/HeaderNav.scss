@@ -5,6 +5,8 @@
     flex-direction: row;
     justify-content: var( --header-alignment);
     border-bottom: solid $gray3 1px;
+    position: fixed;
+    background-color: $fully-white;
 
     &>div {
         display: flex;
