@@ -1,12 +1,16 @@
-import { postService } from "../services/post.local.service";
+import { useState } from 'react'
 
+import { postService } from "../services/post.local.service";
+import { PostDetail } from './PostDetail';
 
 export function PostPreview({ post, idx }) {
 
 
+    const [selectedPost, setSelectedPost] = useState(null)
+
 
     return (
-        <div className="post-preview">
+        <section className="post-preview">
             <div className="flex post-title">
                 <div className="flex">
                     <div className="img-container">
@@ -53,7 +57,7 @@ export function PostPreview({ post, idx }) {
             </div>
 
 
-            <div className="view-all">view all {post.comments.length} comments </div>
+            <div className="view-all" onClick={ ()  => setSelectedPost(post)}>view all {post.comments.length} comments </div>
 
 
 
@@ -64,8 +68,10 @@ export function PostPreview({ post, idx }) {
 
 
 
+            {selectedPost && <PostDetail post={post} />}
+
+        </section>
 
 
-        </div>
     )
 }
