@@ -13,21 +13,7 @@
 
 
 
-.post-details-layout {
-    width: 100%;
-    height: 90%;
-    z-index: 100;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: grid;
-    grid-template-columns: minmax(50px, auto) minmax(100px, 2fr) minmax(500px, 1fr) minmax(50px, auto);
 
-}
 
-.post-details-layout>* {
-    grid-column: 2/4;
-    grid-row: var(--post-details-grid-row);
-    aspect-ratio:var(--post-details-aspect-ratio); 
-}
+
+

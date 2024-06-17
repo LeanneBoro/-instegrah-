@@ -28,14 +28,8 @@ $gray1: #737373;
 
     --post-list-positioning: minmax(20px, 650px) minmax(auto, 500px) 400px;
 
-    --post-details-aspect-ratio:0;
 
-    @media (width < 1400px) {
-        --post-details-aspect-ratio:13/9;
 
-        --post-details-grid-row:2;
-
-    }
 
     @media (width < 1250px) {
         @include compact-side-bar;
