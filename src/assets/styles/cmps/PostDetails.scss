@@ -1,11 +1,10 @@
 .post-details {
     z-index: 100;
     display: flex;
-    width: 90vw; 
-    height: calc((5 / 4) * (55vw)); 
+    width: 90vw;
+    height: calc((5 / 4) * (55vw));
     background: $fully-white;
-    border-radius: 10px;
-    border: 1px solid black;
+    border: 1px solid $gray3;
     max-height: 90vh;
     max-width: 160vh;
     margin: auto;
@@ -15,50 +14,135 @@
     left: 0;
     right: 0;
 
+    & .details-nav {
+        display: none;
+    }
+
     & img {
-        width: 100%; 
-        height: 100%; 
-        object-fit: cover; 
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     & .media {
-        flex: 2; 
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+     
+
+        & .username {
+            color: $minor-black;
+        }
+
+        & .header {
+            display: flex;
+            width: 100%;
+            height: 56px;
+            border-bottom: 0.5px solid $gray3;
+        
+
+            & .profile-picture {
+                width: 35px;
+                height: 35px;
+                margin: auto 12px;
+                background-color: red;
+                border-radius: 50%;
+            }
+
+            & .profile-details {
+                margin: auto 10px;
+                flex-grow: 1;
+
+
+            }
+
+            & .options {
+                margin: auto 12px;
+            }
+
+
+        }
+
+        & .post-title {
+            display: flex;
+            gap: 0.5em;
+             padding: 0.5em
+        }
+
+        & .comment-list {
+            width: 100%;
+            min-height: 50px;
+            flex: 1;
+        }
+
+        & .likes-and-actions {
+            width: 100%;
+            border-block: 0.5px solid $gray3;
+            height: 150px;
+        }
+
+        & .add-comment {
+            height: max-content;
+
+            & input {
+                width: 100%;
+                height: 30px;
+                padding: 5px;
+                border: none;
+
+                &:focus {
+                    outline: none;
+                }
+
+            }
+        }
+
+
+
     }
 }
 
 
 @media (max-width: 745px) {
     .post-details {
-        z-index: 100;
-        display: flex;
         flex-direction: column;
-        width: 50vw; 
-        height: auto; 
-        max-height: 75vh; 
-        min-height: 510px;
-        background: $fully-white; 
-        border-radius: 10px;
-        border: 1px solid black;
-        margin: auto;
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        overflow: hidden;
-    
-        & img {
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+        overflow-y: scroll;
+
+        & .details-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 100%;
-            height: auto; 
+            height: 3.75em;
+            border-bottom: solid $gray3 1px;
+            background-color: $fully-white;
+            position: fixed;
+
+            & .back-btn {
+                position: fixed;
+                left: 10px;
+                top: -50px;
+                width: 3.5em;
+                rotate: -90deg;
+                cursor: pointer;
+            }
+        }
+
+
+        & img {
+            margin-top: 3.75em;
+            padding: 10px;
+            width: 100%;
+            height: auto;
             object-fit: cover;
         }
-    
+
         & .media {
-            margin-top: auto; 
-            overflow: scroll;
+            margin-top: auto;
+
         }
     }
 }
-
-
-

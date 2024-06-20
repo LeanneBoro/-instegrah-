@@ -1,24 +1,21 @@
 .post-preview {
- font-size: 0.875em;
+    font-size: 0.875em;
     border-bottom: 1px solid black;
 
     margin: 0 0 20px;
     padding: 0 0 16px;
 
-    h2 {
-        margin-top: 8px;
-    }
 
-    .post-title {
+
+    & > .post-title {
         padding: 0 0 12px 4px;
         justify-content: space-between;
 
-        h2 {
-            margin: 0;
+        & h2 {
             cursor: pointer;
         }
 
-        .img-container {
+        & .img-container {
             width: 42px;
             height: 42px;
             border-radius: 50px;
@@ -26,54 +23,62 @@
             margin-right: 12px;
         }
 
-        h3 {
+        & h3 {
             margin: 0;
             font-size: 12px;
         }
 
-        .post-by {
+        & .post-by {
 
-            .dot {
+            & .dot {
                 margin: 4px;
             }
         }
     }
 
-    .icon-container {
+    & .icon-container {
         justify-content: space-between;
         margin: 4px 0;
 
-        .svg-container {
+        & .svg-container {
             padding: 8px;
 
-            svg {
+            & svg {
                 cursor: pointer;
             }
         }
     }
 
-    .likes {
-        margin: 0;
+    & .likes {
+        margin-bottom: 8px;
     }
 
-    .latest-comment, .title {
+
+
+    & .latest-comment {
         display: flex;
         align-items: center;
         text-align: center;
 
-        h2 {
+        & h2 {
             cursor: pointer;
         }
 
-        div {
-           
-            margin-top: 0.5em;
+        & div {
+
             padding-inline-start: 0.5em;
             color: $gray1;
         }
     }
 
-    .view-all {
+    & .title {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        gap: 0.5em;
+    }
+
+    & .view-all {
         color: $gray2;
         margin-top: 0.5em;
         cursor: pointer;

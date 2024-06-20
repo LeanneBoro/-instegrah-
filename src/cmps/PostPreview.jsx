@@ -57,7 +57,7 @@ export function PostPreview({ post, idx }) {
             </div>
 
 
-            <div className="view-all" onClick={ ()  => setSelectedPost(post)}>view all {post.comments.length} comments </div>
+            <div className="view-all" onClick={() => setSelectedPost(post)}>view all {post.comments.length} comments </div>
 
 
 
@@ -68,7 +68,7 @@ export function PostPreview({ post, idx }) {
 
 
 
-            {selectedPost && <PostDetail post={post} />}
+            {selectedPost && <PostDetail selectedPost={selectedPost} setSelectedPost={setSelectedPost} />}
 
         </section>
 

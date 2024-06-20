@@ -1,17 +1,98 @@
-export function PostDetail({ post }) {
+export function PostDetail({ selectedPost, setSelectedPost }) {
+
+    console.log(selectedPost);
 
     return <section className="post-details">
 
-        <section className="img-container">
+        <section className="details-nav">
 
-          
-        <img src={`https://picsum.photos/id/1/400/500`}></img>
-       
+            <img className="back-btn" src="src\assets\svgs\Close-Arrow.svg" alt="" onClick={() => setSelectedPost(null)} />
+
+            <div>Post</div>
 
         </section>
 
+        <section className="img-container">
+            <img src={`https://picsum.photos/id/1/400/500`}></img>
+        </section>
+
         <section className="media">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo fugit, dolor asperiores fuga ab, modi at delectus accusamus adipisci voluptatibus sunt itaque voluptates doloribus dolorum temporibus magnam? Incidunt placeat dicta deserunt cum sapiente ad ipsa molestias suscipit veniam repellendus, dolor unde mollitia eum commodi ratione. Mollitia dolorum obcaecati explicabo possimus minus vitae, atque consequuntur natus blanditiis laudantium, aspernatur earum iusto eum cum itaque tempora repudiandae soluta et, consectetur odio fuga! Exercitationem nesciunt ipsa dolore corporis enim adipisci error ratione natus officiis fuga quaerat at alias totam, animi ut provident dicta veritatis numquam id rem. Dicta ab atque voluptatem eveniet pariatur.
+
+            <section className="header">
+
+                <div className="profile-picture">
+
+                </div>
+
+                <section className="profile-details">
+
+                    <h2 className="username">{selectedPost.by.fullname}</h2>
+
+
+                </section>
+
+                <section className="options">
+                    ...
+                </section>
+
+            </section>
+
+            <div className="post-title">
+                <h2 className="username">{selectedPost.by.fullname}</h2>
+                <span >{selectedPost.txt}</span> 
+
+            </div>
+
+            <section className="comment-list">
+
+            </section>
+
+
+            <section className="likes-and-actions">
+
+                <section className="actions">
+
+                    <div>
+                        {/* <img src="src\assets\svgs\Heart.svg" alt="" />
+                        <img src="src\assets\svgs\Heart.svg" alt="" /> */}
+                    </div>
+
+                </section>
+
+                <section className="likes-and-date">
+
+                    <section className="likes">
+
+                        <div className="liked-by-profile">
+
+                        </div>
+
+                        <div className="likes-amount">
+
+                        </div>
+
+
+                    </section>
+
+                    <div className="date">
+
+                    </div>
+
+                </section>
+
+
+
+
+
+            </section>
+
+            <section className="add-comment">
+
+                <input type="text" placeholder="Add a comment" />
+
+
+            </section>
+
         </section>
 
 
