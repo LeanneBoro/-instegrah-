@@ -1,104 +1,147 @@
+import { useEffect, useState } from 'react';
+import { CommentPreview } from './CommentPreview';
+
 export function PostDetail({ selectedPost, setSelectedPost }) {
 
-    console.log(selectedPost);
+    const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
 
-    return <section className="post-details">
+    console.log(selectedPost.comments);
 
-        <section className="details-nav">
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 780) {
+                setIsBackdropDisabled(true);
+            } else {
+                setIsBackdropDisabled(false);
+            }
+        }
 
-            <img className="back-btn" src="src\assets\svgs\Close-Arrow.svg" alt="" onClick={() => setSelectedPost(null)} />
+        handleResize()
+        window.addEventListener('resize', handleResize);
 
-            <div>Post</div>
-
-        </section>
-
-        <section className="img-container">
-            <img src={`https://picsum.photos/id/1/400/500`}></img>
-        </section>
-
-        <section className="media">
-
-            <section className="header">
-
-                <div className="profile-picture">
-
-                </div>
-
-                <section className="profile-details">
-
-                    <h2 className="username">{selectedPost.by.fullname}</h2>
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
 
 
-                </section>
+    function handleBackdropClick(event) {
 
-                <section className="options">
-                    ...
-                </section>
+        if (event.target === event.currentTarget && !isBackdropDisabled) {
+            setSelectedPost(null)
+        }
+    }
 
-            </section>
+    return <div onClick={handleBackdropClick} className="backdrop">
 
-            <div className="post-title">
-                <h2 className="username">{selectedPost.by.fullname}</h2>
-                <span >{selectedPost.txt}</span> 
+        <img className="close-btn" onClick={handleBackdropClick} src="src\assets\svgs\close.svg" alt="" />
 
-            </div>
+        <section className="post-details">
 
-            <section className="comment-list">
+            <section className="details-nav">
+
+                <img className="back-btn" src="src\assets\svgs\Close-Arrow.svg" alt="" onClick={() => setSelectedPost(null)} />
+
+                <div>Post</div>
 
             </section>
 
+            <section className="img-container">
+                <img src={`https://picsum.photos/id/1/400/500`}></img>
+            </section>
 
-            <section className="likes-and-actions">
+            <section className="media">
 
-                <section className="actions">
+                <section className="header">
 
-                    <div>
-                        {/* <img src="src\assets\svgs\Heart.svg" alt="" />
-                        <img src="src\assets\svgs\Heart.svg" alt="" /> */}
+                    <div className="profile-picture">
+
                     </div>
 
-                </section>
+                    <section className="profile-details">
 
-                <section className="likes-and-date">
-
-                    <section className="likes">
-
-                        <div className="liked-by-profile">
-
-                        </div>
-
-                        <div className="likes-amount">
-
-                        </div>
+                        <h2 className="username">{selectedPost.by.fullname}</h2>
 
 
                     </section>
 
-                    <div className="date">
+                    <section className="options">
+                        ...
+                    </section>
 
-                    </div>
+                </section>
+
+                <div className="post-title">
+
+                    <div className="profile-picture"></div>
+                    
+                    <h2 className="username">{selectedPost.by.fullname}</h2>
+                    <span >{selectedPost.txt}</span>
+
+                </div>
+
+                <section className="comment-list">
+
+                    {selectedPost.comments.map(comment => {
+
+                        return <CommentPreview comment={comment} />
+
+                    })}
 
                 </section>
 
 
+                <section className="likes-and-actions">
+
+                    <section className="actions">
+
+                        <div>
+                            {/* <img src="src\assets\svgs\Heart.svg" alt="" />
+                        <img src="src\assets\svgs\Heart.svg" alt="" /> */}
+                        </div>
+
+                    </section>
+
+                    <section className="likes-and-date">
+
+                        <section className="likes">
+
+                            <div className="liked-by-profile">
+
+                            </div>
+
+                            <div className="likes-amount">
+
+                            </div>
 
 
+                        </section>
+
+                        <div className="date">
+
+                        </div>
+
+                    </section>
+
+
+
+
+
+                </section>
+
+                <section className="add-comment">
+
+                    <input type="text" placeholder="Add a comment" />
+
+
+                </section>
 
             </section>
 
-            <section className="add-comment">
-
-                <input type="text" placeholder="Add a comment" />
-
-
-            </section>
 
         </section>
 
-
-    </section>
-
-
+    </div>
 
 
 }

@@ -1,0 +1,11 @@
+.comment-preview {
+    display: flex;
+    gap: 0.5em;
+    padding: 0.5em 0;
+    align-items: center;
+
+
+    & .profile-picture {
+        @include profile-picture
+    }
+}

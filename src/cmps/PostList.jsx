@@ -11,7 +11,7 @@ export function PostList({ posts }) {
                 {
                     posts.map((post, idx) => {
                         return (
-                            <PostPreview post={post} idx={idx} />
+                            <PostPreview post={post} idx={idx} key={idx}/>
                         )
                     })
                 }

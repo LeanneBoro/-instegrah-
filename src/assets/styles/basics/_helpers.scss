@@ -47,3 +47,20 @@
 .bottom-bar {
     @include bottom-bar
 }
+
+@mixin medium-font {
+    font-size: 0.875em;
+    
+  
+  
+  }
+  
+
+  
+
+  .large-styling{
+    display: block;
+    font-size: 0.875rem;
+    font-weight: bold;
+  padding: 0;
+  }
