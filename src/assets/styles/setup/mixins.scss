@@ -104,8 +104,8 @@
 
 
 @mixin profile-picture{
-  width: 35px;
-  height: 35px;
+  min-width: 35px;
+  min-height: 35px;
   margin: auto 12px;
   background-color: red;
   border-radius: 50%;

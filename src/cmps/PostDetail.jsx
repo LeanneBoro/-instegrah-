@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { CommentPreview } from './CommentPreview';
 
 export function PostDetail({ selectedPost, setSelectedPost }) {
 
     const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
+    const inputRef = useRef(null)
 
-    console.log(selectedPost.comments);
+    console.log(selectedPost.likedBy.fullname);
 
     useEffect(() => {
         const handleResize = () => {
@@ -30,6 +31,10 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
         if (event.target === event.currentTarget && !isBackdropDisabled) {
             setSelectedPost(null)
         }
+    }
+
+    function handleCommentBtnClick() {
+        inputRef.current.focus()
     }
 
     return <div onClick={handleBackdropClick} className="backdrop">
@@ -74,7 +79,7 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
                 <div className="post-title">
 
                     <div className="profile-picture"></div>
-                    
+
                     <h2 className="username">{selectedPost.by.fullname}</h2>
                     <span >{selectedPost.txt}</span>
 
@@ -95,10 +100,9 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                     <section className="actions">
 
-                        <div>
-                            {/* <img src="src\assets\svgs\Heart.svg" alt="" />
-                        <img src="src\assets\svgs\Heart.svg" alt="" /> */}
-                        </div>
+
+                        <img className='comment' src="src\assets\svgs\Heart.svg" alt="" />
+                        <img onClick={handleCommentBtnClick}  className='like' src="src\assets\svgs\Comment.svg" alt="" />
 
                     </section>
 
@@ -107,11 +111,22 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
                         <section className="likes">
 
                             <div className="liked-by-profile">
-
+                                {selectedPost.likedBy.slice(0, 3).map((like, index) => (
+                                    <div key={index} className='profile'></div>
+                                ))}
                             </div>
 
-                            <div className="likes-amount">
-
+                            <div className="amount">
+                                liked by <h2>{selectedPost.likedBy[0].fullname} </h2>
+                                {selectedPost.likedBy.length >= 2 ? (
+                                    <>
+                                        and <h2>{selectedPost.likedBy[1].fullname}</h2>
+                                    </>
+                                ) : (
+                                    <>
+                                        and <h2>{selectedPost.likedBy.length - 1} more</h2>
+                                    </>
+                                )}
                             </div>
 
 
@@ -131,7 +146,7 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                 <section className="add-comment">
 
-                    <input type="text" placeholder="Add a comment" />
+                    <input ref={inputRef} type="text" placeholder="Add a comment" />
 
 
                 </section>
