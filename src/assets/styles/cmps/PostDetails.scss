@@ -208,10 +208,11 @@
             & .back-btn {
                 position: fixed;
                 left: 10px;
-                top: -50px;
-                width: 3.5em;
+                width: 30px;
+                height: 30px;
                 rotate: -90deg;
                 cursor: pointer;
+                z-index: 1000;
             }
         }
 

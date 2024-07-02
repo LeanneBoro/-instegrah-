@@ -1,0 +1,35 @@
+.search-modal {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    width: 400px;
+    border-right: solid $gray3 1px;
+    box-shadow: 7px -2px 20px 12px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    background-color: white;
+    left: -400px;
+    /* Start off-screen to the left */
+    transition: left 0.3s ease-in-out;
+    /* Animation duration and easing */
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+}
+
+.search-modal.active {
+    left: 72px;
+
+    & .input-field{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin: 25px;
+
+        & div{
+            font-size: 1.5em;
+            font-style: bold;
+        }
+      
+    }
+
+}

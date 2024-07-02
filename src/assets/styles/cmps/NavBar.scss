@@ -3,9 +3,12 @@
     height: 100vh;
     border-right: solid $gray3 1px;
     position: fixed;
-    z-index: 100;
+    z-index: 1000;
     transition: 0.3s;
     background-color: $fully-white;
+
+
+
 
     & .content {
         height: 0;
@@ -82,10 +85,16 @@
 
     & .content {
 
+
+
         & .options {
             flex-direction: column;
 
-            & div {
+            & >div {
+                &.open {
+                    border: 1px solid $gray3;
+                    border-radius:  10px;
+                }
 
                 & .title {
                     padding: 0;
@@ -94,11 +103,11 @@
             }
         }
 
-        & .logo-container{
+        & .logo-container {
             & .small-logo {
                 display: block;
             }
-    
+
             & .logo {
                 display: none;
             }
