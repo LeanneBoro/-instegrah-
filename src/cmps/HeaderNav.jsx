@@ -1,3 +1,5 @@
+import { SearchInput } from "./SearchInput";
+
 export function HeaderNav() {
     return <section className="header-nav">
 
@@ -5,12 +7,7 @@ export function HeaderNav() {
 
         <div>
 
-            <div className="imput-container">
-                <img className="search-icon" src="src\assets\svgs\Search.svg" alt="" />
-
-                <input type="text" placeholder="Search" />
-                <div className="clear-search">X</div>
-            </div>
+            <SearchInput />
 
 
 
