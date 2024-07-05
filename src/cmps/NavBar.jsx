@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SearchModal } from './SearchModal'
 import { SearchInput } from './SearchInput';
+import { NotificationsModal } from './NotificationsModal';
 
 export function NavBar() {
     const [expandedSection, setExpandedSection] = useState('')
@@ -49,13 +50,16 @@ export function NavBar() {
                         <div className="title">Home</div>
                     </div>
 
-                    <div className={expandedSection === 'search' ? 'open' : ''} onClick={() => setExpandedSection(expandedSection === 'search' ? null : 'search')}>
-                        <img className="icon" 
-                                  src={`src/assets/svgs/Search${expandedSection === 'search' ? 'Bold' : ''}.svg`} /> 
+
+                    <div className={`search expandedSection === 'search' ? 'open' : ''`}
+                        onClick={() => setExpandedSection(expandedSection === 'search' ? null : 'search')}>
+                        <img className="icon"
+                            src={`src/assets/svgs/Search${expandedSection === 'search' ? 'Bold' : ''}.svg`} />
                         <div className="title">Search</div>
                     </div>
 
-                    <div className={expandedSection === 'notifications' ? 'open' : ''} onClick={() => setExpandedSection(expandedSection === 'notifications' ? null : 'notifications')}>
+                    <div className={`notifications expandedSection === 'notifications' ? 'open' : ''`}
+                        onClick={() => setExpandedSection(expandedSection === 'notifications' ? null : 'notifications')}>
                         <img className="icon"
                             src={`src/assets/svgs/Heart${expandedSection === 'notifications' ? 'Bold' : ''}.svg`} />
                         <div className="title">Notifications</div>
@@ -87,20 +91,8 @@ export function NavBar() {
 
         </section>
 
-        <section className={expandedSection === 'search' ? 'search-modal active' : 'search-modal'} >
-
-            <section className='input-field'>
-
-                <div>Search</div>
-
-                <SearchInput />
-
-            </section>
-
-            <section className='recent'></section>
-
-
-        </section>
+        <SearchModal expandedSection={expandedSection} />
+        <NotificationsModal expandedSection={expandedSection}   setExpandedSection={setExpandedSection} />
 
     </react-fragment>
 }

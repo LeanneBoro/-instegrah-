@@ -14,11 +14,6 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 
-}
-
-.search-modal.active {
-    left: 72px;
-
     & .input-field{
         display: flex;
         flex-direction: column;
@@ -31,5 +26,12 @@
         }
       
     }
+
+
+}
+
+.search-modal.active {
+    left: 72px;
+
 
 }

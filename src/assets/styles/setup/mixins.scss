@@ -82,6 +82,10 @@
         margin: 0;
         flex-direction: row;
 
+        .search, .notifications{
+          display: none;
+        }
+
         & div {
           width: 3em;
 

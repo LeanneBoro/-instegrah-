@@ -1,7 +1,19 @@
-export function SearchModal(){
+import { SearchInput } from "./SearchInput";
 
-    return <section className="search-modal">
+export function SearchModal({expandedSection}){
 
-        hello!
+    return <section className={expandedSection === 'search' ? 'search-modal active' : 'search-modal'} >
+
+    <section className='input-field'>
+
+        <div>Search</div>
+
+        <SearchInput />
+
     </section>
+
+    <section className='recent'></section>
+
+
+</section>
 }
