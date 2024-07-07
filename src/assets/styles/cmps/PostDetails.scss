@@ -21,12 +21,14 @@
 .post-details {
     z-index: 100;
     display: flex;
-    width: 90vw;
-    height: calc((5 / 4) * (55vw));
+    width: 80vw;
+    min-height: 400px;
+    height: calc(80vw - 405px);
+    // height: max-content;
     background: $fully-white;
     border: 1px solid $gray3;
-    max-height: 90vh;
-    max-width: 120vh;
+    max-height: 800px;
+    // max-width: 120vh;
     margin: auto;
     position: fixed;
     top: 0;
@@ -38,18 +40,28 @@
         display: none;
     }
 
-    & img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
+    & .img-container {
+        background-color:black;
+
+
+
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Maintain aspect ratio and fit within container */
+        }
+
     }
 
+
+
     & .media {
-        flex: 1;
         display: flex;
+        flex: 1;
         flex-direction: column;
         word-wrap: break-word;
+        min-width: 405px;
+
 
 
 
@@ -97,10 +109,9 @@
         }
 
         & .comment-list {
-            width: 100%;
-            min-height: 50px;
+            height: 30%;
             flex: 1;
-            margin-bottom: 1em;
+            overflow-y: auto;
         }
 
         & .likes-and-actions {
@@ -113,15 +124,15 @@
                 flex-direction: row;
                 padding: 6px 16px 8px 0px;
 
-           
+
 
                 & img {
-                   margin-left: 12px;
+                    margin-left: 12px;
                     width: 25px;
                     padding: 0;
                     cursor: pointer;
 
-                    &:hover{
+                    &:hover {
                         opacity: 0.5;
                     }
                 }
@@ -147,12 +158,12 @@
                         }
 
                         & .profile:not(:first-child) {
-                           margin-left: -6px;
-                          }
+                            margin-left: -6px;
+                        }
 
                     }
 
-                    & h2{
+                    & h2 {
                         cursor: pointer;
                     }
 
@@ -183,4 +194,3 @@
 
     }
 }
-

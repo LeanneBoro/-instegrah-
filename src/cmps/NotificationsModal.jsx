@@ -21,7 +21,7 @@ export function NotificationsModal({ expandedSection, setExpandedSection }) {
         <section className="earlier">
             <h1>Earlier</h1>
 
-            Here be this Earlier Notification list
+            Here be Earlier Notification list
         </section>
 
 

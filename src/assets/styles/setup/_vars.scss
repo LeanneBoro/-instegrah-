@@ -23,7 +23,7 @@ $gray1: #737373;
     --logo-width: 130px;
     --header-alignment: space-between;
     --logo-padding: 1em;
-    --list-margin-top: 0;
+    --list-margin-top: 30px;
     --post-details-grid-row: 0;
 
     --post-list-positioning: minmax(20px, 650px) minmax(auto, 500px) 400px;
@@ -40,7 +40,8 @@ $gray1: #737373;
 
     @media (width < 780px) {
         --header-display: flex;
-        --list-margin-top: 4em;
+        --list-margin-top: 80px;
+        
         @include bottom-bar;
 
         .post-details {
@@ -73,6 +74,7 @@ $gray1: #737373;
 
 
             & .img-container {
+                background-color: white;
                 margin-top: 3.75em;
                 padding: 10px;
                 width: 100%;
@@ -82,6 +84,7 @@ $gray1: #737373;
 
             & .media {
                 margin-top: auto;
+                min-width: 0;
 
             }
         }

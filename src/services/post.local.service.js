@@ -277,7 +277,43 @@ function _createPosts() {
                     imgUrl: "http://mountain-img"
                 },
                 txt: "Nature at its best!"
-            }
+            },
+            {
+                id: "c1008",
+                by: {
+                    _id: "u112",
+                    fullname: "Hank",
+                    imgUrl: "http://mountain-img"
+                },
+                txt: "Nature at its best!"
+            },
+            {
+                id: "c1008",
+                by: {
+                    _id: "u112",
+                    fullname: "Hank",
+                    imgUrl: "http://mountain-img"
+                },
+                txt: "Nature at its best!"
+            },
+            {
+                id: "c1008",
+                by: {
+                    _id: "u112",
+                    fullname: "Hank",
+                    imgUrl: "http://mountain-img"
+                },
+                txt: "Nature at its best!"
+            },
+            {
+                id: "c1008",
+                by: {
+                    _id: "u112",
+                    fullname: "Hank",
+                    imgUrl: "http://mountain-img"
+                },
+                txt: "Nature at its best!"
+            },
         ],
         likedBy: [
             {

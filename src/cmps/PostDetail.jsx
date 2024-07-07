@@ -52,7 +52,7 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
             </section>
 
             <section className="img-container">
-                <img src={`https://picsum.photos/id/1/400/500`}></img>
+                <img src={`https://picsum.photos/id/1/1500/1500`}></img>
             </section>
 
             <section className="media">

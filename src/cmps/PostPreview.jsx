@@ -32,7 +32,7 @@ export function PostPreview({ post, idx }) {
                 </span>
 
             </div>
-            <img src={`https://picsum.photos/id/${idx}/400/500`}></img>
+            <img src={`https://picsum.photos/id/${idx}/1500/1500`}></img>
             <nav className="flex icon-container">
                 <div className="flex main-container">
                     <span className="flex justify-center svg-container">
