@@ -12,8 +12,19 @@
 }
 
 
+.profile-page-layout {
+    display: grid;
+    grid-template-columns: var(--profile-positioning);
+}
 
+.profile-page-layout>* {
+    grid-column: var(--profile-grid-placement);
+}
 
+.profile-info-layout {
+    grid-template-columns: var(--profile-info-layout-positioning);
 
-
-
+    & .profile-container {
+        grid-column: 1;
+    }
+}

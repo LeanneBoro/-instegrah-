@@ -1,15 +1,23 @@
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
 import { NavBar } from './cmps/NavBar'
 import { PostIndex } from './views/PostIndex'
 import { HeaderNav } from './cmps/HeaderNav'
 
+import { Profile } from './views/Profile'
+
 
 function App() {
 
   return <section>
-    <HeaderNav/>
-    <NavBar />
-    <PostIndex />
+    <Router>
+      <HeaderNav />
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<PostIndex />} />
+        <Route path="/profile" element={<Profile/>} />
+      </Routes>
+    </Router>
   </section>
 
 }

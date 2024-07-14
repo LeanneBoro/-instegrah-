@@ -28,6 +28,15 @@ $gray1: #737373;
 
     --post-list-positioning: minmax(20px, 650px) minmax(auto, 500px) 400px;
 
+    --profile-positioning: 250px minmax(auto, 1fr) minmax(0, 935px) minmax(auto, 1fr);
+    --profile-margin-top: 10px;
+    --profile-grid-placement: 3;
+    --profile-info-layout-positioning: 1fr 2fr;
+    --profile-info-height: 250px;
+    --profile-container-size: 130px;
+    --profile-normal-metrics-display: flex;
+    --profile-compact-metrics-display: none;
+
 
 
 
@@ -36,12 +45,21 @@ $gray1: #737373;
 
         --post-list-positioning: minmax(20px, auto) minmax(auto, 500px) minmax(20px, auto);
 
+        --profile-positioning: minmax(72px, 1fr) minmax(0, 935px) minmax(auto, 1fr);
+        --profile-grid-placement: 2;
     }
 
     @media (width < 780px) {
         --header-display: flex;
         --list-margin-top: 80px;
-        
+        --profile-margin-top: 70px;
+        --profile-grid-placement: 1/-1;
+        --profile-info-layout-positioning: 140px 1fr;
+        --profile-container-size: 80px;
+        --profile-info-height: 120px;
+        --profile-compact-metrics-display: flex;
+        --profile-normal-metrics-display: none;
+
         @include bottom-bar;
 
         .post-details {
@@ -89,7 +107,7 @@ $gray1: #737373;
             }
         }
 
-        
+
 
         .search-modal.active {
             display: none;

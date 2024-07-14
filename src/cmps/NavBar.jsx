@@ -1,11 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SearchModal } from './SearchModal'
+
 import { SearchInput } from './SearchInput';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { NotificationsModal } from './NotificationsModal';
 
 export function NavBar() {
     const [expandedSection, setExpandedSection] = useState('')
     const navBarRef = useRef(null)
+    const navigate = useNavigate();
+    const location = useLocation()
+    const currentLocation = location.pathname
+
+
 
 
     function handleOutsideClick(event) {
@@ -31,7 +38,11 @@ export function NavBar() {
 
             <div className="content">
 
-                <div className='logo-container'>
+                <div className='logo-container'
+                    onClick={() => {
+                        navigate('/')
+                        setExpandedSection(null)
+                    }}>
 
                     <div className="logo" >
                         <img src="src\assets\svgs\IntagramLogo.svg" alt="" />
@@ -45,8 +56,11 @@ export function NavBar() {
 
                 <section className="options">
 
-                    <div onClick={() => setExpandedSection(expandedSection === 'home' ? null : 'home')}>
-                        <img className="icon" src="src\assets\svgs\Home.svg" alt="" />
+                    <div onClick={() => {
+                        navigate('/')
+                        setExpandedSection(null)
+                    }}>
+                        <img className="icon" src={`src/assets/svgs/Home${currentLocation === "/" && expandedSection !== 'search' ? "Bold" : ""}.svg`} alt="" />
                         <div className="title">Home</div>
                     </div>
 
@@ -70,7 +84,7 @@ export function NavBar() {
                         <div className="title">Create</div>
                     </div>
 
-                    <div >
+                    <div onClick={() => navigate('/profile')} >
                         <img className="icon " src="src\assets\svgs\Profile.svg" alt="" />
                         <div className="title">Profile</div>
                     </div>
@@ -92,7 +106,7 @@ export function NavBar() {
         </section>
 
         <SearchModal expandedSection={expandedSection} />
-        <NotificationsModal expandedSection={expandedSection}   setExpandedSection={setExpandedSection} />
+        <NotificationsModal expandedSection={expandedSection} setExpandedSection={setExpandedSection} />
 
     </react-fragment>
 }

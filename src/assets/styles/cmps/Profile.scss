@@ -1,0 +1,81 @@
+.information {
+    display: grid;
+    // background-color: red;
+    height: var(--profile-info-height);
+
+    margin-top: var(--profile-margin-top);
+    border-bottom: 1px solid $gray3;
+
+    & .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+
+
+        & .placeholder {
+            width: var(--profile-container-size);
+            height: var(--profile-container-size);
+            border-radius: 50%;
+            background-color: red;
+        }
+
+        & .owner-name {
+            height: 0;
+        }
+
+
+    }
+
+    & .actions-and-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        & .actions {
+            display: flex;
+            justify-content: space-between;
+
+            & .username {
+                font-size: 20px;
+            }
+
+            & button {
+                margin-right: 20px;
+            }
+
+        }
+
+        & .metrics {
+
+            display: var(--profile-normal-metrics-display);
+            gap: 40px;
+
+            > h2{
+                cursor: pointer;
+            }
+
+        }
+
+
+    }
+
+
+}
+
+.compact-metrics {
+    display: var(--profile-compact-metrics-display);
+    justify-content: space-around;
+    border-bottom: 1px solid $gray3;
+
+
+    >section {
+        cursor: pointer;
+        margin-block: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
