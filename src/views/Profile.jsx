@@ -61,5 +61,12 @@ export function Profile() {
             </section>
 
         </section>
+
+        <section className="profile-post-layout">
+
+
+        </section>
+
     </section>
+
 }
