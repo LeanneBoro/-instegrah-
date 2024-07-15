@@ -64,6 +64,58 @@ export function Profile() {
 
         <section className="profile-post-layout">
 
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1800" alt="" />
+            </div>
+
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1800" alt="" />
+            </div>
+
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+            <div className="img-container">
+                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
+            </div>
+
 
         </section>
 

@@ -1,7 +1,6 @@
-import { useState } from 'react'
-
-import { postService } from "../services/post.local.service";
+import { useState, useEffect } from 'react'
 import { PostDetail } from './PostDetail';
+import { userService } from '../services/user.service';
 
 export function PostPreview({ post, idx }) {
 
@@ -14,16 +13,16 @@ export function PostPreview({ post, idx }) {
             <div className="flex post-title">
                 <div className="flex">
                     <div className="img-container">
-                        {/* <img src={post.by.imgUrl}></img>  */}
+                        <img src={post.by.profileImg}></img>
                     </div>
                     <div>
                         <div className="flex post-by">
-                            <h2>{post.by.fullname} </h2>
+                      <h2>{post.by.fullname}</h2>
                             <div>
                                 <span className="time">19 h</span>
                             </div>
                         </div>
-                        <h3>{post.loc.name}</h3>
+                        {/* <h3>{post.loc.name}</h3> */}
                     </div>
                 </div>
 
@@ -62,8 +61,8 @@ export function PostPreview({ post, idx }) {
 
 
             <div className="latest-comment">
-                <h2> {postService.getLatestComment(post.comments).user}</h2>
-                <div >{postService.getLatestComment(post.comments).comment}</div>
+                {/* <h2> {postService.getLatestComment(post.comments).user}</h2>
+                <div >{postService.getLatestComment(post.comments).comment}</div> */}
             </div>
 
 

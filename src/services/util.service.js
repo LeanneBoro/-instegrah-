@@ -1,10 +1,13 @@
 export const utilService = {
     makeId,
     makeLorem,
-    getRandomIntInclusive,
+    getRandomInt,
     loadFromStorage,
     saveToStorage,
-
+    getRandomFullName,
+    getRandomUsername,
+    getRandomProfileImg,
+    getRandomText,
 }
 
 function makeId(length = 6) {
@@ -28,7 +31,7 @@ function makeLorem(size = 100) {
     return txt
 }
 
-function getRandomIntInclusive(min, max) {
+function getRandomInt(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)
     return Math.floor(Math.random() * (max - min + 1)) + min 
@@ -41,5 +44,64 @@ function saveToStorage(key, value) {
 function loadFromStorage(key) {
     const data = localStorage.getItem(key)
     return (data) ? JSON.parse(data) : undefined
+}
+
+
+
+
+// User demo-data-functions:
+
+function getRandomFullName() {
+    const maleFirstNames = [
+        "John", "Alex", "Chris", "Pat", "Taylor", "Sam", "Casey",
+        "Michael", "David", "Tom", "Peter"
+    ];
+    const femaleFirstNames = [
+        "Jane", "Sarah", "Laura", "Emily", "Anna"
+    ];
+    const lastNames = [
+        "Smith", "Doe", "Johnson", "Brown", "Williams", "Jones", "Garcia", "Miller",
+        "Davis", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas"
+    ];
+
+    const isMale = utilService.getRandomInt(0, 1) === 0;
+    const firstName = isMale
+        ? maleFirstNames[utilService.getRandomInt(0, maleFirstNames.length - 1)]
+        : femaleFirstNames[utilService.getRandomInt(0, femaleFirstNames.length - 1)];
+    const lastName = lastNames[utilService.getRandomInt(0, lastNames.length - 1)];
+
+    return {
+        fullName: `${firstName} ${lastName}`,
+        gender: isMale ? 'male' : 'female'
+    };
+}
+
+function getRandomUsername(fullName) {
+    const [firstName, lastName] = fullName.toLowerCase().split(' ');
+    const suffixes = ["123", "456", "789", "007", "thegreat", "cool", "pro"];
+    const suffix = suffixes[utilService.getRandomInt(0, suffixes.length - 1)];
+    return `${firstName}_${lastName}_${suffix}`;
+}
+
+function getRandomText() {
+    const texts = [
+        "Best trip ever",
+        "Had a great time!",
+        "Loving the weather",
+        "Amazing experience",
+        "Fun day out",
+        "Beautiful scenery",
+        "Wonderful time with friends",
+        "Enjoying the vacation",
+        "Relaxing weekend",
+        "Great food and company"
+    ];
+    return texts[utilService.getRandomInt(0, texts.length - 1)];
+}
+
+function getRandomProfileImg(gender) {
+    const genderPath = gender === 'male' ? 'men' : 'women';
+    const id = utilService.getRandomInt(1, 99);
+    return `https://randomuser.me/api/portraits/${genderPath}/${id}.jpg`;
 }
 
