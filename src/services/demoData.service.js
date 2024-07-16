@@ -71,7 +71,7 @@ function createPost(users) {
         const commentUser = users[utilService.getRandomInt(0, users.length - 1)];
         comments.push({
             id: utilService.makeId(),
-            by: { id: commentUser._id, fullname: commentUser.fullname, username: commentUser.username },
+            by: { id: commentUser._id, fullname: commentUser.fullname, username: commentUser.username, imgUrl: commentUser.profileImg},
             txt: utilService.getRandomText(),
             likedBy: []
         });
@@ -88,6 +88,7 @@ function createPost(users) {
 
     return {
         _id: utilService.makeId(),
+        postImg: `https://picsum.photos/id/${utilService.getRandomInt(1,120)}/1500/1500`,
         txt: utilService.getRandomText(),
         imgUrl: utilService.getRandomProfileImg(),
         by: {id : user._id, username: user.username, fullname : user.fullname, profileImg : user.profileImg},

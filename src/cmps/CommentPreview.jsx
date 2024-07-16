@@ -1,9 +1,14 @@
-export function CommentPreview({ comment }) {
+import { ProfileImg } from "./ProfileImg";
 
-    console.log('hi');
+export function CommentPreview({ selectedPost, comment }) {
+
+
 
     return <section className="comment-preview">
-        <div className="profile-picture"></div>
+
+    
+        <ProfileImg imgUrl={comment.by.imgUrl} diameter={'35px'}/>
+        
 
         <h2 className="username">{comment.by.fullname}</h2>
         <span >{comment.txt}</span>

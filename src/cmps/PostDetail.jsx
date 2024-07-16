@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { CommentPreview } from './CommentPreview';
+import { ProfileImg } from './ProfileImg';
 
 export function PostDetail({ selectedPost, setSelectedPost }) {
 
@@ -33,6 +34,7 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
         }
     }
 
+
     function handleCommentBtnClick() {
         inputRef.current.focus()
     }
@@ -51,17 +53,15 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
             </section>
 
-            <section className="img-container">
-                <img src={`https://picsum.photos/id/1/1500/1500`}></img>
+            <section className="post-img-container">
+                <img src={selectedPost.postImg}></img>
             </section>
 
             <section className="media">
 
                 <section className="header">
 
-                    <div className="profile-picture">
-
-                    </div>
+                    <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
 
                     <section className="profile-details">
 
@@ -76,20 +76,22 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                 </section>
 
-                <div className="post-title">
 
-                    <div className="profile-picture"></div>
-
-                    <h2 className="username">{selectedPost.by.fullname}</h2>
-                    <span >{selectedPost.txt}</span>
-
-                </div>
 
                 <section className="comment-list">
 
+                    <div className="post-title">
+
+                    <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
+
+                        <h2 className="username">{selectedPost.by.fullname}</h2>
+                        <span >{selectedPost.txt}</span>
+
+                    </div>
+
                     {selectedPost.comments.map(comment => {
 
-                        return <CommentPreview comment={comment} />
+                        return <CommentPreview selectedPost={selectedPost} comment={comment} />
 
                     })}
 
@@ -102,7 +104,7 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
 
                         <img className='comment' src="src\assets\svgs\Heart.svg" alt="" />
-                        <img onClick={handleCommentBtnClick}  className='like' src="src\assets\svgs\Comment.svg" alt="" />
+                        <img onClick={handleCommentBtnClick} className='like' src="src\assets\svgs\Comment.svg" alt="" />
 
                     </section>
 

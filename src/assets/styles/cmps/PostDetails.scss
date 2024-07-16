@@ -40,15 +40,16 @@
         display: none;
     }
 
-    & .img-container {
-        background-color:black;
+    & .post-img-container {
+        background-color: black;
 
 
 
         & img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Maintain aspect ratio and fit within container */
+            object-fit: contain;
+            /* Maintain aspect ratio and fit within container */
         }
 
     }
@@ -67,6 +68,8 @@
 
         & .header {
             display: flex;
+            align-items: center;
+            padding-left: 16px;
             width: 100%;
             height: 56px;
             border-bottom: 0.5px solid $gray3;
@@ -92,9 +95,9 @@
 
         & .post-title {
 
-            & .profile-picture {
-                @include profile-picture
-            }
+           & img{
+            margin: 12px 0 0 12px;
+           }
 
             & span {
                 max-width: 80%;

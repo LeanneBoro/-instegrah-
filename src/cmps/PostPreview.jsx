@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { PostDetail } from './PostDetail';
 import { userService } from '../services/user.service';
+import { ProfileImg } from './ProfileImg';
 
 export function PostPreview({ post, idx }) {
 
@@ -11,13 +12,13 @@ export function PostPreview({ post, idx }) {
     return (
         <section className="post-preview">
             <div className="flex post-title">
-                <div className="flex">
-                    <div className="img-container">
-                        <img src={post.by.profileImg}></img>
-                    </div>
+                <div className="flex align-center">
+
+                    <ProfileImg imgUrl={post.by.profileImg} diameter={"32px"} />
+
                     <div>
                         <div className="flex post-by">
-                      <h2>{post.by.fullname}</h2>
+                            <h2>{post.by.fullname}</h2>
                             <div>
                                 <span className="time">19 h</span>
                             </div>
@@ -31,7 +32,7 @@ export function PostPreview({ post, idx }) {
                 </span>
 
             </div>
-            <img src={`https://picsum.photos/id/${idx}/1500/1500`}></img>
+            <img className='post-img' src={post.postImg}></img>
             <nav className="flex icon-container">
                 <div className="flex main-container">
                     <span className="flex justify-center svg-container">

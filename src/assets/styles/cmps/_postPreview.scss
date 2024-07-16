@@ -1,13 +1,18 @@
 .post-preview {
     font-size: 0.875em;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $gray3;
 
     margin: 0 0 20px;
     padding: 0 0 16px;
 
 
+    & .post-img {
+        border-radius: 5px;
+    }
 
-    & > .post-title {
+
+
+    &>.post-title {
         padding: 0 0 12px 4px;
         justify-content: space-between;
 
@@ -15,13 +20,16 @@
             cursor: pointer;
         }
 
-        & .img-container {
-            width: 42px;
-            height: 42px;
-            border-radius: 50px;
-            background-color: red;
-            margin-right: 12px;
-        }
+        // & .profile-img-container {
+
+
+            & img {
+                border-radius: 50px;
+                width: 35px;
+                height: 35px;
+                border-radius: 50px;
+            }
+        // }
 
         & h3 {
             margin: 0;
@@ -42,6 +50,14 @@
 
         & .svg-container {
             padding: 8px;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
 
             & svg {
                 cursor: pointer;
