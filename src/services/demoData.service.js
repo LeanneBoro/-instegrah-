@@ -5,8 +5,9 @@ const USER_DB = "user_db"
 const POST_DB = 'post_db'
 
 export const demoDataService = {
-    query,
-    createUser
+    createUser,
+    createPostsDemoData,
+    createUsersDemoData
 };
 
 function _saveUsers(users) {
@@ -28,26 +29,8 @@ function createUser() {
     };
 }
 
-async function query(filterBy = {}) {
-    try {
-        // Query users
-        let users = await storageService.query(USER_DB);
 
-        // If no users found, create demo users
-        if (!users || !users.length) {
-            users = _createUsersDemoData();
-        }
-
-        // Create posts if not already created
-        let posts = await _createPostsDemoData(users);
-
-        return posts;
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-async function _createPostsDemoData(users, numPosts = 100) {
+async function createPostsDemoData(users, numPosts = 100) {
     try {
         let posts = await storageService.query(POST_DB);
         if (!posts || !posts.length) {
@@ -55,6 +38,7 @@ async function _createPostsDemoData(users, numPosts = 100) {
             for (let i = 0; i < numPosts; i++) {
                 posts.push(createPost(users));
             }
+            posts.sort((b,a) => new Date(a.timeStamp) - new Date(b.timeStamp))
             _savePosts(posts);
         }
         return posts;
@@ -66,32 +50,68 @@ async function _createPostsDemoData(users, numPosts = 100) {
 function createPost(users) {
     const user = users[utilService.getRandomInt(0, users.length - 1)];
     const numComments = utilService.getRandomInt(0, 10);
+    const postTimestamp = utilService.getRandomDate();
     const comments = [];
+
+    // Generate comments
     for (let i = 0; i < numComments; i++) {
         const commentUser = users[utilService.getRandomInt(0, users.length - 1)];
+        
+        // Generate random timestamp for each comment
+        const commentTimestamp = utilService.getRandomDate(postTimestamp);
+
+        // Generate a random number of likes for each comment
+        const numLikes = utilService.getRandomInt(0, 10);
+        const likedBy = [];
+        const usedIndexes = new Set();
+        
+        while (likedBy.length < numLikes) {
+            const randomIndex = utilService.getRandomInt(0, users.length - 1);
+            if (!usedIndexes.has(randomIndex)) {
+                likedBy.push(users[randomIndex]._id);
+                usedIndexes.add(randomIndex);
+            }
+        }
+
         comments.push({
             id: utilService.makeId(),
-            by: { id: commentUser._id, fullname: commentUser.fullname, username: commentUser.username, imgUrl: commentUser.profileImg},
+            by: {
+                id: commentUser._id,
+                fullname: commentUser.fullname,
+                username: commentUser.username,
+                imgUrl: commentUser.profileImg
+            },
             txt: utilService.getRandomText(),
-            likedBy: []
+            timeStamp: commentTimestamp,
+            likedBy: likedBy
         });
     }
 
+    // Generate a random number of likes for the post
     const numLikes = utilService.getRandomInt(0, users.length);
     const likedBy = [];
-    for (let i = 0; i < numLikes; i++) {
-        const likedUser = users[utilService.getRandomInt(0, users.length - 1)];
-        if (!likedBy.includes(likedUser._id)) {
-            likedBy.push(likedUser._id);
+    const usedIndexes = new Set();
+    
+    while (likedBy.length < numLikes) {
+        const randomIndex = utilService.getRandomInt(0, users.length - 1);
+        if (!usedIndexes.has(randomIndex)) {
+            likedBy.push(users[randomIndex]._id);
+            usedIndexes.add(randomIndex);
         }
     }
 
     return {
         _id: utilService.makeId(),
-        postImg: `https://picsum.photos/id/${utilService.getRandomInt(1,120)}/1500/1500`,
+        postImg: `https://picsum.photos/id/${utilService.getRandomInt(1, 120)}/1500/1500`,
         txt: utilService.getRandomText(),
         imgUrl: utilService.getRandomProfileImg(),
-        by: {id : user._id, username: user.username, fullname : user.fullname, profileImg : user.profileImg},
+        timeStamp: postTimestamp,
+        by: {
+            id: user._id,
+            username: user.username,
+            fullname: user.fullname,
+            profileImg: user.profileImg
+        },
         // loc: utilService.getRandomLocation(), // Optional, you can remove this line if you don't want locations
         comments: comments,
         likedBy: likedBy,
@@ -99,7 +119,8 @@ function createPost(users) {
     };
 }
 
-async function _createUsersDemoData(numUsers = 30) {
+
+async function createUsersDemoData(numUsers = 30) {
     try {
         let users = await storageService.query(USER_DB);
         if (!users || !users.length) {

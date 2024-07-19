@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { CommentPreview } from './CommentPreview';
 import { ProfileImg } from './ProfileImg';
+import { utilService } from '../services/util.service';
 
 export function PostDetail({ selectedPost, setSelectedPost }) {
 
@@ -80,14 +81,29 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                 <section className="comment-list">
 
-                    <div className="post-title">
+                    <section className="post-title">
 
-                    <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
+                        <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
 
-                        <h2 className="username">{selectedPost.by.fullname}</h2>
-                        <span >{selectedPost.txt}</span>
+                        <div>
+                            <section className="content">
 
-                    </div>
+                                <h2 className="username">{selectedPost.by.fullname}</h2>
+                                <span >{selectedPost.txt}</span>
+
+                            </section>
+
+                            <section className="details">
+                                <div>{utilService.timeDifferenceUpToWeeks(selectedPost.timeStamp)}</div>
+                                <div>reply</div>
+                            </section>
+                        </div>
+
+
+
+
+
+                    </section>
 
                     {selectedPost.comments.map(comment => {
 
@@ -112,7 +128,7 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                         <section className="likes">
 
-                            <div className="liked-by-profile">
+                            <div className="n d">
                                 {selectedPost.likedBy.slice(0, 3).map((like, index) => (
                                     <div key={index} className='profile'></div>
                                 ))}

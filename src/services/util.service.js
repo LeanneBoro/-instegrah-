@@ -8,6 +8,8 @@ export const utilService = {
     getRandomUsername,
     getRandomProfileImg,
     getRandomText,
+    getRandomDate,
+    timeDifferenceUpToWeeks,
 }
 
 function makeId(length = 6) {
@@ -105,3 +107,48 @@ function getRandomProfileImg(gender) {
     return `https://randomuser.me/api/portraits/${genderPath}/${id}.jpg`;
 }
 
+function getRandomDate(minTimestamp = 0) {
+    const now = Date.now()
+    const threeMonthsAgo = now - (1000 * 60 * 60 * 24 * 30 * 3)
+    const minDate = minTimestamp || threeMonthsAgo
+    const randomTimestamp = Math.floor(Math.random() * (now - minDate + 1) + minDate)
+    return randomTimestamp
+}
+
+//functions to calculate dates:
+
+function timeDifferenceUpToWeeks(timestamp, length = "short") {
+    const now = Date.now();
+    const timeDiff = now - timestamp;
+  
+    const minutes = Math.floor(timeDiff / (1000 * 60));
+    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const weeks = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 7));
+  
+    if (length === 'short') {
+      if (minutes < 60) {
+        return `${minutes}m`;
+      } else if (hours < 24) {
+        return `${hours}h`;
+      } else if (days < 7) {
+        return `${days}d`;
+      } else {
+        return `${weeks}w`;
+      }
+    } else {
+      if (minutes < 60) {
+        return `${minutes} minutes`;
+      } else if (hours < 24) {
+        return `${hours} hours`;
+      } else if (days < 7) {
+        return `${days} days`;
+      } else {
+        return `${weeks} weeks`;
+      }
+    }
+  }
+
+
+
+console.log(timeDifferenceUpToWeeks(getRandomDate(),"short"));

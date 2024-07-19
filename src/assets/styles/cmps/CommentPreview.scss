@@ -1,12 +1,30 @@
-.comment-preview {
+.comment-preview{
+
     display: flex;
-    gap: 0.5em;
     padding: 0.5em 0;
-    align-items: center;
     margin: 12px;
 
+    & .comment {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4em;
 
-    & .profile-picture {
-        @include profile-picture
+        & .content {
+            display: flex;
+            gap: 0.5em;
+        }
+
+        & .details {
+            display: flex;
+
+            & div {
+                color: $gray1;
+                cursor: pointer;
+                font-size: 13px;
+                margin-right: 12px;
+            }
+        }
     }
+
+
 }

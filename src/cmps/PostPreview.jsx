@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { PostDetail } from './PostDetail';
 import { userService } from '../services/user.service';
 import { ProfileImg } from './ProfileImg';
+import { utilService } from '../services/util.service';
 
 export function PostPreview({ post, idx }) {
 
@@ -20,7 +21,7 @@ export function PostPreview({ post, idx }) {
                         <div className="flex post-by">
                             <h2>{post.by.fullname}</h2>
                             <div>
-                                <span className="time">19 h</span>
+                                <span className="time">&nbsp;• {utilService.timeDifferenceUpToWeeks(post.timeStamp,"short")}</span>
                             </div>
                         </div>
                         {/* <h3>{post.loc.name}</h3> */}

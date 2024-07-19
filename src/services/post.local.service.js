@@ -1,8 +1,10 @@
 
 import { storageService } from './async-storage.service.js'
+import { demoDataService } from './demoData.service.js'
 import { utilService } from './util.service.js'
 // import { httpService } from './http.service.js'
 const POST_DB = 'post_db'
+const USER_DB = "user_db"
 
 const zBASE_URL = 'post/'
 
@@ -16,18 +18,24 @@ export const postService = {
 }
 
 async function query(filterBy = {}) {
-
     try {
-        let posts = await storageService.query(POST_DB)
-        if (!posts || !posts.length) {
-            posts = _createPosts()
-            _savePosts(posts)
+        // Query users
+        let users = await storageService.query(USER_DB);
+
+        // If no users found, create demo users
+        if (!users || !users.length) {
+            users = demoDataService.createUsersDemoData();
         }
-        return posts
+
+        // Create posts if not already created
+        let posts = await demoDataService.createPostsDemoData(users);
+
+        return posts;
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
+
 
 async function getById(postId) {
     try {
