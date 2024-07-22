@@ -70,7 +70,7 @@
 .compact-metrics {
     display: var(--profile-compact-metrics-display);
     justify-content: space-around;
-    border-bottom: 1px solid $gray3;
+    // border-bottom: 1px solid $gray3;
 
 
     >section {
@@ -93,4 +93,10 @@
       height: 100%;
       object-fit: cover; // This makes the image cover the entire container
     }
+}
+
+
+.profile-post-layout{
+    gap: 3px; 
+    margin-block: 10px;
 }

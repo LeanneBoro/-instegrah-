@@ -3,23 +3,27 @@ import { PostDetail } from './PostDetail';
 import { userService } from '../services/user.service';
 import { ProfileImg } from './ProfileImg';
 import { utilService } from '../services/util.service';
+import { useNavigate} from 'react-router-dom';
 
 export function PostPreview({ post, idx }) {
 
-
     const [selectedPost, setSelectedPost] = useState(null)
+    const navigate = useNavigate();
 
-
+    function navigateToProfile(){
+        navigate(`/profile/${post.by.id}`)
+    }
+    
     return (
         <section className="post-preview">
             <div className="flex post-title">
                 <div className="flex align-center">
 
-                    <ProfileImg imgUrl={post.by.profileImg} diameter={"32px"} />
+                    <ProfileImg imgUrl={post.by.profileImg} diameter={"32px"}/>
 
                     <div>
                         <div className="flex post-by">
-                            <h2>{post.by.fullname}</h2>
+                            <h2 onClick={navigateToProfile}>{post.by.fullname}</h2>
                             <div>
                                 <span className="time">&nbsp;• {utilService.timeDifferenceUpToWeeks(post.timeStamp,"short")}</span>
                             </div>

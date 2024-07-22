@@ -128,9 +128,12 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                         <section className="likes">
 
-                            <div className="n d">
+                            <div className="liked-by-profile">
                                 {selectedPost.likedBy.slice(0, 3).map((like, index) => (
-                                    <div key={index} className='profile'></div>
+                                   
+                                        <profileImg  key={index}  />
+                                        //aggregation in the future
+                                
                                 ))}
                             </div>
 

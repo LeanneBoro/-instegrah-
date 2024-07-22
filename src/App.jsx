@@ -15,7 +15,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<PostIndex />} />
-        <Route path="/profile" element={<Profile/>} />
+        <Route path="/profile/:userId" element={<Profile/>} />
       </Routes>
     </Router>
   </section>

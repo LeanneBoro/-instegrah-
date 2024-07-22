@@ -1,4 +1,49 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { userService } from '../services/user.service';
+import { ProfileImg } from '../cmps/ProfileImg';
+
+
+
+
+
 export function Profile() {
+    const { userId } = useParams()
+
+    const [user, setUser] = useState(null)
+    const [posts, setPosts] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+
+
+    useEffect(() => {
+        loadUser()
+
+        async function loadUser() {
+            try {
+                const user = await userService.getUserById(userId)
+                const userPosts = await userService.getUserPosts(userId)
+
+                setUser(user)
+                setPosts(userPosts)
+
+            } catch (error) {
+                console.error('Failed to fetch posts:', error)
+            }
+            
+            finally {
+                setIsLoading(false);
+            }
+
+            
+        }
+
+
+    }, [])
+
+    if (isLoading) {
+        return <div>Loading...</div>; // Replace this with your loading indicator if needed
+    }
+
 
     return <section className="profile-page-layout profile">
 
@@ -6,11 +51,8 @@ export function Profile() {
 
             <div className="profile-container">
 
-                <div className="placeholder"></div>
+            <ProfileImg imgUrl={user.profileImg} diameter={"160px"}/>
 
-                {/* <div className="profile">
-                    <img src="" alt="" />
-                </div> */}
 
 
 
@@ -63,61 +105,17 @@ export function Profile() {
         </section>
 
         <section className="profile-post-layout posts">
-
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1800" alt="" />
-            </div>
-
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1800" alt="" />
-            </div>
-
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-            <div className="post-img-container">
-                <img src="https://picsum.photos/id/0/1900/1000" alt="" />
-            </div>
-
-
+            {
+                posts.map((post, idx) => {
+                    return (
+                        <div key={idx} className="post-img-container">
+                            <img src={post.postImg} alt="" />
+                        </div>
+                    )
+                })
+            }
         </section>
+
 
     </section>
 
