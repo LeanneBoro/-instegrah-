@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { userService } from '../services/user.service';
 import { ProfileImg } from '../cmps/ProfileImg';
+import { PostDetail } from '../cmps/PostDetail';
+import { useNavigate } from 'react-router-dom';
+
+// import { PostDetail } from '../PostDetail';
 
 
 
@@ -12,8 +16,17 @@ export function Profile() {
 
     const [user, setUser] = useState(null)
     const [posts, setPosts] = useState([])
+    const [selectedPost, setSelectedPost] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
+    const navigate = useNavigate();
+
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+
+    function navigateToProfile(id) {
+        setSelectedPost(null)
+        navigate(`/profile/${id}`)
+    }
 
     useEffect(() => {
         loadUser()
@@ -29,16 +42,26 @@ export function Profile() {
             } catch (error) {
                 console.error('Failed to fetch posts:', error)
             }
-            
+
             finally {
                 setIsLoading(false);
             }
 
-            
+
+        }
+
+        const handleResize = () => {
+            setScreenWidth(window.innerWidth);
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
         }
 
 
-    }, [])
+    }, [user])
 
     if (isLoading) {
         return <div>Loading...</div>; // Replace this with your loading indicator if needed
@@ -51,7 +74,7 @@ export function Profile() {
 
             <div className="profile-container">
 
-            <ProfileImg imgUrl={user.profileImg} diameter={"160px"}/>
+                <ProfileImg imgUrl={user.profileImg} diameter={screenWidth > 780 ? "160px" : "90px"} />
 
 
 
@@ -62,7 +85,7 @@ export function Profile() {
 
                 <section className="actions">
 
-                    <div className="username">here be username</div>
+                    <div className="username">{user.username}</div>
 
                     <button> Edit Profile</button>
 
@@ -77,7 +100,7 @@ export function Profile() {
                     <h2> X following</h2>
                 </section>
 
-                <h2 className="owner-name"> here be owner name</h2>
+                <h2 className="owner-name"> {user.fullname}</h2>
 
             </section>
 
@@ -104,17 +127,29 @@ export function Profile() {
 
         </section>
 
+
+
         <section className="profile-post-layout posts">
             {
                 posts.map((post, idx) => {
                     return (
-                        <div key={idx} className="post-img-container">
-                            <img src={post.postImg} alt="" />
+                        <div onClick={() => setSelectedPost(post)} key={idx} className="post-img-container">
+                            <img className='post-img' src={post.postImg} alt="" />
+                            <div className='back-drop'></div>
+                            <div className='details'>
+                                <img src="src\assets\svgs\HeartBold.svg" alt="Heart Icon" />
+                                <h1>{post.likedBy.length}</h1>
+                                <img src="src\imgs\Comment-Bold.png" alt="" />
+                                <h1>{post.comments.length}</h1>
+                                
+                            </div>
                         </div>
                     )
                 })
             }
         </section>
+
+        {selectedPost && <PostDetail selectedPost={selectedPost} setSelectedPost={setSelectedPost} navigateToProfile={navigateToProfile} />}
 
 
     </section>

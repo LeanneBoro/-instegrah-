@@ -3,12 +3,11 @@ import { CommentPreview } from './CommentPreview';
 import { ProfileImg } from './ProfileImg';
 import { utilService } from '../services/util.service';
 
-export function PostDetail({ selectedPost, setSelectedPost }) {
+export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile }) {
 
     const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
     const inputRef = useRef(null)
 
-    console.log(selectedPost.likedBy.fullname);
 
     useEffect(() => {
         const handleResize = () => {
@@ -62,11 +61,13 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                 <section className="header">
 
-                    <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
+                    <div onClick={() => navigateToProfile(selectedPost.by.id)} className='cursor-pointer'>
+                        <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
+                    </div>
 
                     <section className="profile-details">
 
-                        <h2 className="username">{selectedPost.by.fullname}</h2>
+                        <h2 className="username cursor-pointer" onClick={() => navigateToProfile(selectedPost.by.id)} >{selectedPost.by.fullname}</h2>
 
 
                     </section>
@@ -83,12 +84,15 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                     <section className="post-title">
 
-                        <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
+
+                        <div onClick={() => navigateToProfile(selectedPost.by.id)} className='cursor-pointer'>
+                            <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
+                        </div>
 
                         <div>
                             <section className="content">
 
-                                <h2 className="username">{selectedPost.by.fullname}</h2>
+                                <h2 onClick={() => navigateToProfile(selectedPost.by.id)} className="username cursor-pointer">{selectedPost.by.fullname}</h2>
                                 <span >{selectedPost.txt}</span>
 
                             </section>
@@ -107,7 +111,7 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                     {selectedPost.comments.map(comment => {
 
-                        return <CommentPreview selectedPost={selectedPost} comment={comment} />
+                        return <CommentPreview selectedPost={selectedPost} comment={comment} navigateToProfile={navigateToProfile} />
 
                     })}
 
@@ -130,10 +134,10 @@ export function PostDetail({ selectedPost, setSelectedPost }) {
 
                             <div className="liked-by-profile">
                                 {selectedPost.likedBy.slice(0, 3).map((like, index) => (
-                                   
-                                        <profileImg  key={index}  />
-                                        //aggregation in the future
-                                
+
+                                    <profileImg key={index} />
+                                    //aggregation in the future
+
                                 ))}
                             </div>
 

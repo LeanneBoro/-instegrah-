@@ -3,29 +3,32 @@ import { PostDetail } from './PostDetail';
 import { userService } from '../services/user.service';
 import { ProfileImg } from './ProfileImg';
 import { utilService } from '../services/util.service';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function PostPreview({ post, idx }) {
 
     const [selectedPost, setSelectedPost] = useState(null)
     const navigate = useNavigate();
 
-    function navigateToProfile(){
-        navigate(`/profile/${post.by.id}`)
+    function navigateToProfile(id) {
+        navigate(`/profile/${id}`)
+        setSelectedPost(null)
     }
-    
+
     return (
         <section className="post-preview">
             <div className="flex post-title">
                 <div className="flex align-center">
 
-                    <ProfileImg imgUrl={post.by.profileImg} diameter={"32px"}/>
+                    <div onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>
+                        <ProfileImg imgUrl={post.by.profileImg} diameter={"32px"} />
+                    </div>
 
                     <div>
                         <div className="flex post-by">
-                            <h2 onClick={navigateToProfile}>{post.by.fullname}</h2>
+                            <h2 onClick={() => navigateToProfile(post.by.id)}>{post.by.fullname}</h2>
                             <div>
-                                <span className="time">&nbsp;• {utilService.timeDifferenceUpToWeeks(post.timeStamp,"short")}</span>
+                                <span className="time">&nbsp;• {utilService.timeDifferenceUpToWeeks(post.timeStamp, "short")}</span>
                             </div>
                         </div>
                         {/* <h3>{post.loc.name}</h3> */}
@@ -57,7 +60,7 @@ export function PostPreview({ post, idx }) {
             </h2>
 
             <div className="title">
-                <h2>{post.by.fullname}</h2>
+                <h2 onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>{post.by.fullname}</h2>
                 <div>{post.txt}</div>
             </div>
 
@@ -73,7 +76,7 @@ export function PostPreview({ post, idx }) {
 
 
 
-            {selectedPost && <PostDetail selectedPost={selectedPost} setSelectedPost={setSelectedPost} />}
+            {selectedPost && <PostDetail selectedPost={selectedPost} setSelectedPost={setSelectedPost} navigateToProfile={navigateToProfile} />}
 
         </section>
 

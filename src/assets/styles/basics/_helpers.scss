@@ -40,6 +40,10 @@
     display: grid;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .compact-side-bar {
     @include compact-side-bar
 }
