@@ -1,0 +1,48 @@
+.list-modal {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 400px;
+    height: 90%;
+    max-height: 400px;
+    display: flex;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 20px;
+    border: 1px solid $gray2;
+    z-index: 1000;
+
+    & h2.data-type{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 40px;
+        width: 100%;
+        border-bottom: 1px solid $gray3;
+
+    }
+
+    & .data-list {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin-block: 10px;
+        margin-right: 5px;
+        overflow-y: scroll;
+
+        & .profile {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+         
+
+            & .names {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}

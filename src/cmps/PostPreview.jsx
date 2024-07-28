@@ -4,10 +4,12 @@ import { userService } from '../services/user.service';
 import { ProfileImg } from './ProfileImg';
 import { utilService } from '../services/util.service';
 import { useNavigate } from 'react-router-dom';
+import { ListModal } from './ListModal';
 
 export function PostPreview({ post, idx }) {
 
     const [selectedPost, setSelectedPost] = useState(null)
+    const [modalData,setModalData] = useState(null)
     const navigate = useNavigate();
 
     function navigateToProfile(id) {
@@ -55,8 +57,8 @@ export function PostPreview({ post, idx }) {
                 </div>
                 <span className="flex justify-center svg-container save-container"><svg aria-label="Save" className="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Save</title><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon></svg></span>
             </nav>
-            <h2 className="likes">
-                <span>{post.likedBy.length}</span> likes
+            <h2 className="likes cursor-pointer" onClick={() => setModalData({data: post.likedBy, dataType: 'likes' })}>
+                <span >{post.likedBy.length}</span> likes
             </h2>
 
             <div className="title">
@@ -77,7 +79,7 @@ export function PostPreview({ post, idx }) {
 
 
             {selectedPost && <PostDetail selectedPost={selectedPost} setSelectedPost={setSelectedPost} navigateToProfile={navigateToProfile} />}
-
+            {modalData && <ListModal content={modalData} setModalData={setModalData}/>}
         </section>
 
 

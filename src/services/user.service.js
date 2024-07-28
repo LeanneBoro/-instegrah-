@@ -2,7 +2,8 @@ import { storageService } from './async-storage.service.js'
 
 export const userService = {
     getUserById,
-    getUserPosts
+    getUserPosts,
+    getUsersById
 };
 
 const USER_DB= "user_db"
@@ -29,4 +30,13 @@ async function getUserPosts(userId) {
     }
 }
 
+async function getUsersById(userIds) {
+    try {
+        const users = await storageService.query(USER_DB);
+        return users.filter(user => userIds.includes(user._id));
+    } catch (err) {
+        console.error('Error fetching users:', err);
+        throw err;
+    }
+}
 
