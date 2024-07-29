@@ -1,0 +1,11 @@
+.profile-preview {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+
+
+    & .names {
+        display: flex;
+        flex-direction: column;
+    }
+}

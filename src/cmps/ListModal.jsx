@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { userService } from "../services/user.service"
-import { ProfileImg } from './ProfileImg';
+import { ProfilePreview } from './ProfilePreview';
 import { BackDrop } from './BackDrop';
 
 export function ListModal({ content, setModalData}) {
@@ -30,19 +30,10 @@ export function ListModal({ content, setModalData}) {
 
                 <section className="data-list">
                     {profiles && profiles.map(profile => {
-                        return (
-                            <div className='profile' key={profile._id}>
 
-                                <ProfileImg imgUrl={profile.profileImg} diameter={"45px"} />
-
-
-                                <div className='names'>
-                                    <h2>{profile.username}</h2>
-                                    {profile.fullname}
-                                </div>
-
-                            </div>
-                        );
+                        return <ProfilePreview profile={profile}/>
+                       
+                
                     })}
 
                 </section>

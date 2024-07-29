@@ -1,19 +1,53 @@
-import { SearchInput } from "./SearchInput";
+import { useState, useEffect } from 'react'
 
-export function SearchModal({expandedSection}){
+import Fuse from 'fuse.js'
 
-    return <section className={expandedSection === 'search' ? 'search-modal active' : 'search-modal'} >
+import { SearchInput } from './SearchInput'
+import { ProfilePreview } from './ProfilePreview'
+import { utilService } from '../services/util.service'
+import { userService } from '../services/user.service'
 
-    <section className='input-field'>
+export function SearchModal({ expandedSection }) {
+    const [searchResults, setSearchResults] = useState([])
+    const [searchQuery, setSearchQuery] = useState('')
 
-        <div>Search</div>
+    useEffect(() => {
+        const debouncedSearch = utilService.debounce(performSearch, 1000)
+        debouncedSearch(searchQuery)
+    }, [searchQuery])
 
-        <SearchInput />
+    async function performSearch(query) {
+        try {
+            const users = await userService.getUsersByUsername(query)
 
-    </section>
+            const fuse = new Fuse(users, {
+                keys: ['username'],
+                includeScore: true,
+                threshold: 0.3
+            })
 
-    <section className='recent'></section>
+            const results = fuse.search(query).map(result => result.item)
 
+            setSearchResults(results)
+        } catch (err) {
+            console.error('Error fetching users:', err)
+            setSearchResults([])
+        }
+    }
 
-</section>
+    return (
+        <section className={expandedSection === 'search' ? 'search-modal active' : 'search-modal'}>
+            <section className='input-field'>
+                <div>Search</div>
+                <SearchInput onSearch={setSearchQuery} />
+            </section>
+            <section className='recent'>
+                {searchResults.map(result => (
+                    <div className="cursor-pointer highlight" key={result._id}>
+                        <ProfilePreview profile={result} />
+                    </div>
+                ))}
+            </section>
+        </section>
+    )
 }

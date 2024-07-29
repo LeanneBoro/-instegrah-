@@ -10,6 +10,7 @@ export const utilService = {
     getRandomText,
     getRandomDate,
     timeDifferenceUpToWeeks,
+    debounce
 }
 
 function makeId(length = 6) {
@@ -151,4 +152,14 @@ function timeDifferenceUpToWeeks(timestamp, length = "short") {
 
 
 
-console.log(timeDifferenceUpToWeeks(getRandomDate(),"short"));
+  function debounce(func, delay = 1000) {
+    let timeoutId
+  
+    return function(...args) {
+      clearTimeout(timeoutId)
+  
+      timeoutId = setTimeout(() => {
+        func.apply(this, args)
+      }, delay)
+    }
+  }

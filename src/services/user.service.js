@@ -1,13 +1,15 @@
+import Fuse from 'fuse.js'
 import { storageService } from './async-storage.service.js'
 
 export const userService = {
     getUserById,
     getUserPosts,
-    getUsersById
+    getUsersById,
+    getUsersByUsername
 };
 
-const USER_DB= "user_db"
-const POST_DB= "post_db"
+const USER_DB = "user_db"
+const POST_DB = "post_db"
 
 async function getUserById(userId) {
     try {
@@ -37,6 +39,16 @@ async function getUsersById(userIds) {
     } catch (err) {
         console.error('Error fetching users:', err);
         throw err;
+    }
+}
+
+
+async function getUsersByUsername() {
+    try {
+        return await storageService.query(USER_DB)
+    } catch (err) {
+        console.error('Error fetching users:', err)
+        throw err
     }
 }
 
