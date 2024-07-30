@@ -5,6 +5,10 @@ import { ProfileImg } from '../cmps/ProfileImg';
 import { PostDetail } from '../cmps/PostDetail';
 import { useNavigate } from 'react-router-dom';
 
+import { loadUser, } from '../store/actions/user.actions';
+import { loadPostsByUser } from '../store/actions/post.actions';
+import { useSelector } from 'react-redux';
+
 // import { PostDetail } from '../PostDetail';
 
 
@@ -14,41 +18,24 @@ import { useNavigate } from 'react-router-dom';
 export function Profile() {
     const { userId } = useParams()
 
-    const [user, setUser] = useState(null)
-    const [posts, setPosts] = useState([])
-    const [selectedPost, setSelectedPost] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
+    const user = useSelector(storeState => storeState.userModule.user)
+    const posts = useSelector(storeState => storeState.postModule.posts)
+    const [selectedPostId, setSelectedPostId] = useState(null)
+
 
     const navigate = useNavigate();
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
     function navigateToProfile(id) {
-        setSelectedPost(null)
+        setSelectedPostId(null)
         navigate(`/profile/${id}`)
     }
 
     useEffect(() => {
-        loadUser()
+        loadUser(userId)
+        loadPostsByUser(userId)
 
-        async function loadUser() {
-            try {
-                const user = await userService.getUserById(userId)
-                const userPosts = await userService.getUserPosts(userId)
-
-                setUser(user)
-                setPosts(userPosts)
-
-            } catch (error) {
-                console.error('Failed to fetch posts:', error)
-            }
-
-            finally {
-                setIsLoading(false);
-            }
-
-
-        }
 
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
@@ -61,18 +48,18 @@ export function Profile() {
         }
 
 
-    }, [user])
-
-    if (isLoading) {
-        return <div>Loading...</div>; // Replace this with your loading indicator if needed
-    }
+    }, [userId])
 
 
-    return <section className="profile-page-layout profile">
+
+
+
+    return user && <section className="profile-page-layout profile">
 
         <section className="information profile-info-layout ">
 
             <div className="profile-container">
+                
 
                 <ProfileImg imgUrl={user.profileImg} diameter={screenWidth > 780 ? "160px" : "90px"} />
 
@@ -133,7 +120,7 @@ export function Profile() {
             {
                 posts.map((post, idx) => {
                     return (
-                        <div onClick={() => setSelectedPost(post)} key={idx} className="post-img-container">
+                        <div onClick={() => setSelectedPostId(post._id)} key={idx} className="post-img-container">
                             <img className='post-img' src={post.postImg} alt="" />
                             <div className='back-drop'></div>
                             <div className='details'>
@@ -149,7 +136,7 @@ export function Profile() {
             }
         </section>
 
-        {selectedPost && <PostDetail selectedPost={selectedPost} setSelectedPost={setSelectedPost} navigateToProfile={navigateToProfile} />}
+        {selectedPostId && <PostDetail selectedPostId={selectedPostId} setSelectedPostId={setSelectedPostId} navigateToProfile={navigateToProfile} />}
 
 
     </section>

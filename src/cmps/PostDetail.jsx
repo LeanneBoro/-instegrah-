@@ -10,13 +10,15 @@ import { addComment, removeComment } from '../store/actions/post.actions'
 
 export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfile }) {
 
+    
     const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
     const [commentText, setCommentText] = useState('')
     const inputRef = useRef(null)
     const posts = useSelector(storeState => storeState.postModule.posts);
     const selectedPost = posts.find(post => post._id === selectedPostId);
+    
 
-
+    
 
     function handleCommentBtnClick() {
         inputRef.current.focus()

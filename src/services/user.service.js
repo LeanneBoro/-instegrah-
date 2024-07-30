@@ -3,7 +3,6 @@ import { storageService } from './async-storage.service.js'
 
 export const userService = {
     getUserById,
-    getUserPosts,
     getUsersById,
     getUsersByUsername
 };
@@ -22,15 +21,6 @@ async function getUserById(userId) {
     }
 }
 
-async function getUserPosts(userId) {
-    try {
-        const posts = await storageService.query(POST_DB)
-        return posts.filter(post => post.by.id === userId)
-    } catch (err) {
-        console.error('Error fetching user posts:', err)
-        throw err
-    }
-}
 
 async function getUsersById(userIds) {
     try {

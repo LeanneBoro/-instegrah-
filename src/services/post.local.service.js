@@ -14,7 +14,8 @@ export const postService = {
     save,
     remove,
     getLatestComment,
-    addComment
+    addComment,
+    getPostsByUserId
 
 }
 
@@ -44,6 +45,16 @@ async function getById(postId) {
         return post
     } catch (err) {
         console.log(err)
+    }
+}
+
+async function getPostsByUserId(userId) {
+    try {
+        const posts = await storageService.query(POST_DB)
+        return posts.filter(post => post.by.id === userId)
+    } catch (err) {
+        console.error('Error fetching user posts:', err)
+        throw err
     }
 }
 

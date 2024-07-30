@@ -13,6 +13,17 @@ export async function loadPosts() {
     }
 }
 
+export async function loadPostsByUser(userId) {
+  try {
+      // store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+      const posts = await postService.getPostsByUserId(userId)
+      store.dispatch({ type: SET_POSTS, posts })
+      // store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+  } catch (err) {
+      console.log(err)
+  }
+}
+
 export async function addComment(postId, comment) {
 
   try {
@@ -21,7 +32,7 @@ export async function addComment(postId, comment) {
           type: ADD_COMMENT,
           postId,
           comment: comment,
-      });
+      })
   } catch (err) {
       console.error('Error in addComment action creator:', err);
   }
