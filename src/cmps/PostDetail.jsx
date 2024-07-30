@@ -4,11 +4,17 @@ import { ProfileImg } from './ProfileImg';
 import { utilService } from '../services/util.service';
 import { ListModal } from './ListModal';
 import { BackDrop } from './BackDrop';
+import { useSelector } from 'react-redux';
 
-export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile }) {
+import { addComment, removeComment } from '../store/actions/post.actions'
+
+export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfile }) {
 
     const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
+    const [commentText, setCommentText] = useState('')
     const inputRef = useRef(null)
+    const posts = useSelector(storeState => storeState.postModule.posts);
+    const selectedPost = posts.find(post => post._id === selectedPostId);
 
 
 
@@ -16,9 +22,34 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile })
         inputRef.current.focus()
     }
 
+    function handleCommentSubmit(event) {
+        event.preventDefault()
+
+        if (commentText.trim()) {
+            const newComment = {
+                txt: commentText,
+                timeStamp: Date.now(),
+                by: {
+                    id: 'currentUserId',
+                    fullname: 'Current User',
+                    username: 'currentUser',
+                    imgUrl: 'https://randomuser.me/api/portraits/men/86.jpg',
+                },
+                likedBy: []
+            }
+
+            addComment(selectedPost._id, newComment)
+        }
+    }
+
+    function handleCommentChange(event) {
+        setCommentText(event.target.value)
+    }
+
+
     return (
-        <BackDrop disableAt={780} zIndex={1000} dataState={setSelectedPost} >
-            
+        <BackDrop disableAt={780} zIndex={1000} dataState={setSelectedPostId} >
+
             {/* <img className="close-btn" onClick={handleBackdropClick} src="src/assets/svgs/close.svg" alt="" /> */}
 
             <section className="post-details">
@@ -105,8 +136,16 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile })
                     </section>
 
                     <section className="add-comment">
-                        <input ref={inputRef} type="text" placeholder="Add a comment" />
+                        <form onSubmit={handleCommentSubmit}>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                placeholder="Add a comment"
+                                value={commentText}
+                                onChange={handleCommentChange} />
+                        </form>
                     </section>
+
                 </section>
             </section>
         </BackDrop>

@@ -1,27 +1,20 @@
 import { useEffect, useState } from "react"
 
+import {loadPosts} from '../store/actions/post.actions'
+import { useSelector } from 'react-redux'
+
 import { PostList } from "../cmps/PostList"
 import { postService } from "../services/post.local.service"
 // import { userService } from "../services/demoData.service"
 
 export function PostIndex() {
-
-    const [posts, setPosts] = useState(null)
+    const {posts} =useSelector(storeState => storeState.postModule)
 
 
     useEffect(() => {
         loadPosts()
     }, [])
 
-    async function loadPosts() {
-        try {
-            const posts = await postService.query()
-            // const posts = await postService.query()
-            setPosts(posts)
-        } catch (error) {
-            console.error('Failed to fetch posts:', error)
-        }
-    }
 
     if (!posts) return <h1>Loading....</h1>
     return (

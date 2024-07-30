@@ -41,13 +41,25 @@ export function SearchModal({ expandedSection }) {
                 <div>Search</div>
                 <SearchInput onSearch={setSearchQuery} />
             </section>
-            <section className='recent'>
+
+            {searchQuery && <section className='results'>
                 {searchResults.map(result => (
                     <div className="cursor-pointer highlight" key={result._id}>
                         <ProfilePreview profile={result} />
                     </div>
                 ))}
-            </section>
+            </section>}
+
+            {!searchQuery && <section className='recent'>
+                <h2>Recent</h2>
+
+                {/* {searchResults.map(result => (
+                    <div className="cursor-pointer highlight" key={result._id}>
+                        <ProfilePreview profile={result} />
+                    </div>
+                ))} */}
+            </section>}
+
         </section>
     )
 }

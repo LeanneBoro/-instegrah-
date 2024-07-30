@@ -8,14 +8,15 @@ import { ListModal } from './ListModal';
 
 export function PostPreview({ post, idx }) {
 
-    const [selectedPost, setSelectedPost] = useState(null)
+    const [selectedPostId, setSelectedPostId] = useState(null)
     const [modalData,setModalData] = useState(null)
     const navigate = useNavigate();
 
     function navigateToProfile(id) {
         navigate(`/profile/${id}`)
-        setSelectedPost(null)
+        setSelectedPostId(null)
     }
+
 
     return (
         <section className="post-preview">
@@ -67,7 +68,7 @@ export function PostPreview({ post, idx }) {
             </div>
 
 
-            <div className="view-all" onClick={() => setSelectedPost(post)}>view all {post.comments.length} comments </div>
+            <div className="view-all" onClick={() => setSelectedPostId(post._id)}>view all {post.comments.length} comments </div>
 
 
 
@@ -78,7 +79,7 @@ export function PostPreview({ post, idx }) {
 
 
 
-            {selectedPost && <PostDetail selectedPost={selectedPost} setSelectedPost={setSelectedPost} navigateToProfile={navigateToProfile} />}
+            {selectedPostId && <PostDetail selectedPostId={selectedPostId} setSelectedPostId={setSelectedPostId} navigateToProfile={navigateToProfile} />}
             {modalData && <ListModal content={modalData} setModalData={setModalData}/>}
         </section>
 

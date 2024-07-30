@@ -3,11 +3,9 @@ import { ProfileImg } from "./ProfileImg";
 import { utilService } from '../services/util.service';
 import { ListModal } from "./ListModal";
 
-export function CommentPreview({ selectedPost, comment, navigateToProfile }) {
+export function CommentPreview({comment, navigateToProfile }) {
     
     const [modalData, setModalData] = useState(null)
-    console.log(modalData);
-
 
 
     return <section className="comment-preview flex">

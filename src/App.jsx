@@ -1,4 +1,6 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
 import { useState } from 'react'
 import { NavBar } from './cmps/NavBar'
 import { PostIndex } from './views/PostIndex'
@@ -10,6 +12,7 @@ import { Profile } from './views/Profile'
 function App() {
 
   return <section>
+      <Provider store={store}>
     <Router>
       <HeaderNav />
       <NavBar />
@@ -18,6 +21,7 @@ function App() {
         <Route path="/profile/:userId" element={<Profile/>} />
       </Routes>
     </Router>
+    </Provider>
   </section>
 
 }

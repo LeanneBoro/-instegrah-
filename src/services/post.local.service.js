@@ -13,7 +13,8 @@ export const postService = {
     getById,
     save,
     remove,
-    getLatestComment
+    getLatestComment,
+    addComment
 
 }
 
@@ -80,6 +81,24 @@ function getLatestComment(comments) {
     const latestComment = { user: comments[comments.length - 1].by.fullname, comment: comments[comments.length - 1].txt }
 
     return latestComment
+}
+
+async function addComment(postId, comment) {
+
+    try {
+        comment.id = utilService.makeId()
+
+        let post = await storageService.get(POST_DB, postId)
+        post.comments = post.comments ? [...post.comments, comment] : [comment]
+        const updatedPost = await storageService.put(POST_DB, post)
+        return updatedPost
+    }
+
+    catch (err) {
+        console.error('Error adding comment:', err);
+        throw err;  // Rethrow the error to be handled by the caller
+    }
+
 }
 
 function _createPosts() {
