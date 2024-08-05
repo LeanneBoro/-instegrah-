@@ -4,6 +4,10 @@ import { SearchModal } from './SearchModal'
 import { SearchInput } from './SearchInput';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NotificationsModal } from './NotificationsModal';
+import { PostEdit } from '../views/PostEdit';
+import { BackDrop } from './BackDrop';
+
+
 
 export function NavBar() {
     const [expandedSection, setExpandedSection] = useState('')
@@ -13,7 +17,7 @@ export function NavBar() {
     const currentLocation = location.pathname
 
 
-
+    console.log(expandedSection);
 
     function handleOutsideClick(event) {
         if (navBarRef.current && !navBarRef.current.contains(event.target)) {
@@ -79,7 +83,7 @@ export function NavBar() {
                         <div className="title">Notifications</div>
                     </div>
 
-                    <div>
+                    <div onClick={() => setExpandedSection(expandedSection === 'upload' ? null : 'upload')} >
                         <img className="icon" src="src\assets\svgs\Create.svg" alt="" />
                         <div className="title">Create</div>
                     </div>
@@ -107,6 +111,12 @@ export function NavBar() {
 
         <SearchModal expandedSection={expandedSection} />
         <NotificationsModal expandedSection={expandedSection} setExpandedSection={setExpandedSection} />
+
+        {expandedSection === "upload" &&
+            <BackDrop zIndex={1100} dataState={setExpandedSection}>
+                <PostEdit />
+            </BackDrop>
+        }
 
     </react-fragment>
 }

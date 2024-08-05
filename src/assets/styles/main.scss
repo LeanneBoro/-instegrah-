@@ -1,15 +1,13 @@
-
-
 // Setup
 @import "setup/mixins";
 @import "setup/vars";
 // @import "setup/functions";
 @import "setup/typography";
+@import "basics/base";
 
 // Basics
 @import "basics/helpers";
 @import "basics/layout";
-@import "basics/base";
 
 // Components
 @import "cmps/NavBar.scss";
@@ -26,3 +24,5 @@
 @import "cmps/ListModal";
 @import "cmps/BackDrop";
 @import "cmps/ProfilePreview";
+@import "cmps/FileUploader";
+@import "./basics/views/PostEdit.scss";

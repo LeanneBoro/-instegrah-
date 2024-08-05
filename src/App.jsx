@@ -7,20 +7,21 @@ import { PostIndex } from './views/PostIndex'
 import { HeaderNav } from './cmps/HeaderNav'
 
 import { Profile } from './views/Profile'
+import { PostEdit } from './views/PostEdit'
 
 
 function App() {
 
   return <section>
-      <Provider store={store}>
-    <Router>
-      <HeaderNav />
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<PostIndex />} />
-        <Route path="/profile/:userId" element={<Profile/>} />
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <HeaderNav />
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<PostIndex />} />
+          <Route path="/profile/:userId" element={<Profile />} />
+        </Routes>
+      </Router>
     </Provider>
   </section>
 

@@ -15,6 +15,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    border-radius: 5px;
 
     & .details-nav {
         display: none;
@@ -22,6 +23,7 @@
 
     & .post-img-container {
         background-color: black;
+        border-start-end-radius: 5px;
 
 
 

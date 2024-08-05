@@ -82,7 +82,8 @@
         margin: 0;
         flex-direction: row;
 
-        .search, .notifications{
+        .search,
+        .notifications {
           display: none;
         }
 
@@ -103,14 +104,58 @@
 
 }
 
-
-
-
-
-@mixin profile-picture{
+@mixin profile-picture {
   min-width: 35px;
   min-height: 35px;
   margin: auto 12px;
   background-color: red;
   border-radius: 50%;
+}
+
+@mixin mobile-post-edit {
+  .post-edit {
+    max-width: none;
+    height: 100vh;
+    max-height: none;
+    border-radius: 0;
+    overflow-y: scroll;
+
+    & .add-details {
+      flex-direction: column;
+
+      & .details {
+        max-width: none;
+
+        & textarea {
+          height: 200px;
+        }
+      }
+
+    }
+
+    &.expanded {
+      max-width: none;
+      max-height: none;
+
+      .image-container {
+        max-width: none;
+        width: 100%;
+
+        & img {
+          height: none;
+        }
+      }
+    }
+  }
+
+}
+
+@mixin back-btn {
+  position: fixed;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  rotate: -90deg;
+  cursor: pointer;
+  z-index: 1000;
 }

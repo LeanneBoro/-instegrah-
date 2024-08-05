@@ -5,6 +5,7 @@ $fully-white: #ffffff;
 
 $cyan1: #385898;
 $cyan2: #0095f6;
+$cyan3: #0866ff;
 
 $gray1: #737373;
 $gray2: #8e8e8e;
@@ -37,7 +38,7 @@ $gray1: #737373;
     --profile-normal-metrics-display: flex;
     --profile-compact-metrics-display: none;
 
-
+    --post-edit-layout: 75px minmax(50px, 1fr) minmax(0, 800px) minmax(50px, 1fr);
 
 
     @media (width < 1250px) {
@@ -60,7 +61,11 @@ $gray1: #737373;
         --profile-compact-metrics-display: flex;
         --profile-normal-metrics-display: none;
 
+        --post-edit-layout: 0 minmax(50px, 1fr) minmax(0, 800px) minmax(50px, 1fr);
+
         @include bottom-bar;
+
+        @include mobile-post-edit;
 
         .post-details {
             flex-direction: column;
@@ -80,13 +85,7 @@ $gray1: #737373;
                 position: fixed;
 
                 & .back-btn {
-                    position: fixed;
-                    left: 10px;
-                    width: 30px;
-                    height: 30px;
-                    rotate: -90deg;
-                    cursor: pointer;
-                    z-index: 1000;
+                    @include back-btn
                 }
             }
 
