@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { loadUser, } from '../store/actions/user.actions';
 import { loadPostsByUser } from '../store/actions/post.actions';
 import { useSelector } from 'react-redux';
+import { Loader } from '../cmps/Loader';
 
 // import { PostDetail } from '../PostDetail';
 
@@ -20,8 +21,10 @@ export function Profile() {
 
     const user = useSelector(storeState => storeState.userModule.user)
     const posts = useSelector(storeState => storeState.postModule.posts)
+    const isLoading = useSelector(storeState => storeState.utilityModule.isLoading)
     const [selectedPostId, setSelectedPostId] = useState(null)
 
+    console.log(isLoading);
 
     const navigate = useNavigate();
 
@@ -54,91 +57,68 @@ export function Profile() {
 
 
 
-    return user && <section className="profile-page-layout profile">
-
-        <section className="information profile-info-layout ">
-
-            <div className="profile-container">
-                
-
-                <ProfileImg imgUrl={user.profileImg} diameter={screenWidth > 780 ? "160px" : "90px"} />
-
-
-
-
-            </div>
-
-            <section className="actions-and-details">
-
-                <section className="actions">
-
-                    <div className="username">{user.username}</div>
-
-                    <button> Edit Profile</button>
-
-                </section>
-
-                <section className="metrics">
-
-                    <h2> X span</h2>
-
-                    <h2> X followers</h2>
-
-                    <h2> X following</h2>
-                </section>
-
-                <h2 className="owner-name"> {user.fullname}</h2>
-
-            </section>
-
-
-
-
-        </section>
-        <section className="compact-metrics">
-
-            <section >
-                <h2>X</h2>
-                <div>posts</div>
-            </section>
-
-            <section >
-                <h2>X</h2>
-                <div>followers</div>
-            </section>
-
-            <section >
-                <h2>X</h2>
-                <div>following</div>
-            </section>
-
-        </section>
-
-
-
-        <section className="profile-post-layout posts">
-            {
-                posts.map((post, idx) => {
-                    return (
-                        <div onClick={() => setSelectedPostId(post._id)} key={idx} className="post-img-container">
-                            <img className='post-img' src={post.postImg} alt="" />
-                            <div className='back-drop'></div>
-                            <div className='details'>
-                                <img src="src\assets\svgs\HeartBold.svg" alt="Heart Icon" />
-                                <h1>{post.likedBy.length}</h1>
-                                <img src="src\imgs\Comment-Bold.png" alt="" />
-                                <h1>{post.comments.length}</h1>
-                                
+    return (
+        <section className="profile-page-layout profile">
+            {isLoading ? (
+                <Loader />  
+            ) : (
+                user && (
+                    <>
+                        <section className="information profile-info-layout">
+                            <div className="profile-container">
+                                <ProfileImg imgUrl={user.profileImg} diameter={screenWidth > 780 ? "160px" : "90px"} />
                             </div>
-                        </div>
-                    )
-                })
-            }
+    
+                            <section className="actions-and-details">
+                                <section className="actions">
+                                    <div className="username">{user.username}</div>
+                                    <button>Edit Profile</button>
+                                </section>
+    
+                                <section className="metrics">
+                                    <h2>X span</h2>
+                                    <h2>X followers</h2>
+                                    <h2>X following</h2>
+                                </section>
+    
+                                <h2 className="owner-name">{user.fullname}</h2>
+                            </section>
+                        </section>
+    
+                        <section className="compact-metrics">
+                            <section>
+                                <h2>X</h2>
+                                <div>posts</div>
+                            </section>
+                            <section>
+                                <h2>X</h2>
+                                <div>followers</div>
+                            </section>
+                            <section>
+                                <h2>X</h2>
+                                <div>following</div>
+                            </section>
+                        </section>
+    
+                        <section className="profile-post-layout posts">
+                            {posts.map((post, idx) => (
+                                <div onClick={() => setSelectedPostId(post._id)} key={idx} className="post-img-container">
+                                    <img className='post-img' src={post.postImg} alt="" />
+                                    <div className='back-drop'></div>
+                                    <div className='details'>
+                                        <img src="src/assets/svgs/HeartBold.svg" alt="Heart Icon" />
+                                        <h1>{post.likedBy.length}</h1>
+                                        <img src="src/imgs/Comment-Bold.png" alt="" />
+                                        <h1>{post.comments.length}</h1>
+                                    </div>
+                                </div>
+                            ))}
+                        </section>
+    
+                        {selectedPostId && <PostDetail selectedPostId={selectedPostId} setSelectedPostId={setSelectedPostId} navigateToProfile={navigateToProfile} />}
+                    </>
+                )
+            )}
         </section>
-
-        {selectedPostId && <PostDetail selectedPostId={selectedPostId} setSelectedPostId={setSelectedPostId} navigateToProfile={navigateToProfile} />}
-
-
-    </section>
-
-}
+    )
+}    

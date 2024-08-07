@@ -114,7 +114,7 @@ export function NavBar() {
 
         {expandedSection === "upload" &&
             <BackDrop zIndex={1100} dataState={setExpandedSection}>
-                <PostEdit />
+                <PostEdit dataState={setExpandedSection}/>
             </BackDrop>
         }
 

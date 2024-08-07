@@ -32,6 +32,9 @@ async function query(filterBy = {}) {
         // Create posts if not already created
         let posts = await demoDataService.createPostsDemoData(users);
 
+        // Sort posts by timestamp in descending order
+        posts = posts.sort((a, b) => b.timeStamp - a.timeStamp)
+
         return posts;
     } catch (err) {
         console.log(err);

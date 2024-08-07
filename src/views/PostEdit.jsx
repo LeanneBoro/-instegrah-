@@ -1,17 +1,74 @@
-import { BackDrop } from "../cmps/BackDrop";
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
+
+import { BackDrop } from "../cmps/BackDrop";
+
 import Croppie from "croppie";
 import "croppie/croppie.css";
+
 import { FileUploader } from "../cmps/FileUploader";
 import { ProfileImg } from "../cmps/ProfileImg";
+import { postService } from "../services/post.local.service";
+import { savePost } from '../store/actions/post.actions'
 
-export function PostEdit() {
+export function PostEdit({dataState}) {
     const croppieRef = useRef(null);
     const croppieInstance = useRef(null);
     const [imageUploaded, setImageUploaded] = useState(false)
     const [imageCropped, setImageCropped] = useState(null)
+    const [caption, setCaption] = useState("")
+    const navigate = useNavigate();
 
-    console.log(imageCropped);
+    function handleCaptionChange(event) {
+        setCaption(event.target.value)
+    }
+
+    async function handlePublish() {
+        const post = {
+            by: {
+                fullname: "existing user",
+                id: "user id",
+                profileImg: "https://randomuser.me/api/portraits/women/96.jpg",
+                username: "laura_davis_pro"
+            },
+            comments: [],
+            postImg: imageCropped,
+            likedBy: [],
+            timeStamp: Date.now(),
+            txt: caption
+        }
+
+        try {
+            savePost(post)
+            dataState(null)
+            navigate('/')
+
+        } catch (err) {
+            console.error('Failed to publish post:', err);
+        }
+    }
+
+    const nextButtonTitle = imageCropped
+        ? "Publish"
+        : imageUploaded
+            ? "Crop Image"
+            : "Please Choose an Image from the Device"
+
+    const nextButtonClass = imageCropped
+        ? caption ? "next-btn" : "next-btn disabled"
+        : imageUploaded
+            ? "next-btn"
+            : "next-btn disabled"
+
+    const nextButtonOnClick = () => {
+        if (imageCropped) {
+            if (caption) {
+                handlePublish()
+            }
+        } else if (imageUploaded) {
+            handleCrop()
+        }
+    }
 
 
     useEffect(() => {
@@ -61,54 +118,54 @@ export function PostEdit() {
         }
     }
 
-    return <section className={`post-edit ${imageCropped ? "expanded" : ""}`}>
-
-        <section className="header">
-
-            <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" />
-            <h2>Create a new Post</h2>
-
-            <h2 title={`${imageUploaded ? "Crop Image" : "Please Choose an Image from the Device"}`}
-                className={`next-btn ${imageUploaded ? "" : "disabled"}`}
-                onClick={() => imageUploaded && handleCrop()}>Next</h2>
-
-        </section>
 
 
-
-        {imageCropped ? (
-            <React.Fragment>
-                <section className="add-details">
-
-                    <section className="image-container">
-                        <img src={imageCropped} alt="" />
-                    </section>
-
-                    <section className="details">
-
-                        <div className="username">
-                            <ProfileImg
-                                diameter={"40px"}
-                                imgUrl={"https://randomuser.me/api/portraits/women/96.jpg"} />
-
-                            <h2>username</h2>
-                        </div>
-
-                       <textarea placeholder="Write a caption" name="" id=""></textarea>
-
-                    </section>
-                </section>
-            </React.Fragment>
-        ) : (
-            <section className="croppie-cmp">
-                <section className="options">
-                    <FileUploader existingImage={imageUploaded} handleFile={handleImageUpload} />
-                </section>
-
-                <div ref={croppieRef} id="croppie"></div>
+    return (
+        <section className={`post-edit ${imageCropped ? "expanded" : ""}`}>
+            <section className="header">
+                <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" />
+                <h2>Create a new Post</h2>
+                <h2
+                    title={nextButtonTitle}
+                    className={nextButtonClass}
+                    onClick={nextButtonOnClick}
+                >
+                    {imageCropped ? "Publish" : "Next"}
+                </h2>
             </section>
-        )}
 
-
-    </section>
+            {imageCropped ? (
+                <React.Fragment>
+                    <section className="add-details">
+                        <section className="image-container">
+                            <img src={imageCropped} alt="" />
+                        </section>
+                        <section className="details">
+                            <div className="username">
+                                <ProfileImg
+                                    diameter={"40px"}
+                                    imgUrl={"https://randomuser.me/api/portraits/women/96.jpg"}
+                                />
+                                <h2>username</h2>
+                            </div>
+                            <textarea
+                                placeholder="Write a caption"
+                                name=""
+                                id=""
+                                value={caption}
+                                onChange={handleCaptionChange}
+                            />
+                        </section>
+                    </section>
+                </React.Fragment>
+            ) : (
+                <section className="croppie-cmp">
+                    <section className="options">
+                        <FileUploader existingImage={imageUploaded} handleFile={handleImageUpload} />
+                    </section>
+                    <div ref={croppieRef} id="croppie"></div>
+                </section>
+            )}
+        </section>
+    )
 }
