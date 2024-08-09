@@ -1,0 +1,11 @@
+.loader-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: var(--post-list-positioning);
+
+    & img {
+        grid-column: 2/3;
+    }
+}
