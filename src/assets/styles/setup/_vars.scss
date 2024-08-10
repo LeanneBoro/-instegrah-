@@ -40,6 +40,9 @@ $gray1: #737373;
 
     --post-edit-layout: 75px minmax(50px, 1fr) minmax(0, 800px) minmax(50px, 1fr);
 
+    --placeholder-min-width: 500px;
+
+
 
     @media (width < 1250px) {
         @include compact-side-bar;
@@ -62,6 +65,8 @@ $gray1: #737373;
         --profile-normal-metrics-display: none;
 
         --post-edit-layout: 0 minmax(50px, 1fr) minmax(0, 800px) minmax(50px, 1fr);
+
+        --placeholder-min-width: none;
 
         @include bottom-bar;
 

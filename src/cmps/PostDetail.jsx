@@ -54,7 +54,7 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
 
             {/* <img className="close-btn" onClick={handleBackdropClick} src="src/assets/svgs/close.svg" alt="" /> */}
 
-            <section className="post-details">
+            <section className="post-details ">
                 <section className="details-nav">
                     <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" onClick={() => setSelectedPost(null)} />
                     <div>Post</div>
