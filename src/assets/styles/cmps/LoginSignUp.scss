@@ -1,0 +1,64 @@
+
+
+.login-signup {
+    grid-column: 2;
+    width: 100%;
+    max-width: 350px;
+    height: max-content;
+    background-color: white;
+    border: 1px solid $gray3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1001;
+
+    & img {
+        width: 200px;
+        margin-block: 36px;
+    }
+
+    & .login-input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+
+        & input {
+
+            width: 80%;
+            padding-block: 10px;
+            padding-left: 1em;
+            font-size: 1em;
+
+
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+        }
+
+    }
+
+    & .login-btn-container {
+        padding-block: 30px;
+        margin-top: 30px;
+        border-top: 1px solid $gray3;
+    
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        &>div {
+            @include cyan-btn-1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            cursor: pointer;
+           
+        }
+    }
+
+}

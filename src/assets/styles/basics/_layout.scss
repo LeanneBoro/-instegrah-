@@ -35,3 +35,16 @@
 
 }
 
+.login-signup-layout{
+    display: grid;
+    grid-template-columns: var(--post-list-positioning);
+    height: 100%;
+    align-items: center;
+    justify-items: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+ 
+}
+

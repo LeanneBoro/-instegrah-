@@ -22,9 +22,10 @@ export function BackDrop({ children, disableAt = 0, zIndex, dataState }) {
     }, [])
 
     function handleBackdropClick(event) {
- 
 
+        
         if (event.target === event.currentTarget && !isBackdropDisabled) {
+            
             dataState(null)
         }
     }

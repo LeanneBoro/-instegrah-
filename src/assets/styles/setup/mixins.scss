@@ -159,3 +159,18 @@
   cursor: pointer;
   z-index: 1000;
 }
+
+
+@mixin cyan-btn-1{
+  background-color: $cyan2;
+  color: white;
+  border: none;
+  width: 170px;
+  height: 35px;
+  border-radius: 10px;
+  transition: 0.1s;
+
+  &:hover {
+      background-color: $cyan3;
+  }
+}

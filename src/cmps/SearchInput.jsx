@@ -16,7 +16,7 @@ export function SearchInput({ width = '', onSearch }) {
     }
 
 
-    return <section className="input-container" style={inputContainerStyle}>
+    return <section className="search-input-container" style={inputContainerStyle}>
         <img className="search-icon" src="src\assets\svgs\Search.svg" alt="" />
 
         <input

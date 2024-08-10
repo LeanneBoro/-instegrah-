@@ -18,6 +18,15 @@
             flex-direction: column;
 
 
+            & .login-btn{
+                @include cyan-btn-1;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+
             & div {
 
 

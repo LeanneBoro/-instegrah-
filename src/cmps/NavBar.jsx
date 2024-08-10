@@ -6,6 +6,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { NotificationsModal } from './NotificationsModal';
 import { PostEdit } from '../views/PostEdit';
 import { BackDrop } from './BackDrop';
+import { LoginSignUp } from './LoginSignup';
+
 
 
 
@@ -17,7 +19,7 @@ export function NavBar() {
     const currentLocation = location.pathname
 
 
-    console.log(expandedSection);
+
 
     function handleOutsideClick(event) {
         if (navBarRef.current && !navBarRef.current.contains(event.target)) {
@@ -60,6 +62,10 @@ export function NavBar() {
 
                 <section className="options">
 
+
+
+
+
                     <div onClick={() => {
                         navigate('/')
                         setExpandedSection(null)
@@ -88,10 +94,15 @@ export function NavBar() {
                         <div className="title">Create</div>
                     </div>
 
+
+                    <div onClick={() => setExpandedSection("login")} className='login-btn'>Log In</div>
+
                     <div onClick={() => navigate('/profile')} >
                         <img className="icon " src="src\assets\svgs\Profile.svg" alt="" />
                         <div className="title">Profile</div>
                     </div>
+
+
 
                     <div>
                         <img className="icon" src="src\assets\svgs\More.svg" alt="" />
@@ -114,9 +125,14 @@ export function NavBar() {
 
         {expandedSection === "upload" &&
             <BackDrop zIndex={1100} dataState={setExpandedSection}>
-                <PostEdit dataState={setExpandedSection}/>
+                <PostEdit dataState={setExpandedSection} />
             </BackDrop>
         }
+
+        {expandedSection === "login" &&
+            <BackDrop  dataState={setExpandedSection}>
+                <LoginSignUp setExpandedSection={setExpandedSection} />
+            </BackDrop>}
 
     </react-fragment>
 }
