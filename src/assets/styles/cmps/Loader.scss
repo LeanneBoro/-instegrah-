@@ -1,4 +1,4 @@
-.loader-container {
+.loader-container-index {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -8,4 +8,9 @@
     & img {
         grid-column: 2/3;
     }
+}
+
+
+.loader{
+position: absolute;
 }

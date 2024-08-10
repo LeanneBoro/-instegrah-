@@ -21,9 +21,9 @@ export function PostIndex() {
     return (
 
         <section className="main-layout post-index">
-            {/* <div className="loader-layout"> */}
-                {isLoading && <Loader />}
-            {/* </div> */}
+          
+                {isLoading && <div className='loader-container-index'><Loader /></div> }
+    
 
             <PostList posts={posts} />
         </section>

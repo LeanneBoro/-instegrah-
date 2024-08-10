@@ -84,63 +84,65 @@
     }
 }
 
-.post-img-container {
-    aspect-ratio: 1/1;
-    background-color: red;
-    overflow: hidden;
-    position: relative;
+.posts {
+    .post-img-container {
+        aspect-ratio: 1/1;
+        background-color: red;
+        overflow: hidden;
+        position: relative;
 
-    &:hover .back-drop {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    &:hover .details {
-        display: flex;
-    }
-
-    & .back-drop {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0);
-        transition: background-color 0.1s ease;
-        z-index: 1;
-        cursor: pointer;
-
-
-    }
-
-
-
-    & .post-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    & .details {
-        display: none;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        gap: 10px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-
-        & img {
-            filter: invert(1);
-            width: 13%;
-            height: 13%;
+        &:hover .back-drop {
+            background-color: rgba(0, 0, 0, 0.3);
         }
 
-        & h1 {
-            color: white;
+        &:hover .details {
+            display: flex;
         }
 
+        & .back-drop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            transition: background-color 0.1s ease;
+            z-index: 1;
+            cursor: pointer;
+
+
+        }
+
+
+
+        & .post-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        & .details {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            gap: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+
+            & img {
+                filter: invert(1);
+                width: 13%;
+                height: 13%;
+            }
+
+            & h1 {
+                color: white;
+            }
+
+        }
     }
 }
 

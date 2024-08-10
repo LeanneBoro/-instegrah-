@@ -1,4 +1,4 @@
-.comment-preview{
+.comment-preview {
 
     display: flex;
     padding: 0.5em 0;
@@ -10,8 +10,11 @@
         gap: 0.4em;
 
         & .content {
-            display: flex;
-            gap: 0.5em;
+            display: block;
+
+            & .username {
+                margin-right: 0.5em;
+            }
         }
 
         & .details {

@@ -60,7 +60,7 @@ export function Profile() {
     return (
         <section className="profile-page-layout profile">
             {isLoading ? (
-                <Loader />  
+                <div className='loader-container-index'><Loader /> </div>
             ) : (
                 user && (
                     <>
@@ -68,23 +68,23 @@ export function Profile() {
                             <div className="profile-container">
                                 <ProfileImg imgUrl={user.profileImg} diameter={screenWidth > 780 ? "160px" : "90px"} />
                             </div>
-    
+
                             <section className="actions-and-details">
                                 <section className="actions">
                                     <div className="username">{user.username}</div>
                                     <button>Edit Profile</button>
                                 </section>
-    
+
                                 <section className="metrics">
                                     <h2>X span</h2>
                                     <h2>X followers</h2>
                                     <h2>X following</h2>
                                 </section>
-    
+
                                 <h2 className="owner-name">{user.fullname}</h2>
                             </section>
                         </section>
-    
+
                         <section className="compact-metrics">
                             <section>
                                 <h2>X</h2>
@@ -99,7 +99,7 @@ export function Profile() {
                                 <div>following</div>
                             </section>
                         </section>
-    
+
                         <section className="profile-post-layout posts">
                             {posts.map((post, idx) => (
                                 <div onClick={() => setSelectedPostId(post._id)} key={idx} className="post-img-container">
@@ -114,7 +114,7 @@ export function Profile() {
                                 </div>
                             ))}
                         </section>
-    
+
                         {selectedPostId && <PostDetail selectedPostId={selectedPostId} setSelectedPostId={setSelectedPostId} navigateToProfile={navigateToProfile} />}
                     </>
                 )
