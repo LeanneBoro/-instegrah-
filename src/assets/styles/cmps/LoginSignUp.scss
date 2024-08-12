@@ -1,16 +1,18 @@
-
-
 .login-signup {
     grid-column: 2;
     width: 100%;
-    max-width: 350px;
+    max-width: 300px;
     height: max-content;
+    // min-height: 600px;
     background-color: white;
     border: 1px solid $gray3;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 1001;
+    border-radius: 20px;
+
+
 
     & img {
         width: 200px;
@@ -22,6 +24,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
+        height: max-content;
 
         & input {
 
@@ -36,13 +39,51 @@
             }
         }
 
+        & .upload-profile {
+
+            max-width: 200px;
+            width: 100%;
+            padding-inline: 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+
+
+            & .text {
+                width: 100%;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+                @include cyan-btn-1;
+                cursor: pointer;
+            }
+
+            & .image-container {
+
+                & img {
+                    background-color: white;
+                    margin-left: 15px;
+                    margin-block: 10px;
+                    border-radius: 50%;
+                    // padding: 5px;
+           
+                }
+            }
+        }
+
     }
 
     & .login-btn-container {
         padding-block: 30px;
         margin-top: 30px;
         border-top: 1px solid $gray3;
-    
+
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -57,8 +98,18 @@
             justify-content: center;
             width: 80%;
             cursor: pointer;
-           
+
         }
+
+
     }
+
+}
+
+.login-signup.extended {
+    max-width: 1000px;
+    width: 100%;
+    min-height: 600px;
+    height: 100%;
 
 }

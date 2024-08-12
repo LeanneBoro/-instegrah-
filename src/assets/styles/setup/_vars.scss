@@ -29,6 +29,8 @@ $gray1: #737373;
 
     --post-list-positioning: minmax(20px, 650px) minmax(auto, 500px) 400px;
 
+    --login-sign-up-layout: minmax(20px, 1fr) minmax(450px, 1000px) minmax(20px, 1fr);
+
     --profile-positioning: 250px minmax(auto, 1fr) minmax(0, 935px) minmax(auto, 1fr);
     --profile-margin-top: 10px;
     --profile-grid-placement: 3;
@@ -49,6 +51,8 @@ $gray1: #737373;
 
         --post-list-positioning: minmax(20px, auto) minmax(auto, 500px) minmax(20px, auto);
 
+        --login-sign-up-layout: minmax(20px, auto) minmax(auto, 1fr) minmax(20px, auto);
+
         --profile-positioning: minmax(72px, 1fr) minmax(0, 935px) minmax(auto, 1fr);
         --profile-grid-placement: 2;
     }
@@ -65,6 +69,8 @@ $gray1: #737373;
         --profile-normal-metrics-display: none;
 
         --post-edit-layout: 0 minmax(50px, 1fr) minmax(0, 800px) minmax(50px, 1fr);
+
+        --login-sign-up-layout: minmax(0, auto) minmax(auto, 100%) minmax(0, auto);
 
         --placeholder-min-width: none;
 
