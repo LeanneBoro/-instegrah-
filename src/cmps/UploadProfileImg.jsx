@@ -3,7 +3,7 @@ import 'croppie/croppie.css'
 import { useState, useRef, useEffect } from 'react'
 import { FileUploader } from './FileUploader'
 
-export function UploadProfileImg({openSelectionModal,SetProfileImg}) {
+export function UploadProfileImg({ openSelectionModal, setProfileImg }) {
     const croppieRef = useRef(null)
     const croppieInstance = useRef(null)
     const [imageUploaded, setImageUploaded] = useState(false)
@@ -51,13 +51,14 @@ export function UploadProfileImg({openSelectionModal,SetProfileImg}) {
     }
 
     const handleCrop = async () => {
+        if (!imageUploaded) return
         if (croppieInstance.current) {
             try {
                 const result = await croppieInstance.current.result({
                     type: 'base64',
                     size: 'viewport',
                 })
-                SetProfileImg(result)
+                setProfileImg(result)
                 openSelectionModal(false)
             } catch (error) {
                 console.error('Croppie result error:', error)
@@ -69,7 +70,7 @@ export function UploadProfileImg({openSelectionModal,SetProfileImg}) {
         <section className="upload-profile-img">
             <section className="croppie-cmp">
                 <section className='header'>
-                    <h2 onClick={handleCrop} className='select'>Set as Profile</h2>
+                    <h2 onClick={handleCrop} className={`select ${!imageUploaded ? 'disabled' : ''}`}>Set as Profile</h2>
                 </section>
 
                 <section className="options">

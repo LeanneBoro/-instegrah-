@@ -109,6 +109,7 @@ export function PostEdit({dataState}) {
     };
 
     const handleCrop = async () => {
+        
         if (croppieInstance.current) {
             const result = await croppieInstance.current.result({
                 type: "base64",

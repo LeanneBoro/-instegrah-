@@ -1,35 +1,40 @@
-import { useRef, useState } from 'react';
-import { ProfileImg } from './ProfileImg';
-import { UploadProfileImg } from './UploadProfileImg';
+import { useRef, useState } from 'react'
+import { ProfileImg } from './ProfileImg'
+import { UploadProfileImg } from './UploadProfileImg'
 
 export function LoginSignUp({ setExpandedSection }) {
     const modalRef = useRef(null)
-    const [signUp, ShowSignUp] = useState()
+    const [signUp, setSignUp] = useState(false) // Default to false if not specified
     const [selectionModal, openSelectionModal] = useState(false)
-    const [profileImg, SetProfileImg] = useState(null)
+    const [profileImg, setProfileImg] = useState(null)
 
+    const imgSrc = profileImg ? profileImg : "src/assets/svgs/Profile.svg"
+    const buttonText = profileImg ? "Change Image" : "Upload Profile Image"
 
-    const imgSrc = profileImg
-        ? profileImg
-        : "src/assets/svgs/Profile.svg"
+    // Button configuration based on `signUp` state
+    const buttonConfig = {
+        cyanBtn: {
+            class: 'cyan-btn',
+            text: signUp ? 'Already Signed up' : 'Log In'
+        },
+        pinkBtn: {
+            class: 'pink-btn',
+            text: signUp ? 'Complete Sign Up' : 'Sign Up'
+        },
 
-    const buttonText = profileImg
-        ? "Change Image"
-        : "Upload Profile Image"
+    }
 
-
-
-
+    // Determine button configuration based on `signUp`
+    const btn1Config = signUp ? buttonConfig.pinkBtn : buttonConfig.cyanBtn
+    const btn2Config = signUp ? buttonConfig.cyanBtn : buttonConfig.pinkBtn
 
     const handleLayoutClick = () => {
         setExpandedSection('')
     }
 
-
-
     const handleModalClick = (event) => {
         event.stopPropagation()
-    };
+    }
 
     return (
         <section
@@ -55,22 +60,22 @@ export function LoginSignUp({ setExpandedSection }) {
                                         <ProfileImg imgUrl={imgSrc} diameter={"100px"} />
                                     </div>
                                     <div onClick={() => openSelectionModal(true)} className='text'>
-                                       {buttonText}
+                                        {buttonText}
                                     </div>
                                 </section>
                             )}
                         </section>
                         <section className="login-btn-container">
-                            <div>Login</div>
-                            <div onClick={() => ShowSignUp(!signUp)}>Sign-Up</div>
+                            <div className={`btn-1 ${btn1Config.class}`}>{btn1Config.text}</div>
+                            <div className={`btn-2 ${btn2Config.class}`} onClick={() => setSignUp(!signUp)}>
+                                {btn2Config.text}
+                            </div>
                         </section>
                     </>
                 )}
 
-
-                {selectionModal && <UploadProfileImg openSelectionModal={openSelectionModal} SetProfileImg={SetProfileImg} />}
+                {selectionModal && <UploadProfileImg openSelectionModal={openSelectionModal} setProfileImg={setProfileImg} />}
             </section>
-
         </section>
-    );
+    )
 }

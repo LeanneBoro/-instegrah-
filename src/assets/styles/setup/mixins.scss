@@ -161,7 +161,7 @@
 }
 
 
-@mixin cyan-btn-1{
+@mixin cyan-btn-1 {
   background-color: $cyan2;
   color: white;
   border: none;
@@ -169,8 +169,34 @@
   height: 35px;
   border-radius: 10px;
   transition: 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
 
   &:hover {
-      background-color: $cyan3;
+    background-color: $cyan3;
+  }
+}
+
+@mixin pink-btn-1 {
+  background-color: $pink1;
+  color: white;
+  border: none;
+  width: 170px;
+  height: 35px;
+  border-radius: 10px;
+  transition: 0.1s;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: $pink2;
   }
 }
