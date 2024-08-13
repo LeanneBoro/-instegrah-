@@ -4,7 +4,9 @@ import { storageService } from './async-storage.service.js'
 export const userService = {
     getUserById,
     getUsersById,
-    getUsersByUsername
+    getUsersByUsername,
+    addUser,
+    checkUsernameExists,
 };
 
 const USER_DB = "user_db"
@@ -42,3 +44,18 @@ async function getUsersByUsername() {
     }
 }
 
+async function addUser() {
+
+}
+
+
+
+async function checkUsernameExists(username) {
+    try {
+        const users = await  storageService.query(USER_DB)
+        return users.some(user => user.username === username)
+    } catch (err) {
+        console.error('Error checking username:', err)
+        throw err;
+    }
+}
