@@ -1,7 +1,7 @@
 @mixin headerBtns {
 
   &:hover {
-    background-color: $gray4;
+    // background-color: $gray4;
     cursor: pointer;
 
     & img {
@@ -199,4 +199,21 @@
   &:hover {
     background-color: $pink2;
   }
+}
+
+@mixin mobile-login-singUp {
+  .login-signup {
+    width: 100vw;
+    max-width: none;
+    justify-content: center;
+    height: 100vh;
+    border-radius: 0;
+    overflow-y: scroll;
+
+    & input{
+      max-width: 350px;
+    }
+  }
+
+
 }

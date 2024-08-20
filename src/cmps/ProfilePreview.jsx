@@ -1,7 +1,7 @@
 import { ProfileImg } from "./ProfileImg"
 
 export function ProfilePreview({ profile }) {
-    return <section className="profile-preview" key={profile._id}>
+    return <section className="profile-preview" key={profile.fullname}>
 
         <ProfileImg imgUrl={profile.profileImg} diameter={"45px"} />
 

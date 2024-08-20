@@ -3,27 +3,42 @@ import { ProfileImg } from './ProfileImg'
 import { UploadProfileImg } from './UploadProfileImg'
 import { userService } from '../services/user.service'
 import { utilService } from '../services/util.service'
+import {allPosts} from '../../everything-demodata/demoData'
+
+
+// console.log(allPosts);
+
 
 export function LoginSignUp({ setExpandedSection }) {
+
+
+
     const modalRef = useRef(null)
+    const debounceRef = useRef(null)
+
+
     const [signUp, setSignUp] = useState(false)
     const [selectionModal, openSelectionModal] = useState(false)
-    const [profileImg, setProfileImg] = useState(null)
+    const [profileImg, setProfileImg] = useState('src/assets/svgs/Profile.svg')
 
     const [newUser, editNewUser] = useState({
         username: '',
         password: '',
         fullname: '',
-        profileImg: ''
+        profileImg: '',
     })
 
-    const [feedback, setFeedback] = useState({
+    const [signUpFeedback, setSignUpFeedback] = useState({
         usernameFeedback: { type: '', text: '' },
         passwordFeedback: { type: '', text: '' },
         fullnameFeedback: { type: '', text: '' }
     })
 
-    const imgSrc = profileImg ? profileImg : "src/assets/svgs/Profile.svg"
+    const [loginFeedback, setLoginFeedback] = useState({
+        usernameFeedback: { type: '', text: '' },
+        passwordFeedback: { type: '', text: '' }
+    })
+
     const buttonText = profileImg ? "Change Image" : "Upload Profile Image"
 
     const buttonConfig = {
@@ -42,16 +57,27 @@ export function LoginSignUp({ setExpandedSection }) {
 
     const feedbackConfig = {
         username: {
-            className: `username-input ${feedback.usernameFeedback.type === 'denied' ? 'denied' : (feedback.usernameFeedback.type === 'approved' ? 'approved' : '')}`,
-            text: feedback.usernameFeedback.text
+            className: `${signUpFeedback.usernameFeedback.type === 'denied' ? 'denied' : (signUpFeedback.usernameFeedback.type === 'approved' ? 'approved' : '')}`,
+            text: signUpFeedback.usernameFeedback.text
         },
         password: {
-            className: `password-input ${feedback.passwordFeedback.type === 'denied' ? 'denied' : (feedback.passwordFeedback.type === 'approved' ? 'approved' : '')}`,
-            text: feedback.passwordFeedback.text
+            className: `${signUpFeedback.passwordFeedback.type === 'denied' ? 'denied' : (signUpFeedback.passwordFeedback.type === 'approved' ? 'approved' : '')}`,
+            text: signUpFeedback.passwordFeedback.text
         },
         fullname: {
-            className: `fullname-input ${feedback.fullnameFeedback.type === 'denied' ? 'denied' : (feedback.fullnameFeedback.type === 'approved' ? 'approved' : '')}`,
-            text: feedback.fullnameFeedback.text
+            className: `${signUpFeedback.fullnameFeedback.type === 'denied' ? 'denied' : (signUpFeedback.fullnameFeedback.type === 'approved' ? 'approved' : '')}`,
+            text: signUpFeedback.fullnameFeedback.text
+        }
+    }
+
+    const loginFeedbackConfig = {
+        username: {
+            className: `${loginFeedback.usernameFeedback.type === 'denied' ? 'denied' : ''}`,
+            text: loginFeedback.usernameFeedback.text
+        },
+        password: {
+            className: `${loginFeedback.passwordFeedback.type === 'denied' ? 'denied' : ''}`,
+            text: loginFeedback.passwordFeedback.text
         }
     }
 
@@ -63,25 +89,32 @@ export function LoginSignUp({ setExpandedSection }) {
         event.stopPropagation()
     }
 
+    console.log(newUser);
+
     function handleBtn2() {
         setSignUp(!signUp)
         editNewUser({
             username: '',
             password: '',
             fullname: '',
-            profileImg: ''
+            profileImg: 'src/assets/svgs/Profile.svg'
         })
-        setFeedback({
+        setSignUpFeedback({
             usernameFeedback: { type: '', text: '' },
             passwordFeedback: { type: '', text: '' },
             fullnameFeedback: { type: '', text: '' }
         })
+        setLoginFeedback({
+            usernameFeedback: { type: '', text: '' },
+            passwordFeedback: { type: '', text: '' }
+        })
     }
+
 
     const debouncedCheckUsername = useCallback(
         utilService.debounce(async (username) => {
             if (username.trim() === '') {
-                setFeedback(prevFeedback => ({
+                setSignUpFeedback(prevFeedback => ({
                     ...prevFeedback,
                     usernameFeedback: {
                         type: '',
@@ -89,10 +122,21 @@ export function LoginSignUp({ setExpandedSection }) {
                     }
                 }))
                 return
+            } else if (username.trim().length < 3 || username.trim().length > 25) {
+                setSignUpFeedback(prevFeedback => ({
+                    ...prevFeedback,
+                    usernameFeedback: {
+                        type: 'denied',
+                        text: '* username must be between 3 and 25 characters'
+                    }
+                }))
+                return
             }
+
             try {
+                console.log('finished')
                 const exists = await userService.checkUsernameExists(username)
-                setFeedback(prevFeedback => ({
+                setSignUpFeedback(prevFeedback => ({
                     ...prevFeedback,
                     usernameFeedback: {
                         type: exists ? 'denied' : 'approved',
@@ -101,7 +145,7 @@ export function LoginSignUp({ setExpandedSection }) {
                 }))
             } catch (err) {
                 console.error('Error checking username:', err)
-                setFeedback(prevFeedback => ({
+                setSignUpFeedback(prevFeedback => ({
                     ...prevFeedback,
                     usernameFeedback: {
                         type: 'denied',
@@ -109,82 +153,34 @@ export function LoginSignUp({ setExpandedSection }) {
                     }
                 }))
             }
-        }),
+        },),
         []
     )
 
-    function handleSignUp() {
-        setFeedback(prevFeedback => {
-            const newFeedback = { ...prevFeedback }
-            switch (true) {
-                case newUser.username.trim() === '':
-                    newFeedback.usernameFeedback = {
-                        type: 'denied',
-                        text: '* username must be between 3 and 12 characters'
-                    }
-                    break
-                case newUser.username.length < 3 || newUser.username.length > 12:
-                    newFeedback.usernameFeedback = {
-                        type: 'denied',
-                        text: '* username must be between 3 and 12 characters'
-                    }
-                    break
-                default:
-                    newFeedback.usernameFeedback = {
-                        type: '',
-                        text: ''
-                    }
-                    break
+    function onSignUp() {
+        editNewUser(newUser => ({
+            ...newUser,
+            profileImg: profileImg
+        }))
+
+
+        userService.handleSignUp(newUser, signUpFeedback).then(result => {
+            setSignUpFeedback(result.feedback)
+            if (result.success) {
+
             }
-            switch (true) {
-                case newUser.fullname.trim() === '':
-                    newFeedback.fullnameFeedback = {
-                        type: 'denied',
-                        text: '* full name must be at least 1 character'
-                    }
-                    break
-                default:
-                    newFeedback.fullnameFeedback = {
-                        type: '',
-                        text: ''
-                    }
-                    break
-            }
-            switch (true) {
-                case newUser.password.trim() === '':
-                    newFeedback.passwordFeedback = {
-                        type: 'denied',
-                        text: '* password must be between 5 and 12 characters'
-                    }
-                    break
-                case newUser.password.length < 5 || newUser.password.length > 12:
-                    newFeedback.passwordFeedback = {
-                        type: 'denied',
-                        text: '* password must be between 5 and 12 characters'
-                    }
-                    break
-                default:
-                    newFeedback.passwordFeedback = {
-                        type: '',
-                        text: ''
-                    }
-                    break
-            }
-            return newFeedback
         })
-        const isValid = [
-            feedback.usernameFeedback.type,
-            feedback.fullnameFeedback.type,
-            feedback.passwordFeedback.type
-        ].every(type => type === 'approved')
-        if (isValid) {
-            console.log('Signing up:', newUser)
-        }
     }
-    
 
     function handleLogin() {
-        console.log('login!')
+        userService.handleLogin(newUser).then(result => {
+            if (result.success) {
+
+                // Optionally redirect or do something on successful login
+            } else {
+                setLoginFeedback(result.feedback)
+            }
+        })
     }
 
     function handleChange(event) {
@@ -194,17 +190,19 @@ export function LoginSignUp({ setExpandedSection }) {
             [name]: value
         }))
         if (name === 'username') {
-            setFeedback(prevFeedback => ({
+            setSignUpFeedback(prevFeedback => ({
                 ...prevFeedback,
                 usernameFeedback: {
                     type: '',
                     text: ''
                 }
             }))
-            debouncedCheckUsername(value)
+            if (debounceRef.current) {
+                clearTimeout(debounceRef.current)
+            }
+            debounceRef.current = setTimeout(() => debouncedCheckUsername(value), 300)
         }
     }
-    console.log(feedback.usernameFeedback)
 
     return (
         <section
@@ -222,7 +220,7 @@ export function LoginSignUp({ setExpandedSection }) {
                         <img src="src/assets/svgs/IntagramLogo.svg" alt="Instagram Logo" />
                         <section className="login-input-container">
                             <input
-                                className={`input-field ${feedbackConfig.username.className}`}
+                                className={`${signUp ? feedbackConfig.username.className : loginFeedbackConfig.username.className}`}
                                 name="username"
                                 placeholder="Enter username"
                                 type="text"
@@ -230,10 +228,13 @@ export function LoginSignUp({ setExpandedSection }) {
                                 onChange={handleChange}
                                 required
                             />
-                            {signUp && <span className='feedback'>{feedbackConfig.username.text}</span>}
-                            
+
+                            <span className='feedback'>
+                                {signUp ? feedbackConfig.username.text : loginFeedbackConfig.username.text}
+                            </span>
+
                             <input
-                                className={`input-field ${feedbackConfig.password.className}`}
+                                className={`${signUp ? feedbackConfig.password.className : loginFeedbackConfig.password.className}`}
                                 name="password"
                                 placeholder="Enter password"
                                 type="password"
@@ -241,11 +242,14 @@ export function LoginSignUp({ setExpandedSection }) {
                                 onChange={handleChange}
                                 required
                             />
-                            <span className='feedback'>{feedbackConfig.password.text}</span>
+                            <span className='feedback'>
+                                {signUp ? feedbackConfig.password.text : loginFeedbackConfig.password.text}
+                            </span>
+
                             {signUp && (
                                 <>
                                     <input
-                                        className={`input-field ${feedbackConfig.fullname.className}`}
+                                        className={`${feedbackConfig.fullname.className}`}
                                         name="fullname"
                                         placeholder="Enter Full Name"
                                         type="text"
@@ -259,7 +263,7 @@ export function LoginSignUp({ setExpandedSection }) {
                             {signUp && (
                                 <section className='upload-profile'>
                                     <div className='image-container'>
-                                        <ProfileImg imgUrl={imgSrc} diameter={"100px"} />
+                                        <ProfileImg imgUrl={profileImg} diameter={"100px"} />
                                     </div>
                                     <div onClick={() => openSelectionModal(true)} className='text'>
                                         {buttonText}
@@ -268,7 +272,7 @@ export function LoginSignUp({ setExpandedSection }) {
                             )}
                         </section>
                         <section className="login-btn-container">
-                            <div onClick={signUp ? handleSignUp : handleLogin}
+                            <div onClick={signUp ? onSignUp : handleLogin}
                                 className={`btn-1 ${btn1Config.class}`}>{btn1Config.text}
                             </div>
                             {!signUp && <div className={`btn-2 ${btn2Config.class}`}

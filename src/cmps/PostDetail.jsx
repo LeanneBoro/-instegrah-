@@ -8,17 +8,28 @@ import { useSelector } from 'react-redux';
 
 import { addComment, removeComment } from '../store/actions/post.actions'
 
-export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfile }) {
+export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfile, setModalData }) {
 
-    
+
     const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
     const [commentText, setCommentText] = useState('')
     const inputRef = useRef(null)
-    const posts = useSelector(storeState => storeState.postModule.posts);
+    const posts = useSelector(storeState => storeState.postModule.profilePagePosts);
     const selectedPost = posts.find(post => post._id === selectedPostId);
-    
 
-    
+    useEffect(() => {
+        if (selectedPostId) {
+            document.body.classList.add('no-scroll')
+        } else {
+            document.body.classList.remove('no-scroll')
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll')
+        }
+    }, [selectedPostId])
+
+
 
     function handleCommentBtnClick() {
         inputRef.current.focus()
@@ -37,41 +48,41 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
                     username: 'currentUser',
                     imgUrl: 'https://randomuser.me/api/portraits/men/86.jpg',
                 },
-                likedBy: []
+                likes: []
             }
 
             addComment(selectedPost._id, newComment)
         }
     }
 
+
     function handleCommentChange(event) {
         setCommentText(event.target.value)
     }
 
 
+
     return (
-        <BackDrop disableAt={780} zIndex={1000} dataState={setSelectedPostId} >
+        <BackDrop disableAt={780} zIndex={1000} dataState={setSelectedPostId}>
 
-            {/* <img className="close-btn" onClick={handleBackdropClick} src="src/assets/svgs/close.svg" alt="" /> */}
-
-            <section className="post-details ">
+            <section className="post-details">
                 <section className="details-nav">
                     <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" onClick={() => setSelectedPostId(null)} />
                     <div>Post</div>
                 </section>
 
                 <section className="post-img-container">
-                    <img src={selectedPost.postImg} alt="" />
+                    <img src={selectedPost.image} alt="" />
                 </section>
 
                 <section className="media">
                     <section className="header">
-                        <div onClick={() => navigateToProfile(selectedPost.by.id)} className='cursor-pointer'>
-                            <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
+                        <div onClick={() => navigateToProfile(selectedPost.by)} className='cursor-pointer'>
+                            <ProfileImg imgUrl={selectedPost.authorProfileImg} diameter={'35px'} />
                         </div>
 
                         <section className="profile-details">
-                            <h2 className="username cursor-pointer" onClick={() => navigateToProfile(selectedPost.by.id)}>{selectedPost.by.fullname}</h2>
+                            <h2 className="username cursor-pointer" onClick={() => navigateToProfile(selectedPost.by.id)}>{selectedPost.authorUsername}</h2>
                         </section>
 
                         <section className="options">
@@ -81,14 +92,14 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
 
                     <section className="comment-list">
                         <section className="post-title">
-                            <div onClick={() => navigateToProfile(selectedPost.by.id)} className='cursor-pointer'>
-                                <ProfileImg imgUrl={selectedPost.by.profileImg} diameter={'35px'} />
+                            <div onClick={() => navigateToProfile(selectedPost.by)} className='cursor-pointer'>
+                                <ProfileImg imgUrl={selectedPost.authorProfileImg} diameter={'35px'} />
                             </div>
 
                             <div>
                                 <section className="content">
-                                    <h2 onClick={() => navigateToProfile(selectedPost.by.id)} className="username cursor-pointer">{selectedPost.by.fullname}</h2>
-                                    <span>{selectedPost.txt}</span>
+                                    <h2 onClick={() => navigateToProfile(selectedPost.by)} className="username cursor-pointer">{selectedPost.authorUsername}</h2>
+                                    <span>{selectedPost.title}</span>
                                 </section>
 
                                 <section className="details">
@@ -99,7 +110,7 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
                         </section>
 
                         {selectedPost.comments.map(comment => (
-                            <CommentPreview key={comment.id} selectedPost={selectedPost} comment={comment} navigateToProfile={navigateToProfile} />
+                            <CommentPreview key={comment._id} setModalData={setModalData} selectedPost={selectedPost} comment={comment} navigateToProfile={navigateToProfile} />
                         ))}
                     </section>
 
@@ -109,32 +120,34 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
                             <img onClick={handleCommentBtnClick} className='like' src="src/assets/svgs/Comment.svg" alt="" />
                         </section>
 
-                        <section className="likes-and-date">
-                            <section className="likes">
-                                <div className="liked-by-profile">
-                                    {/* {selectedPost.likedBy.slice(0, 3).map((like, index) => (
-                                        <ProfileImg key={index} imgUrl={like.profileImg} diameter={"30px"} />
-                                    ))} */}
-                                </div>
+                        {selectedPost.likes.length > 0 && (
+                            <section className="likes-and-date">
+                                <section className="likes">
+                                    <div className="liked-by-profile">
+                                        {selectedPost.likes.slice(0, 3).map((like, index) => (
+                                            <ProfileImg key={index} imgUrl={like.profileImg} diameter={"23px"} />
+                                        ))}
+                                    </div>
 
-                                <div className="amount">
-                                    liked by <h2>{selectedPost.likedBy[0].fullname}</h2>
-                                    {selectedPost.likedBy.length >= 2 ? (
-                                        <>
-                                            and <h2>{selectedPost.likedBy[1].fullname}</h2>
-                                        </>
-                                    ) : (
-                                        <>
-                                            and <h2>{selectedPost.likedBy.length - 1} more</h2>
-                                        </>
-                                    )}
-                                </div>
+                                    <div className="amount">
+                                        liked by <h2>{selectedPost.likes[0].fullname} </h2>
+                                        {selectedPost.likes.length <= 2 ? (
+                                            <>
+                                                and <h2>{selectedPost.likes[1].fullname}</h2>
+                                            </>
+                                        ) : (
+                                            <>
+                                                and <h2>{selectedPost.likes.length - 1} more</h2>
+                                            </>
+                                        )}
+                                    </div>
+                                </section>
+
                             </section>
-
-                            <div className="date">
-                                {/* Add date here if needed */}
-                            </div>
-                        </section>
+                        )}
+                        <div className="date">
+                            {utilService.timeDifferenceUpToWeeks(selectedPost.createdAt)}
+                        </div>
                     </section>
 
                     <section className="add-comment">
@@ -151,5 +164,5 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
                 </section>
             </section>
         </BackDrop>
-    );
+    )
 }

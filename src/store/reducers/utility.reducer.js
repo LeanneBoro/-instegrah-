@@ -1,7 +1,9 @@
-import { SET_IS_LOADING } from '../actions/utility.actions'
+export const SET_IS_LOADING = 'SET_IS_LOADING'
+export const MODAL_CONTENT = 'MODAL_CONTENT'
 
 const initialState = {
-    isLoading: false
+    isLoading: false,
+    modalContent: {}
   }
   
   export function utilityReducer(state = initialState, action = {}) {

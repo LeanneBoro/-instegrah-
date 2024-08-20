@@ -17,6 +17,7 @@ export function PostIndex() {
     }, [])
 
 
+console.log(posts);
 
     return (
 

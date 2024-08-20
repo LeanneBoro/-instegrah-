@@ -1,35 +1,32 @@
-import { useEffect, useState, useRef } from 'react';
-import { ProfileImg } from "./ProfileImg";
-import { utilService } from '../services/util.service';
-import { ListModal } from "./ListModal";
 
-export function CommentPreview({comment, navigateToProfile }) {
-    
-    const [modalData, setModalData] = useState(null)
+import { ProfileImg } from "./ProfileImg";
+
+
+export function CommentPreview({ setModalData, comment, navigateToProfile }) {
 
 
     return <section className="comment-preview flex">
 
         <div onClick={() => navigateToProfile(comment.by.id)} className='cursor-pointer'>
-            <ProfileImg imgUrl={comment.by.imgUrl} diameter={'35px'} />
+            <ProfileImg imgUrl={comment.commenter.profileImg} diameter={'35px'} />
         </div>
 
 
         <section className="comment">
 
             <section className="content">
-                <h2 onClick={() => navigateToProfile(comment.by.id)} className="username cursor-pointer">{comment.by.fullname}</h2>
+                <h2 onClick={() => navigateToProfile(comment.by)} className="username cursor-pointer">{comment.commenter.username}</h2>
 
-                <span >{comment.txt}</span>
+                <span >{comment.text}</span>
 
             </section>
             <section className="details">
 
-                <div>{utilService.timeDifferenceUpToWeeks(comment.timeStamp)}</div>
+                {/* <div>{utilService.timeDifferenceUpToWeeks(comment.timeStamp)}</div> */}
 
-                <div onClick={() => setModalData({data: comment.likedBy, dataType: 'likes' })}>
-                    {comment.likedBy.length > 0 &&
-                        `${comment.likedBy.length} ${comment.likedBy.length > 1 ? 'likes' : 'like'}`}
+                <div onClick={() => setModalData({ data: comment.commentLikedBy, dataType: 'likes' })}>
+                    {comment.commentLikedBy.length > 0 &&
+                        `${comment.commentLikedBy.length} ${comment.commentLikedBy.length > 1 ? 'likes' : 'like'}`}
                 </div>
 
                 <div>reply</div>
@@ -39,7 +36,6 @@ export function CommentPreview({comment, navigateToProfile }) {
 
         </section>
 
-        {modalData && <ListModal content={modalData} setModalData={setModalData}/>}
 
     </section>
 }

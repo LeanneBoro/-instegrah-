@@ -7,52 +7,73 @@ import { ListModal } from './ListModal'
 import { PostPreviewPlaceholder } from './PostPreviewPlaceholder'
 
 export function PostPreview({ post, idx }) {
+
     const [selectedPostId, setSelectedPostId] = useState(null)
     const [modalData, setModalData] = useState(null)
-    const [isImageLoaded, setIsImageLoaded] = useState(false)
+    const [loadingStates, setLoadingStates] = useState({
+        image: false,
+        likes: false,
+        comments: false
+    })
     const navigate = useNavigate()
 
     useEffect(() => {
+        // Load image
         const img = new Image()
-        img.src = post.postImg
-        img.onload = () => setIsImageLoaded(true)
-        img.onerror = () => setIsImageLoaded(true)
-    }, [post.postImg])
+        img.src = post.image
+        img.onload = () => setLoadingStates(prev => ({ ...prev, image: true }))
+        img.onerror = () => setLoadingStates(prev => ({ ...prev, image: true }))
+
+        setLoadingStates(prev => ({ ...prev, likes: true, comments: true }))
+
+        if (modalData) {
+            document.body.classList.add('no-scroll')
+        } else {
+            document.body.classList.remove('no-scroll')
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll')
+        }
+
+    }, [post.image, post.likes, post.comments,modalData])
 
     function navigateToProfile(id) {
         navigate(`/profile/${id}`)
         setSelectedPostId(null)
     }
 
+    const isDataLoaded = loadingStates.image && loadingStates.likes && loadingStates.comments
+
     return (
         <section className="post-preview">
-            {!isImageLoaded ? (
+            {!isDataLoaded ? (
                 <PostPreviewPlaceholder />
             ) : (
                 <>
                     <div className="flex post-title">
                         <div className="flex align-center">
-                            <div onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>
-                                <ProfileImg imgUrl={post.by.profileImg} diameter={"32px"} />
+                            <div onClick={() => navigateToProfile(post.by)} className='cursor-pointer'>
+                                <ProfileImg imgUrl={post.authorProfileImg} diameter={"32px"} />
                             </div>
-    
+
                             <div>
                                 <div className="flex post-by">
-                                    <h2 onClick={() => navigateToProfile(post.by.id)}>{post.by.fullname}</h2>
+                                    <h2 onClick={() => navigateToProfile(post.by)}>{post.authorUsername}</h2>
                                     <div>
-                                        <span className="time">&nbsp;• {utilService.timeDifferenceUpToWeeks(post.timeStamp, "short")}</span>
+                                        <span className="time">&nbsp;• {utilService.timeDifferenceUpToWeeks(post.createdAt, "short")}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-    
+
                         <span className="flex justify-center">
                             <svg aria-label="More Options" className="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More Options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
                         </span>
                     </div>
-                    <img 
-                        className='post-img' 
-                        src={post.postImg}
+                    <img
+                        className='post-img'
+                        src={post.image}
                         alt="Post"
                     />
                     <nav className="flex icon-container">
@@ -69,19 +90,19 @@ export function PostPreview({ post, idx }) {
                         </div>
                         <span className="flex justify-center svg-container save-container"><svg aria-label="Save" className="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Save</title><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon></svg></span>
                     </nav>
-                    <h2 className="likes cursor-pointer" onClick={() => setModalData({data: post.likedBy, dataType: 'likes' })}>
-                        <span>{post.likedBy.length}</span> likes
-                    </h2>
+                    {post.likes.length > 0 && <h2 className="likes cursor-pointer" onClick={() => setModalData({ data: post.likes, dataType: 'likes' })}>
+                        <span>{post.likes.length}</span> likes
+                    </h2>}
                     <div className="title">
-                        <h2 onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>{post.by.fullname}</h2>
+                        <h2 onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>{post.authorFullname}</h2>
                         <div>{post.txt}</div>
                     </div>
                     <div className="view-all" onClick={() => setSelectedPostId(post._id)}>view all {post.comments.length} comments </div>
                     <div className="latest-comment">
                         {/* Latest comment code */}
                     </div>
-                    {selectedPostId && <PostDetail selectedPostId={selectedPostId} setSelectedPostId={setSelectedPostId} navigateToProfile={navigateToProfile} />}
-                    {modalData && <ListModal content={modalData} setModalData={setModalData}/>}
+                    {selectedPostId && <PostDetail setModalData={setModalData} selectedPostId={selectedPostId} setSelectedPostId={setSelectedPostId} navigateToProfile={navigateToProfile} />}
+                    {modalData && <ListModal content={modalData} setModalData={setModalData} />}
                 </>
             )}
         </section>

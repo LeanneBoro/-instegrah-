@@ -1,0 +1,182 @@
+[
+    {
+        "fullname": "Peter Brown",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/5.jpg",
+        "username": "peter_brown_thegreat"
+    },
+    {
+        "fullname": "Laura Smith",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/6.jpg",
+        "username": "laura_smith91"
+    },
+    {
+        "fullname": "John Doe",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/7.jpg",
+        "username": "johnny_doe"
+    },
+    {
+        "fullname": "Emily Johnson",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/7.jpg",
+        "username": "emily_j"
+    },
+    {
+        "fullname": "Michael Davis",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/8.jpg",
+        "username": "mike_davis"
+    },
+    {
+        "fullname": "Jessica Williams",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/8.jpg",
+        "username": "jessica_w"
+    },
+    {
+        "fullname": "Daniel Brown",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/9.jpg",
+        "username": "dan_brown"
+    },
+    {
+        "fullname": "Sarah Miller",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/9.jpg",
+        "username": "sarah_m"
+    },
+    {
+        "fullname": "David Wilson",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/10.jpg",
+        "username": "david_w"
+    },
+    {
+        "fullname": "Olivia Moore",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/10.jpg",
+        "username": "liv_moore"
+    },
+    {
+        "fullname": "James Taylor",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/11.jpg",
+        "username": "j_taylor"
+    },
+    {
+        "fullname": "Sophia Anderson",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/11.jpg",
+        "username": "sophie_anderson"
+    },
+    {
+        "fullname": "William Thomas",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/12.jpg",
+        "username": "will_thomas"
+    },
+    {
+        "fullname": "Ava Jackson",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/12.jpg",
+        "username": "ava_j"
+    },
+    {
+        "fullname": "Lucas Harris",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/13.jpg",
+        "username": "lucas_the_legend"
+    },
+    {
+        "fullname": "Mia Martin",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/13.jpg",
+        "username": "mia_martin_21"
+    },
+    {
+        "fullname": "Ethan Thompson",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/14.jpg",
+        "username": "ethan_t"
+    },
+    {
+        "fullname": "Isabella White",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/14.jpg",
+        "username": "isabella_white"
+    },
+    {
+        "fullname": "Alexander Scott",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/15.jpg",
+        "username": "alex_scott"
+    },
+    {
+        "fullname": "Charlotte King",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/15.jpg",
+        "username": "charlotte_king"
+    },
+    {
+        "fullname": "Benjamin Lee",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/16.jpg",
+        "username": "ben_lee"
+    },
+    {
+        "fullname": "Amelia Green",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/16.jpg",
+        "username": "amelia_green"
+    },
+    {
+        "fullname": "Oliver Adams",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/17.jpg",
+        "username": "oliver_a"
+    },
+    {
+        "fullname": "Harper Nelson",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/17.jpg",
+        "username": "harper_nelson"
+    },
+    {
+        "fullname": "Liam Carter",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/18.jpg",
+        "username": "liam_carter"
+    },
+    {
+        "fullname": "Evelyn Roberts",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/18.jpg",
+        "username": "evelyn_r"
+    },
+    {
+        "fullname": "Jackson Clark",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/19.jpg",
+        "username": "jackson_clark"
+    },
+    {
+        "fullname": "Mia Rodriguez",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/19.jpg",
+        "username": "mia_r"
+    },
+    {
+        "fullname": "Elijah Lewis",
+        "gender": "male",
+        "profileImg": "https://randomuser.me/api/portraits/men/20.jpg",
+        "username": "elijah_lewis"
+    },
+    {
+        "fullname": "Zoe Scott",
+        "gender": "female",
+        "profileImg": "https://randomuser.me/api/portraits/women/20.jpg",
+        "username": "zoe_scott"
+    }
+]

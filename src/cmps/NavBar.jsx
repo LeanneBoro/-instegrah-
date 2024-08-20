@@ -63,6 +63,17 @@ export function NavBar() {
                 <section className="options">
 
 
+                {/* <div onClick={() => } className='login-btn'>Log In</div> */}
+
+
+
+                <div title='Log-in' className="login-btn" onClick={() => {
+                    setExpandedSection("login")
+                    }}>
+                        <img className="icon" src="src\imgs\login-icon.png" alt="" />
+                        <div className="title">Log in</div>
+                    </div>
+
 
 
 
@@ -95,8 +106,7 @@ export function NavBar() {
                     </div>
 
 
-                    <div onClick={() => setExpandedSection("login")} className='login-btn'>Log In</div>
-
+                  
                     <div onClick={() => navigate('/profile')} >
                         <img className="icon " src="src\assets\svgs\Profile.svg" alt="" />
                         <div className="title">Profile</div>

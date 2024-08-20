@@ -1,14 +1,15 @@
 import { postService } from '../../services/post.local.service'
-import { SET_POSTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT } from '../reducers/post.reducer'
+import { SET_POSTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA } from '../reducers/post.reducer'
+import { SET_IS_LOADING } from '../reducers/utility.reducer'
 import { store } from '../store'
-import { SET_IS_LOADING } from './utility.actions';
+
 
 export async function loadPosts() {
   try {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
     store.dispatch({ type: SET_POSTS, posts: [] })
 
-    const posts = await postService.query();
+    const posts = await postService.query()
     store.dispatch({ type: SET_POSTS, posts })
 
   } catch (err) {
@@ -21,15 +22,22 @@ export async function loadPosts() {
 export async function loadPostsByUser(userId) {
   try {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
-    store.dispatch({ type: SET_POSTS, posts: [] })
 
-    const posts = await postService.getPostsByUserId(userId)
-    store.dispatch({ type: SET_POSTS, posts })
-    store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+    const profilePosts = await postService.queryPostsByUser(userId)
+    store.dispatch({ type: SET_PROFILE_POSTS, profilePosts })
+
   } catch (err) {
     console.log(err)
   }
+  finally{
+    store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+  }
 }
+
+export function clearProfileData() {
+  store.dispatch({ type: CLEAR_PROFILE_DATA })
+}
+
 export async function addComment(postId, comment) {
 
   try {
@@ -57,6 +65,8 @@ export async function removeComment(postId, commentId) {
   }
 }
 
+
+
 export async function savePost(newPost) {
 
   try {
@@ -73,7 +83,7 @@ export async function savePost(newPost) {
     console.error('error posting new post:', err)
   }
 
-  finally{
+  finally {
     store.dispatch({ type: SET_IS_LOADING, isLoading: false })
   }
 
