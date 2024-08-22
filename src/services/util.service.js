@@ -10,7 +10,8 @@ export const utilService = {
     getRandomText,
     getRandomDate,
     timeDifferenceUpToWeeks,
-    debounce
+    debounce,
+    base64ToBlob
 }
 
 function makeId(length = 6) {
@@ -163,3 +164,13 @@ function timeDifferenceUpToWeeks(timestamp, length = "short") {
       }, delay)
     }
   }
+
+  function base64ToBlob(base64, mimeType = 'image/png') {
+    const byteCharacters = atob(base64.split(',')[1])
+    const byteNumbers = new Array(byteCharacters.length)
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i)
+    }
+    const byteArray = new Uint8Array(byteNumbers)
+    return new Blob([byteArray], { type: mimeType })
+}

@@ -1,18 +1,23 @@
-import Fuse from 'fuse.js'
 import { storageService } from './async-storage.service.js'
+import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
+
+
 
 export const userService = {
     getUserById,
     getUsersById,
     getUsersByUsername,
-    save,
     checkUsernameExists,
     handleSignUp,
+    signup,
+    getLoggedInUser,
 }
 
 const USER_DB = "user_db"
-const POST_DB = "post_db"
+const BASE_AUTH_URL = 'auth/'
+const BASE_USER_URL = 'user/'
+const STORAGE_KEY_LOGGEDIN = 'loggedinUser'
 
 async function getUserById(userId) {
     try {
@@ -46,28 +51,88 @@ async function getUsersByUsername() {
     }
 }
 
-async function save(user) {
+// async function save(user) {
+//     try {
+//         if (user._id) {
+//             const updatedUser = await storageService.put(USER_DB, user)
+//             return updatedUser
+//         } else {
+//             user._id = utilService.makeId()
+//             const userToAdd = await storageService.post(USER_DB, user)
+//             return userToAdd
+//         }
+//     } catch (err) {
+//         console.log(err)
+//     }
+
+// }
+
+async function login({ username, password }) {
     try {
-        if (user._id) {
-            const updatedUser = await storageService.put(USER_DB, user)
-            return updatedUser
+        const user = await httpService.post(BASE_AUTH_URL + 'login', { username, password })
+        if (user) {
+            return _setLoggedInUser(user)
         } else {
-            user._id = utilService.makeId()
-            const userToAdd = await storageService.post(USER_DB, user)
-            return userToAdd
+            return Promise.reject('Invalid login')
         }
+    } catch (err) {
+        console.error('Error occurred during login:', err)
+        throw err
+    }
+}
+
+async function signup({ username, password, fullname, profileImg, isAdmin = false }) {
+    try {
+        const formData = new FormData()
+        formData.append('username', username)
+        formData.append('password', password)
+        formData.append('fullname', fullname)
+
+        const profileImgBlob = utilService.base64ToBlob(profileImg)
+        formData.append('profileImg', profileImgBlob, 'profileImg.png')
+
+        const response = await httpService.post(BASE_AUTH_URL + 'signup', formData)
+        const profileImgUrl = response.profileImg
+
+            _setLoggedInUser({ username, password, fullname, profileImg : profileImgUrl, isAdmin })
+        return { username, password, fullname, profileImg : profileImgUrl, isAdmin }
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
+}
+
+async function logout() {
+    try {
+        await httpService.post(BASE_AUTH_URL + 'logout')
+        sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
     } catch (err) {
         console.log(err)
     }
+}
 
+function _setLoggedInUser(user) {
+    const userToSave = { _id: user._id, fullname: user.fullname, username: user.username, profileImg: user.profileImg }
+    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
+    return userToSave
+}
+
+
+function getLoggedInUser() {
+    const user = JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN))
+    return user
 }
 
 
 
+
 async function checkUsernameExists(username) {
+
     try {
-        const users = await storageService.query(USER_DB)
-        return users.some(user => user.username === username)
+        const availability = await httpService.get(`user/verify/${username}`)
+        console.log(availability)
+
+        return availability
     } catch (err) {
         console.error('Error checking username:', err)
         throw err
@@ -79,6 +144,7 @@ async function checkUsernameExists(username) {
 
 async function handleSignUp(userData, currentFeedback) {
     const feedback = { ...currentFeedback }
+
 
     if (userData.username.trim() === '') {
         feedback.usernameFeedback = {
@@ -138,9 +204,9 @@ async function handleSignUp(userData, currentFeedback) {
 
     if (isValid) {
         try {
-         await save(userData)
-          console.log('signed up!');
-          
+            await signup(userData)
+            console.log('signed up!');
+
         } catch (error) {
             console.error('Sign up error:', error)
             return { success: false, feedback: { ...feedback, general: 'Error during sign up' } }
