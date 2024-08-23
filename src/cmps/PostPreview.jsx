@@ -8,7 +8,10 @@ import { PostPreviewPlaceholder } from './PostPreviewPlaceholder'
 
 export function PostPreview({ post, idx }) {
 
-    const [selectedPostId, setSelectedPostId] = useState(null)
+
+    
+
+    const [selectedPost, setSelectedPost] = useState(null)
     const [modalData, setModalData] = useState(null)
     const [loadingStates, setLoadingStates] = useState({
         image: false,
@@ -16,6 +19,7 @@ export function PostPreview({ post, idx }) {
         comments: false
     })
     const navigate = useNavigate()
+
 
     useEffect(() => {
         // Load image
@@ -40,7 +44,7 @@ export function PostPreview({ post, idx }) {
 
     function navigateToProfile(id) {
         navigate(`/profile/${id}`)
-        setSelectedPostId(null)
+        setSelectedPost(null)
     }
 
     const isDataLoaded = loadingStates.image && loadingStates.likes && loadingStates.comments
@@ -97,11 +101,11 @@ export function PostPreview({ post, idx }) {
                         <h2 onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>{post.authorFullname}</h2>
                         <div>{post.txt}</div>
                     </div>
-                    <div className="view-all" onClick={() => setSelectedPostId(post._id)}>view all {post.comments.length} comments </div>
+                    <div className="view-all" onClick={() => setSelectedPost(post)}>view all {post.comments.length} comments </div>
                     <div className="latest-comment">
                         {/* Latest comment code */}
                     </div>
-                    {selectedPostId && <PostDetail setModalData={setModalData} selectedPostId={selectedPostId} setSelectedPostId={setSelectedPostId} navigateToProfile={navigateToProfile} />}
+                    {selectedPost && <PostDetail setModalData={setModalData} selectedPost={selectedPost} setSelectedPost={setSelectedPost} navigateToProfile={navigateToProfile} />}
                     {modalData && <ListModal content={modalData} setModalData={setModalData} />}
                 </>
             )}

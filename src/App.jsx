@@ -5,12 +5,13 @@ import { useState } from 'react'
 import { NavBar } from './cmps/NavBar'
 import { PostIndex } from './views/PostIndex'
 import { HeaderNav } from './cmps/HeaderNav'
-
 import { Profile } from './views/Profile'
 import { PostEdit } from './views/PostEdit'
 
 
 function App() {
+
+
 
   return <section>
     <Provider store={store}>
@@ -26,5 +27,7 @@ function App() {
   </section>
 
 }
+
+
 
 export default App

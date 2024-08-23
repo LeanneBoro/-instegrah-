@@ -13,7 +13,7 @@ export function Profile() {
     const user = useSelector(storeState => storeState.postModule.profilePostOwner)
     const posts = useSelector(storeState => storeState.postModule.profilePagePosts)
     const isLoading = useSelector(storeState => storeState.utilityModule.isLoading)
-    const [selectedPostId, setSelectedPostId] = useState(null)
+    const [selectedPost, setSelectedPost] = useState(null)
     const [modalData, setModalData] = useState(null)
 
 
@@ -22,7 +22,7 @@ export function Profile() {
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
     function navigateToProfile(id) {
-        setSelectedPostId(null)
+        setSelectedPost(null)
         navigate(`/profile/${id}`)
     }
 
@@ -88,7 +88,7 @@ export function Profile() {
 
             <section className="profile-post-layout posts">
                 {posts.map((post, idx) => (
-                    <div onClick={() => setSelectedPostId(post._id)} key={idx} className="post-img-container">
+                    <div onClick={() => setSelectedPost(post)} key={idx} className="post-img-container">
                         <img className='post-img' src={post.image} alt="" />
                         <div className='back-drop'></div>
                         <div className='details'>
@@ -101,9 +101,9 @@ export function Profile() {
                 ))}
             </section>
 
-            {selectedPostId && <PostDetail
-                selectedPostId={selectedPostId}
-                setSelectedPostId={setSelectedPostId}
+            {selectedPost && <PostDetail
+                selectedPost={selectedPost}
+                setSelectedPost={setSelectedPost}
                 navigateToProfile={navigateToProfile}
                 setModalData={setModalData} />}
 

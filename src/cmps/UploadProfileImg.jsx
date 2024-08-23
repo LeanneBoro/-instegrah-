@@ -3,7 +3,7 @@ import 'croppie/croppie.css'
 import { useState, useRef, useEffect } from 'react'
 import { FileUploader } from './FileUploader'
 
-export function UploadProfileImg({ openSelectionModal, setProfileImg }) {
+export function UploadProfileImg({ openSelectionModal, onSetProfileImg }) {
     const croppieRef = useRef(null)
     const croppieInstance = useRef(null)
     const [imageUploaded, setImageUploaded] = useState(false)
@@ -58,7 +58,7 @@ export function UploadProfileImg({ openSelectionModal, setProfileImg }) {
                     type: 'base64',
                     size: 'viewport',
                 })
-                setProfileImg(result)
+                onSetProfileImg(result)
                 openSelectionModal(false)
             } catch (error) {
                 console.error('Croppie result error:', error)

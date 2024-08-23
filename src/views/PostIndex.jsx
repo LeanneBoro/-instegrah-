@@ -17,8 +17,6 @@ export function PostIndex() {
     }, [])
 
 
-console.log(posts);
-
     return (
 
         <section className="main-layout post-index">

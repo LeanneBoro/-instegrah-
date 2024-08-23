@@ -10,8 +10,6 @@ export function ListModal({ content, setModalData}) {
 
 
 
-    console.log(content);
-    
 
     return (
         <BackDrop  zIndex={5000000000000000} dataState={setModalData}>

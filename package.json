@@ -13,7 +13,10 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.4",
+    "cloudinary": "^2.4.0",
+    "cloudinary-react": "^1.8.1",
     "croppie": "^2.6.5",
+    "dotenv": "^16.4.5",
     "exif-js": "^2.3.0",
     "fuse.js": "^7.0.0",
     "mongodb": "^6.8.0",

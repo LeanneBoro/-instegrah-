@@ -3,6 +3,7 @@ import { storageService } from './async-storage.service.js'
 import { demoDataService } from './demoData.service.js'
 import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
+import { userService } from './user.service.js'
 // import { httpService } from './http.service.js'
 const POST_DB = 'post_db'
 const USER_DB = "user_db"
@@ -17,7 +18,9 @@ export const postService = {
     remove,
     getLatestComment,
     addComment,
-    getPostsByUserId
+    isCommentLiked,
+    getPostsByUserId,
+    getPostComments
 
 }
 
@@ -43,14 +46,14 @@ export const postService = {
 //     }
 // }
 
-function query(){
+function query() {
 
     return httpService.get(BASE_URL)
 }
 
-function queryPostsByUser(userId){
+function queryPostsByUser(userId) {
 
-    return httpService.get(BASE_URL + userId )
+    return httpService.get(BASE_URL + userId)
 }
 
 
@@ -128,261 +131,16 @@ async function addComment(postId, comment) {
 
 }
 
-function _createPosts() {
-    return [{
-        _id: "s101",
-        txt: "Best trip ever",
-        imgUrl: "http://some-img",
-        by: {
-            _id: "u101",
-            fullname: "Ulash Ulashi",
-            imgUrl: "https://randomuser.me/api/portraits/men/80.jpg"
-        },
-        loc: { // Optional
-            lat: 11.11,
-            lng: 22.22,
-            name: "Tel Aviv"
-        },
-        comments: [
-            {
-                id: "c1001",
-                by: {
-                    _id: "u105",
-                    fullname: "Bob",
-                    imgUrl: "http://some-img"
-                },
-                txt: "good one!",
-                likedBy: [ // Optional
-                    {
-                        "_id": "u105",
-                        "fullname": "Bob",
-                        "imgUrl": "http://some-img"
-                    }
-                ]
-            },
-            {
-                id: "c1002",
-                by: {
-                    _id: "u106",
-                    fullname: "Dob",
-                    imgUrl: "http://some-img"
-                },
-                txt: "not good!",
-            }
-        ],
-        likedBy: [
-            {
-                _id: "u105",
-                fullname: "Bob",
-                imgUrl: "http://some-img"
-            },
-            {
-                _id: "u106",
-                fullname: "Dob",
-                imgUrl: "http://some-img"
-            }
-        ],
-        tags: ["fun", "romantic"]
-    },
-    {
-        _id: "s102",
-        txt: "Amazing adventure",
-        imgUrl: "http://another-img",
-        by: {
-            _id: "u102",
-            fullname: "Anna Anni",
-            imgUrl: "http://another-img"
-        },
-        loc: { // Optional
-            lat: 33.33,
-            lng: 44.44,
-            name: "New York"
-        },
-        comments: [
-            {
-                id: "c1003",
-                by: {
-                    _id: "u107",
-                    fullname: "Charlie",
-                    imgUrl: "http://another-img"
-                },
-                txt: "Fantastic!",
-                likedBy: [ // Optional
-                    {
-                        _id: "u107",
-                        fullname: "Charlie",
-                        imgUrl: "http://another-img"
-                    }
-                ]
-            },
-            {
-                id: "c1004",
-                by: {
-                    _id: "u108",
-                    fullname: "Dani",
-                    imgUrl: "http://another-img"
-                },
-                txt: "I want to go there too!"
-            }
-        ],
-        likedBy: [
-            {
-                _id: "u107",
-                fullname: "Charlie",
-                imgUrl: "http://another-img"
-            },
-            {
-                _id: "u108",
-                fullname: "Dani",
-                imgUrl: "http://another-img"
-            }
-        ],
-        tags: ["adventure", "exploration"]
-    }, {
-        _id: "s103",
-        txt: "Lovely beach day",
-        imgUrl: "http://beach-img",
-        by: {
-            _id: "u103",
-            fullname: "Becky Beach",
-            imgUrl: "https://randomuser.me/api/portraits/men/80.jpg"
-        },
-        loc: { // Optional
-            lat: 55.55,
-            lng: 66.66,
-            name: "Malibu"
-        },
-        comments: [
-            {
-                id: "c1005",
-                by: {
-                    _id: "u109",
-                    fullname: "Eve",
-                    imgUrl: "http://beach-img"
-                },
-                txt: "Looks so relaxing!",
-                likedBy: [ // Optional
-                    {
-                        _id: "u109",
-                        fullname: "Eve",
-                        imgUrl: "http://beach-img"
-                    }
-                ]
-            },
-            {
-                id: "c1006",
-                by: {
-                    _id: "u110",
-                    fullname: "Frank",
-                    imgUrl: "http://beach-img"
-                },
-                txt: "Wish I was there!"
-            }
-        ],
-        likedBy: [
-            {
-                _id: "u109",
-                fullname: "Eve",
-                imgUrl: "http://beach-img"
-            },
-            {
-                _id: "u110",
-                fullname: "Frank",
-                imgUrl: "http://beach-img"
-            }
-        ],
-        tags: ["beach", "sunset"]
-    },
-    {
-        _id: "s104",
-        txt: "Mountain hike",
-        imgUrl: "http://mountain-img",
-        by: {
-            _id: "u104",
-            fullname: "Mike Mount",
-            imgUrl: "https://randomuser.me/api/portraits/men/80.jpg"
-        },
-        loc: { // Optional
-            lat: 77.77,
-            lng: 88.88,
-            name: "Rocky Mountains"
-        },
-        comments: [
-            {
-                id: "c1007",
-                by: {
-                    _id: "u111",
-                    fullname: "Gina",
-                    imgUrl: "http://mountain-img"
-                },
-                txt: "Breathtaking view!",
-                likedBy: [ // Optional
-                    {
-                        _id: "u111",
-                        fullname: "Gina",
-                        imgUrl: "http://mountain-img"
-                    }
-                ]
-            },
-            {
-                id: "c1008",
-                by: {
-                    _id: "u112",
-                    fullname: "Hank",
-                    imgUrl: "http://mountain-img"
-                },
-                txt: "Nature at its best!"
-            },
-            {
-                id: "c1008",
-                by: {
-                    _id: "u112",
-                    fullname: "Hank",
-                    imgUrl: "http://mountain-img"
-                },
-                txt: "Nature at its best!"
-            },
-            {
-                id: "c1008",
-                by: {
-                    _id: "u112",
-                    fullname: "Hank",
-                    imgUrl: "http://mountain-img"
-                },
-                txt: "Nature at its best!"
-            },
-            {
-                id: "c1008",
-                by: {
-                    _id: "u112",
-                    fullname: "Hank",
-                    imgUrl: "http://mountain-img"
-                },
-                txt: "Nature at its best!"
-            },
-            {
-                id: "c1008",
-                by: {
-                    _id: "u112",
-                    fullname: "Hank",
-                    imgUrl: "http://mountain-img"
-                },
-                txt: "Nature at its best!"
-            },
-        ],
-        likedBy: [
-            {
-                _id: "u111",
-                fullname: "Gina",
-                imgUrl: "http://mountain-img"
-            },
-            {
-                _id: "u112",
-                fullname: "Hank",
-                imgUrl: "http://mountain-img"
-            }
-        ],
-        tags: ["hiking", "nature"]
-    }
-    ]
+function isCommentLiked(comment) {
+    const userId = userService.getLoggedInUser()._id
+
+    const isLiked = comment.likedBy.some(like => {
+        return like.userId === userId
+    })
+
+    return isLiked
 }
+
+async function getPostComments(postId) {
+    return httpService.get(`post/comments/${postId}`)
+  }

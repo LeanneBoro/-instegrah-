@@ -5,20 +5,29 @@ import { utilService } from '../services/util.service';
 import { ListModal } from './ListModal';
 import { BackDrop } from './BackDrop';
 import { useSelector } from 'react-redux';
+import { getPostComments } from '../store/actions/post.actions';
 
 import { addComment, removeComment } from '../store/actions/post.actions'
+import { postService } from '../services/post.local.service';
 
-export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfile, setModalData }) {
+export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
+    const { postComments } = useSelector(storeState => storeState.postModule)
+    const { isCommentLoading } = useSelector(storeState => storeState.utilityModule)
+
+    const sortedComments = postComments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    
+
+console.log(isCommentLoading);
 
 
     const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
     const [commentText, setCommentText] = useState('')
     const inputRef = useRef(null)
-    const posts = useSelector(storeState => storeState.postModule.profilePagePosts);
-    const selectedPost = posts.find(post => post._id === selectedPostId);
+
 
     useEffect(() => {
-        if (selectedPostId) {
+        getPostComments(selectedPost._id)
+        if (selectedPost) {
             document.body.classList.add('no-scroll')
         } else {
             document.body.classList.remove('no-scroll')
@@ -27,7 +36,7 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
         return () => {
             document.body.classList.remove('no-scroll')
         }
-    }, [selectedPostId])
+    }, [selectedPost])
 
 
 
@@ -63,11 +72,11 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
 
 
     return (
-        <BackDrop disableAt={780} zIndex={1000} dataState={setSelectedPostId}>
+        <BackDrop disableAt={780} zIndex={1000} dataState={setSelectedPost}>
 
             <section className="post-details">
                 <section className="details-nav">
-                    <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" onClick={() => setSelectedPostId(null)} />
+                    <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" onClick={() => setSelectedPost(null)} />
                     <div>Post</div>
                 </section>
 
@@ -103,14 +112,14 @@ export function PostDetail({ selectedPostId, setSelectedPostId, navigateToProfil
                                 </section>
 
                                 <section className="details">
-                                    <div>{utilService.timeDifferenceUpToWeeks(selectedPost.timeStamp)}</div>
+                                    <div>{utilService.timeDifferenceUpToWeeks(selectedPost.createdAt)}</div>
                                     <div>reply</div>
                                 </section>
                             </div>
                         </section>
 
-                        {selectedPost.comments.map(comment => (
-                            <CommentPreview key={comment._id} setModalData={setModalData} selectedPost={selectedPost} comment={comment} navigateToProfile={navigateToProfile} />
+                        {sortedComments.map((comment,index) => (
+                            <CommentPreview key={comment._id} isCommentLoading={isCommentLoading} setModalData={setModalData} selectedPost={selectedPost} comment={comment} navigateToProfile={navigateToProfile} />
                         ))}
                     </section>
 

@@ -1,6 +1,6 @@
 import { postService } from '../../services/post.local.service'
-import { SET_POSTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA } from '../reducers/post.reducer'
-import { SET_IS_LOADING } from '../reducers/utility.reducer'
+import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA } from '../reducers/post.reducer'
+import { SET_IS_LOADING, SET_IS_COMMENTS_LOADING } from '../reducers/utility.reducer'
 import { store } from '../store'
 
 
@@ -19,6 +19,33 @@ export async function loadPosts() {
   }
 }
 
+export async function handleCommentLike() {
+
+  try {
+
+  }
+
+  catch {
+
+  }
+}
+
+export async function getPostComments(postId) {
+  try {
+    store.dispatch({ type: SET_IS_COMMENTS_LOADING, isLoading: true })
+
+    const comments = await postService.getPostComments(postId)
+    store.dispatch({ type: SET_POST_COMMENTS, comments })
+
+  } catch (err) {
+    console.log(err)
+  }
+  finally {
+    store.dispatch({ type: SET_IS_COMMENTS_LOADING, isLoading: false })
+  }
+
+}
+
 export async function loadPostsByUser(userId) {
   try {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
@@ -29,7 +56,7 @@ export async function loadPostsByUser(userId) {
   } catch (err) {
     console.log(err)
   }
-  finally{
+  finally {
     store.dispatch({ type: SET_IS_LOADING, isLoading: false })
   }
 }
