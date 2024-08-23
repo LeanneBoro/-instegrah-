@@ -2,20 +2,38 @@
 
     display: flex;
     padding: 0.5em 0;
-    margin: 12px;
+    margin-block: 12px;
+    padding-inline: 12px;
+
+    &:hover {
+        background-color: darken(white, 10%)
+    }
 
     & .comment {
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
         gap: 0.4em;
 
         & .content {
-            display: block;
+            display: flex;
+            justify-content: space-between;
+
+
+            & .text {
+                // display: block;
+
+            }
 
             & .username {
                 margin-right: 0.5em;
+                flex-grow: 1;
             }
+
+
         }
+
+
 
         & .details {
             display: flex;
@@ -27,7 +45,21 @@
                 margin-right: 12px;
             }
         }
+
+
     }
 
+    & .like {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1em;
+        right: 20px;
+        margin-left: 10px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 
 }

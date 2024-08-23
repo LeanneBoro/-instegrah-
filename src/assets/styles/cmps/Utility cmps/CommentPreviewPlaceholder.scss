@@ -1,0 +1,38 @@
+.comment-preview-placeholder {
+
+    padding: 0.5em 0;
+    margin: 12px;
+    background-color: white;
+    height: 3.6em;
+    display: flex;
+    align-items: center;
+
+    .profile{
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        margin-right: 15px;
+        background-color: $gray3;
+        animation: flicker 1.5s infinite;
+    }
+
+    & .text{
+        background-color: $gray3;
+        width: 80%;
+        height: 30px;
+        border-radius: 5px;
+        animation: flicker 1.5s infinite;
+    }
+}
+
+@keyframes flicker {
+
+    0%,
+    100% {
+        background-color: $gray3;
+    }
+
+    50% {
+        background-color: lighten($gray3, 10%);
+    }
+}
