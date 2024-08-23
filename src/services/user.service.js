@@ -93,9 +93,10 @@ async function signup({ username, password, fullname, profileImg, isAdmin = fals
 
         const response = await httpService.post(BASE_AUTH_URL + 'signup', formData)
         const profileImgUrl = response.profileImg
-
-            _setLoggedInUser({ username, password, fullname, profileImg : profileImgUrl, isAdmin })
-        return { username, password, fullname, profileImg : profileImgUrl, isAdmin }
+        const _id = response._id
+      
+        _setLoggedInUser({ _id: _id, username, password, fullname, profileImg: profileImgUrl, isAdmin })
+        return { username, password, fullname, profileImg: profileImgUrl, isAdmin }
     } catch (err) {
         console.log(err)
         throw err
@@ -112,7 +113,9 @@ async function logout() {
 }
 
 function _setLoggedInUser(user) {
-    const userToSave = { _id: user._id, fullname: user.fullname, username: user.username, profileImg: user.profileImg }
+  
+
+    const userToSave = { _id: user._id, fullname: user.fullname, username: user.username, profileImg: user.profileImg, }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
     return userToSave
 }
@@ -138,6 +141,8 @@ async function checkUsernameExists(username) {
         throw err
     }
 }
+
+
 
 
 

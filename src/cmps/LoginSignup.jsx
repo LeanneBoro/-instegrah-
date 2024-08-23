@@ -3,7 +3,7 @@ import { ProfileImg } from './ProfileImg'
 import { UploadProfileImg } from './UploadProfileImg'
 import { userService } from '../services/user.service'
 import { utilService } from '../services/util.service'
-import {allPosts} from '../../everything-demodata/demoData'
+import { allPosts } from '../../everything-demodata/demoData'
 
 
 // console.log(allPosts);
@@ -89,7 +89,7 @@ export function LoginSignUp({ setExpandedSection }) {
         event.stopPropagation()
     }
 
-    console.log(newUser);
+
 
     function handleBtn2() {
         setSignUp(!signUp)
@@ -134,7 +134,7 @@ export function LoginSignUp({ setExpandedSection }) {
             }
 
             try {
-                console.log('finished')
+
                 const exists = await userService.checkUsernameExists(username)
                 setSignUpFeedback(prevFeedback => ({
                     ...prevFeedback,
@@ -158,17 +158,9 @@ export function LoginSignUp({ setExpandedSection }) {
     )
 
     function onSignUp() {
-        editNewUser(newUser => ({
-            ...newUser,
-            profileImg: profileImg
-        }))
-
 
         userService.handleSignUp(newUser, signUpFeedback).then(result => {
             setSignUpFeedback(result.feedback)
-            if (result.success) {
-
-            }
         })
     }
 
@@ -181,6 +173,17 @@ export function LoginSignUp({ setExpandedSection }) {
                 setLoginFeedback(result.feedback)
             }
         })
+    }
+
+    function onSetProfileImg(result) {
+        setProfileImg(result)
+
+        editNewUser(newUser => ({
+            ...newUser,
+            profileImg: result
+        }))
+    
+
     }
 
     function handleChange(event) {
@@ -286,7 +289,7 @@ export function LoginSignUp({ setExpandedSection }) {
                         </section>
                     </>
                 )}
-                {selectionModal && <UploadProfileImg openSelectionModal={openSelectionModal} setProfileImg={setProfileImg} />}
+                {selectionModal && <UploadProfileImg openSelectionModal={openSelectionModal} onSetProfileImg={onSetProfileImg} />}
             </section>
         </section>
     )
