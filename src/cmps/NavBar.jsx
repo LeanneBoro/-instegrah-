@@ -7,6 +7,7 @@ import { NotificationsModal } from './NotificationsModal';
 import { PostEdit } from '../views/PostEdit';
 import { BackDrop } from './BackDrop';
 import { LoginSignUp } from './LoginSignup';
+import { userService } from '../services/user.service';
 
 
 
@@ -25,7 +26,7 @@ export function NavBar() {
         if (navBarRef.current && !navBarRef.current.contains(event.target)) {
             setExpandedSection('');
         }
-    };
+    }
 
     useEffect(() => {
         document.addEventListener('click', handleOutsideClick)
@@ -35,6 +36,12 @@ export function NavBar() {
             document.removeEventListener('click', handleOutsideClick)
         }
     }, [])
+
+    function handleProfileNavigate(){
+        userService.getLoggedInUser() 
+        ? navigate('/profile/' + userService.getLoggedInUser()._id) 
+        : setExpandedSection("login")
+    }
 
 
 
@@ -107,8 +114,8 @@ export function NavBar() {
 
 
                   
-                    <div onClick={() => navigate('/profile')} >
-                        <img className="icon " src="src\assets\svgs\Profile.svg" alt="" />
+                    <div onClick={handleProfileNavigate} >
+                        <img className="icon " src={userService.getLoggedInUser() ? userService.getLoggedInUser().profileImg  : "src/assets/svgs/Profile.svg"} alt="" />
                         <div className="title">Profile</div>
                     </div>
 

@@ -1,41 +1,25 @@
-import fs from 'fs';
+import fs from 'fs'
 
-// Generate a random timestamp between now and 6 months ago
-function getRandomTimestamp() {
-  const now = Date.now();
-  const sixMonthsAgo = now - (6 * 30 * 24 * 60 * 60 * 1000); // Approximate 6 months in milliseconds
-  return Math.floor(Math.random() * (now - sixMonthsAgo)) + sixMonthsAgo;
+// Load the JSON file
+const data = JSON.parse(fs.readFileSync('instegram.post.json', 'utf8'))
+
+// Helper function to generate a random timestamp between two dates
+const getRandomTimestamp = (start, end) => {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
 }
 
-// Read JSON data from the file
-const inputFilePath = 'data.json';
-const outputFilePath = 'updatedData.json';
+const now = new Date()
 
-fs.readFile(inputFilePath, 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading file:', err);
-    return;
-  }
+data.forEach(post => {
+  const postCreatedAt = new Date(parseInt(post.createdAt.$numberLong, 10))
+  
+  post.comments.forEach(comment => {
+    const randomTimestamp = getRandomTimestamp(postCreatedAt, now)
+    comment.createdAt = { $numberLong: randomTimestamp.getTime().toString() }
+  })
+})
 
-  // Parse the JSON data
-  const jsonData = JSON.parse(data);
+// Write the updated data back to a JSON file
+fs.writeFileSync('updated_instegram.post.json', JSON.stringify(data, null, 2), 'utf8')
 
-  // Update the createdAt field to be a timestamp
-  jsonData.forEach(post => {
-    post.createdAt = getRandomTimestamp(); // Update createdAt to a random timestamp
-    if (post.comments) {
-      post.comments.forEach(comment => {
-        comment.createdAt = getRandomTimestamp(); // Update createdAt in comments
-      });
-    }
-  });
-
-  // Write the updated JSON data to a new file
-  fs.writeFile(outputFilePath, JSON.stringify(jsonData, null, 2), (err) => {
-    if (err) {
-      console.error('Error writing file:', err);
-      return;
-    }
-    console.log('Updated data has been written to', outputFilePath);
-  });
-});
+console.log('Updated JSON file has been saved as updated_instegram.post.json')
