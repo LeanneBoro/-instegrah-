@@ -19,6 +19,7 @@ const BASE_AUTH_URL = 'auth/'
 const BASE_USER_URL = 'user/'
 const STORAGE_KEY_LOGGEDIN = 'loggedinUser'
 
+
 async function getUserById(userId) {
     try {
         const users = await storageService.query(USER_DB)
@@ -51,21 +52,7 @@ async function getUsersByUsername() {
     }
 }
 
-// async function save(user) {
-//     try {
-//         if (user._id) {
-//             const updatedUser = await storageService.put(USER_DB, user)
-//             return updatedUser
-//         } else {
-//             user._id = utilService.makeId()
-//             const userToAdd = await storageService.post(USER_DB, user)
-//             return userToAdd
-//         }
-//     } catch (err) {
-//         console.log(err)
-//     }
 
-// }
 
 async function login({ username, password }) {
     try {
@@ -81,21 +68,23 @@ async function login({ username, password }) {
     }
 }
 
-async function signup({ username, password, fullname, profileImg, isAdmin = false }) {
+async function signup({ username, password, fullname, profileImg, isAdmin = false, }) {
     try {
         const formData = new FormData()
         formData.append('username', username)
         formData.append('password', password)
         formData.append('fullname', fullname)
 
+
         const profileImgBlob = utilService.base64ToBlob(profileImg)
         formData.append('profileImg', profileImgBlob, 'profileImg.png')
 
         const response = await httpService.post(BASE_AUTH_URL + 'signup', formData)
         const profileImgUrl = response.profileImg
-        const _id = response._id
-      
-        _setLoggedInUser({ _id: _id, username, password, fullname, profileImg: profileImgUrl, isAdmin })
+        const { _id, followers, following } = response
+       
+
+        _setLoggedInUser({ _id: _id, username, password, fullname, profileImg: profileImgUrl, isAdmin, followers, following })
         return { username, password, fullname, profileImg: profileImgUrl, isAdmin }
     } catch (err) {
         console.log(err)
@@ -113,9 +102,14 @@ async function logout() {
 }
 
 function _setLoggedInUser(user) {
-  
+    console.log(user);
 
-    const userToSave = { _id: user._id, fullname: user.fullname, username: user.username, profileImg: user.profileImg, }
+
+    const userToSave = {
+        _id: user._id, fullname: user.fullname,
+        username: user.username, profileImg:
+            user.profileImg, followers: user.followers, following: user.following
+    }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
     return userToSave
 }

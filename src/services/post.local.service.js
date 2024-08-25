@@ -20,31 +20,14 @@ export const postService = {
     addComment,
     isCommentLiked,
     getPostsByUserId,
-    getPostComments
+    getPostComments,
+    updateCommentLikes,
+    togglePostLike,
+
 
 }
 
-// async function query(filterBy = {}) {
-//     try {
-//         // Query users
-//         let users = await storageService.query(USER_DB);
 
-//         // If no users found, create demo users
-//         if (!users || !users.length) {
-//             users = demoDataService.createUsersDemoData();
-//         }
-
-//         // Create posts if not already created
-//         let posts = await demoDataService.createPostsDemoData(users);
-
-//         // Sort posts by timestamp in descending order
-//         posts = posts.sort((a, b) => b.timeStamp - a.timeStamp)
-
-//         return posts;
-//     } catch (err) {
-//         console.log(err);
-//     }
-// }
 
 function query() {
 
@@ -131,16 +114,30 @@ async function addComment(postId, comment) {
 
 }
 
-function isCommentLiked(comment) {
-    const userId = userService.getLoggedInUser()._id
+async function togglePostLike(postId){
+    console.log(postId);
+    
+    const response = await httpService.put(`post/likes/${postId}`)
+    return response
 
-    const isLiked = comment.likedBy.some(like => {
-        return like.userId === userId
-    })
+}
+
+function isCommentLiked(comment) {
+    const loggedInUser = userService.getLoggedInUser()
+    if (!loggedInUser) return
+
+    const userId = loggedInUser._id
+
+    const isLiked = comment.likedBy.some(like => like._id === userId)
 
     return isLiked
 }
 
 async function getPostComments(postId) {
     return httpService.get(`post/comments/${postId}`)
-  }
+}
+
+async function updateCommentLikes(postId, commentId) {
+    const response = await httpService.put(`post/${postId}/comments/${commentId}`)
+    return response
+}

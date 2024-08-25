@@ -5,6 +5,7 @@ import { utilService } from '../services/util.service';
 import { ListModal } from './ListModal';
 import { BackDrop } from './BackDrop';
 import { useSelector } from 'react-redux';
+import { toggleCommentLike } from "../store/actions/post.actions";
 import { getPostComments } from '../store/actions/post.actions';
 
 import { addComment, removeComment } from '../store/actions/post.actions'
@@ -14,16 +15,17 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
     const { postComments } = useSelector(storeState => storeState.postModule)
     const { isCommentLoading } = useSelector(storeState => storeState.utilityModule)
 
-    const sortedComments = postComments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    
-
-console.log(isCommentLoading);
-
+    const sortedComments = postComments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
 
     const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
     const [commentText, setCommentText] = useState('')
     const inputRef = useRef(null)
 
+
+
+    function toggleCommentLike(){
+        
+    }
 
     useEffect(() => {
         getPostComments(selectedPost._id)
@@ -119,7 +121,13 @@ console.log(isCommentLoading);
                         </section>
 
                         {sortedComments.map((comment,index) => (
-                            <CommentPreview key={comment._id} isCommentLoading={isCommentLoading} setModalData={setModalData} selectedPost={selectedPost} comment={comment} navigateToProfile={navigateToProfile} />
+                            <CommentPreview key={comment._id} 
+                            isCommentLoading={isCommentLoading} 
+                            setModalData={setModalData} 
+                            postId={selectedPost._id} 
+                            comment={comment} 
+                            navigateToProfile={navigateToProfile}
+                             />
                         ))}
                     </section>
 

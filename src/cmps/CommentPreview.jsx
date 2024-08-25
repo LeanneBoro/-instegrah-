@@ -2,13 +2,15 @@ import { postService } from "../services/post.local.service"
 import { utilService } from "../services/util.service";
 import { CommentPreviewPlaceholder } from "./CommentPreviewPlaceholder"
 import { ProfileImg } from "./ProfileImg"
+import { toggleCommentLike } from "../store/actions/post.actions";
+import { userService } from "../services/user.service";
 
-export function CommentPreview({ setModalData, comment, navigateToProfile,isCommentLoading }) {
+export function CommentPreview({ setModalData, comment, navigateToProfile,isCommentLoading,postId }) {
 
-    if (isCommentLoading) return <CommentPreviewPlaceholder />
-    console.log(comment);
+
+
     
-
+    if (isCommentLoading) return <CommentPreviewPlaceholder />
     return (
         <section className="comment-preview flex">
             <div onClick={() => navigateToProfile(comment.by.id)} className='cursor-pointer'>
@@ -34,14 +36,15 @@ export function CommentPreview({ setModalData, comment, navigateToProfile,isComm
                 </section>
             </section>
 
-            <div className="like">
+           {userService.getLoggedInUser() && <div className="like">
                 <img
                     src={postService.isCommentLiked(comment)
                         ? 'src/imgs/HeartFull.png'
                         : 'src/assets/svgs/Heart.svg'}
                     alt=""
+                    onClick={() => toggleCommentLike(comment,postId)}
                 />
-            </div>
+            </div>}
         </section>
     )
 }
