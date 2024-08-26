@@ -130,6 +130,7 @@ function isCommentLiked(comment) {
 
     const isLiked = comment.likedBy.some(like => like._id === userId)
 
+
     return isLiked
 }
 

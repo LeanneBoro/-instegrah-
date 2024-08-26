@@ -39,10 +39,13 @@ export async function toggleCommentLike(comment, postId) {
 
   if (!user) return
 
+  // console.log(event);
+  
+
   try {
     const commentId = comment._id
-    await postService.updateCommentLikes(postId, commentId)
     store.dispatch({ type: TOGGLE_COMMENT_LIKE, comment, postId, user })
+    await postService.updateCommentLikes(postId, commentId)
   }
 
   catch (err) {

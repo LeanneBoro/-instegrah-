@@ -12,7 +12,7 @@ export function CommentPreview({ setModalData, comment, navigateToProfile,isComm
     
     if (isCommentLoading) return <CommentPreviewPlaceholder />
     return (
-        <section className="comment-preview flex">
+        <section  className="comment-preview flex">
             <div onClick={() => navigateToProfile(comment.by.id)} className='cursor-pointer'>
                 <ProfileImg imgUrl={comment.by.profileImg} diameter={'35px'} />
             </div>
@@ -36,13 +36,13 @@ export function CommentPreview({ setModalData, comment, navigateToProfile,isComm
                 </section>
             </section>
 
-           {userService.getLoggedInUser() && <div className="like">
+           {userService.getLoggedInUser() && <div className="like" onClick={() => toggleCommentLike(comment,postId)}>
                 <img
                     src={postService.isCommentLiked(comment)
                         ? 'src/imgs/HeartFull.png'
                         : 'src/assets/svgs/Heart.svg'}
                     alt=""
-                    onClick={() => toggleCommentLike(comment,postId)}
+                    
                 />
             </div>}
         </section>
