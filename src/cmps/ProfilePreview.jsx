@@ -1,3 +1,4 @@
+import { FollowBtn } from "./FollowBtn"
 import { ProfileImg } from "./ProfileImg"
 
 export function ProfilePreview({ profile }) {
@@ -8,6 +9,7 @@ export function ProfilePreview({ profile }) {
         <div className='names'>
         <h2>{profile.username}</h2>
         {profile.fullname}
+      
     </div>
 
 

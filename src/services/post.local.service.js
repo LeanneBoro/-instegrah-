@@ -144,7 +144,7 @@ function isPostLiked(post) {
 
     const userId = loggedInUser._id
 
-    const isLiked = post.likes.some(like => like._id === userId)
+    const isLiked = post.likes.some(like => like === userId)
    
     
 

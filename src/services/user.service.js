@@ -34,8 +34,12 @@ async function getUserById(userId) {
 
 async function getUsersById(userIds) {
     try {
-        const users = await storageService.query(USER_DB)
-        return users.filter(user => userIds.includes(user._id))
+    
+        const idsQuery = userIds.join(',')
+        const response = await httpService.get(`${BASE_USER_URL}ids/${encodeURIComponent(idsQuery)}`)
+
+      return response
+        
     } catch (err) {
         console.error('Error fetching users:', err)
         throw err

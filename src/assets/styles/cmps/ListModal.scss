@@ -27,10 +27,17 @@
 
     & .data-list {
         display: flex;
+    
         flex-direction: column;
         flex-grow: 1;
         margin-block: 10px;
         margin-right: 5px;
         overflow-y: scroll;
+
+        & .item{
+            align-items: center;
+            display: flex;
+            margin-right: 16px;
+        }
     }
 }
