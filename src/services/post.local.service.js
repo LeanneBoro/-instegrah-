@@ -23,6 +23,7 @@ export const postService = {
     getPostComments,
     updateCommentLikes,
     togglePostLike,
+    isPostLiked
 
 
 }
@@ -129,6 +130,23 @@ function isCommentLiked(comment) {
     const userId = loggedInUser._id
 
     const isLiked = comment.likedBy.some(like => like._id === userId)
+
+
+    return isLiked
+}
+
+function isPostLiked(post) {
+    const loggedInUser = userService.getLoggedInUser()
+    if (!loggedInUser) return
+
+    // console.log(post.);
+    
+
+    const userId = loggedInUser._id
+
+    const isLiked = post.likes.some(like => like._id === userId)
+   
+    
 
 
     return isLiked

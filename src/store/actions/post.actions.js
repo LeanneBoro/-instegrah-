@@ -1,6 +1,6 @@
 import { postService } from '../../services/post.local.service'
 import { userService } from '../../services/user.service'
-import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, TOGGLE_COMMENT_LIKE, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA } from '../reducers/post.reducer'
+import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, TOGGLE_COMMENT_LIKE, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA, TOGGLE_POST_LIKE } from '../reducers/post.reducer'
 import { SET_IS_LOADING, SET_IS_COMMENTS_LOADING } from '../reducers/utility.reducer'
 import { store } from '../store'
 
@@ -22,9 +22,14 @@ export async function loadPosts() {
 }
 
 export async function togglePostLike(postId) {
+  const user = userService.getLoggedInUser()
+
+
+  if (!user) return
 
   try {
-   await postService.togglePostLike(postId)
+    store.dispatch({ type: TOGGLE_POST_LIKE, postId, user })
+    await postService.togglePostLike(postId)
   }
 
   catch (err) {
@@ -39,8 +44,8 @@ export async function toggleCommentLike(comment, postId) {
 
   if (!user) return
 
-  // console.log(event);
-  
+
+
 
   try {
     const commentId = comment._id

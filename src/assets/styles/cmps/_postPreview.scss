@@ -48,20 +48,12 @@
         justify-content: space-between;
         margin: 4px 0;
 
-        & .svg-container {
+        & .svg-container  {
             padding: 8px;
+           height: 40px;
+           @include profile-preview-btns;
+            
 
-            &:first-child {
-                padding-left: 0;
-            }
-
-            &:last-child {
-                padding-right: 0;
-            }
-
-            & svg {
-                cursor: pointer;
-            }
         }
     }
 

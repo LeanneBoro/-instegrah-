@@ -6,6 +6,7 @@ export const CLEAR_PROFILE_DATA = 'CLEAR_PROFILE_DATA'
 export const ADD_POST = 'ADD_POST'
 export const SET_POST_COMMENTS = 'SET_POST_COMMENTS'
 export const TOGGLE_COMMENT_LIKE = 'TOGGLE_COMMENT_LIKE'
+export const TOGGLE_POST_LIKE = 'TOGGLE_POST_LIKE'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
@@ -78,8 +79,6 @@ export function postReducer(state = initialState, action = {}) {
             : post
         ),
       }
-
-      case TOGGLE_COMMENT_LIKE:
         case TOGGLE_COMMENT_LIKE:
   return {
     ...state,
@@ -100,7 +99,30 @@ export function postReducer(state = initialState, action = {}) {
       
       return comment
     })
+    
   }
+  case TOGGLE_POST_LIKE:
+    return {
+        ...state,
+        posts: state.posts.map(post => 
+            post._id === action.postId
+                ? {
+                    ...post,
+                    likes: (() => {
+                        const userIndex = post.likes.findIndex(like => like._id === action.user._id)
+
+                        if (userIndex !== -1) {
+                            const updatedLikes = [...post.likes]
+                            updatedLikes.splice(userIndex, 1) // Remove the user from likes
+                            return updatedLikes
+                        } else {
+                          return [...post.likes, action.user]
+                        }
+                    })()
+                }
+                : post
+        ),
+    }
     default:
       return state
   }
