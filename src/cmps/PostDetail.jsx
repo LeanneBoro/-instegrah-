@@ -10,22 +10,20 @@ import { getPostComments } from '../store/actions/post.actions';
 
 import { addComment, removeComment } from '../store/actions/post.actions'
 import { postService } from '../services/post.local.service';
+import { loadUsers } from '../store/actions/user.actions';
 
 export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
     const { postComments } = useSelector(storeState => storeState.postModule)
     const { isCommentLoading } = useSelector(storeState => storeState.utilityModule)
 
     const sortedComments = postComments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-
     const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
     const [commentText, setCommentText] = useState('')
+    const [userData, setUsersData] = useState('')
     const inputRef = useRef(null)
 
 
 
-    function toggleCommentLike(){
-        
-    }
 
     useEffect(() => {
         getPostComments(selectedPost._id)
@@ -40,7 +38,18 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
         }
     }, [selectedPost])
 
+    useEffect(() => {
+        loadUsers(selectedPost.likes)
+            .then((fetchedUsers) => { 
+                setUsersData(fetchedUsers) 
+            })
+            .catch(err => {
+                console.error('Failed to load users', err)
+            })
+    }, [])
 
+  ;
+    
 
     function handleCommentBtnClick() {
         inputRef.current.focus()
@@ -120,14 +129,14 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                             </div>
                         </section>
 
-                        {sortedComments.map((comment,index) => (
-                            <CommentPreview key={comment._id} 
-                            isCommentLoading={isCommentLoading} 
-                            setModalData={setModalData} 
-                            postId={selectedPost._id} 
-                            comment={comment} 
-                            navigateToProfile={navigateToProfile}
-                             />
+                        {sortedComments.map((comment, index) => (
+                            <CommentPreview key={comment._id}
+                                isCommentLoading={isCommentLoading}
+                                setModalData={setModalData}
+                                postId={selectedPost._id}
+                                comment={comment}
+                                navigateToProfile={navigateToProfile}
+                            />
                         ))}
                     </section>
 
@@ -141,8 +150,8 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                             <section className="likes-and-date">
                                 <section className="likes">
                                     <div className="liked-by-profile">
-                                        {selectedPost.likes.slice(0, 3).map((like, index) => (
-                                            <ProfileImg key={index} imgUrl={like.profileImg} diameter={"23px"} />
+                                        {userData && userData.slice(0, 3).map((user, index) => (
+                                            <ProfileImg key={index} imgUrl={user.profileImg} diameter={"23px"} />
                                         ))}
                                     </div>
 
@@ -154,7 +163,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                                             </>
                                         ) : (
                                             <>
-                                                and <h2>{selectedPost.likes.length - 1} more</h2>
+                                                and <h2 onClick={() => setModalData({ data: selectedPost.likes, dataType: 'likes' })}>{selectedPost.likes.length - 1} more</h2>
                                             </>
                                         )}
                                     </div>

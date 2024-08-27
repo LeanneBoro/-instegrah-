@@ -12,7 +12,6 @@ export function ListModal({ content, setModalData }) {
     const usersData = useSelector(storeState => storeState.userModule.usersData);
 
 
-console.log(usersData);
 
     useEffect(() => {
         loadUsers(content.data)

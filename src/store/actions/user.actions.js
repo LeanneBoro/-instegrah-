@@ -35,8 +35,8 @@ export async function loadUser(userId) {
 export async function loadUsers(idArr) {
     try {
         const users = await userService.getUsersById(idArr)
-      
         store.dispatch({ type: SET_USERS_DATA, users })
+        return users
     } catch (err) {
         console.log(err);
 

@@ -37,15 +37,7 @@ export function PostPreview({ post, idx }) {
 
         setLoadingStates(prev => ({ ...prev, likes: true, comments: true }))
 
-        if (modalData) {
-            document.body.classList.add('no-scroll')
-        } else {
-            document.body.classList.remove('no-scroll')
-        }
 
-        return () => {
-            document.body.classList.remove('no-scroll')
-        }
 
     }, [post.image, post.likes, post.comments, modalData])
     
