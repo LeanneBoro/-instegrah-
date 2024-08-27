@@ -129,23 +129,26 @@ function isCommentLiked(comment) {
 
     const userId = loggedInUser._id
 
-    const isLiked = comment.likedBy.some(like => like._id === userId)
+    const isLiked = comment.likedBy.some(id => id === userId)
 
 
     return isLiked
 }
 
 function isPostLiked(post) {
+    // console.log("🚀 ~ isPostLiked ~ post:", post.likes)
     const loggedInUser = userService.getLoggedInUser()
+    // console.log("🚀 ~ isPostLiked ~ loggedInUser:", loggedInUser._id)
     if (!loggedInUser) return
 
-    // console.log(post.);
+    
     
 
     const userId = loggedInUser._id
 
     const isLiked = post.likes.some(like => like === userId)
    
+
     
 
 

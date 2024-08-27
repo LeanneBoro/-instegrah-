@@ -12,6 +12,8 @@ export const userService = {
     handleSignUp,
     signup,
     getLoggedInUser,
+    toggleFollow,
+    checkIfFollowing,
 }
 
 const USER_DB = "user_db"
@@ -34,12 +36,12 @@ async function getUserById(userId) {
 
 async function getUsersById(userIds) {
     try {
-    
+
         const idsQuery = userIds.join(',')
         const response = await httpService.get(`${BASE_USER_URL}ids/${encodeURIComponent(idsQuery)}`)
 
-      return response
-        
+        return response
+
     } catch (err) {
         console.error('Error fetching users:', err)
         throw err
@@ -86,7 +88,7 @@ async function signup({ username, password, fullname, profileImg, isAdmin = fals
         const response = await httpService.post(BASE_AUTH_URL + 'signup', formData)
         const profileImgUrl = response.profileImg
         const { _id, followers, following } = response
-       
+
 
         _setLoggedInUser({ _id: _id, username, password, fullname, profileImg: profileImgUrl, isAdmin, followers, following })
         return { username, password, fullname, profileImg: profileImgUrl, isAdmin }
@@ -138,6 +140,26 @@ async function checkUsernameExists(username) {
         console.error('Error checking username:', err)
         throw err
     }
+}
+
+async function toggleFollow(idToFollow) {
+    try {
+       const isFollowing =  await httpService.get(`user/follow/${idToFollow}`)
+       console.log(isFollowing);
+       return isFollowing
+    } catch (err) {
+        console.error('Error following user:', err)
+    }
+
+}
+
+function checkIfFollowing(userFollowedList) {
+
+    const userId = getLoggedInUser()._id
+    
+    const isFollowing = userFollowedList.some(id => id === userId)
+    return isFollowing 
+
 }
 
 

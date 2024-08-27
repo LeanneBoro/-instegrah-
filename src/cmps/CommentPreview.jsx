@@ -8,6 +8,7 @@ import { userService } from "../services/user.service";
 export function CommentPreview({ setModalData, comment, navigateToProfile,isCommentLoading,postId }) {
 
 
+// console.log(comment.likedByt);
 
     
     if (isCommentLoading) return <CommentPreviewPlaceholder />

@@ -5,12 +5,13 @@ import { utilService } from '../services/util.service';
 import { ListModal } from './ListModal';
 import { BackDrop } from './BackDrop';
 import { useSelector } from 'react-redux';
-import { toggleCommentLike } from "../store/actions/post.actions";
+import { toggleCommentLike, togglePostLike } from "../store/actions/post.actions";
 import { getPostComments } from '../store/actions/post.actions';
 
 import { addComment, removeComment } from '../store/actions/post.actions'
 import { postService } from '../services/post.local.service';
 import { loadUsers } from '../store/actions/user.actions';
+import { userService } from '../services/user.service';
 
 export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
     const { postComments } = useSelector(storeState => storeState.postModule)
@@ -22,21 +23,15 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
     const [userData, setUsersData] = useState('')
     const inputRef = useRef(null)
 
-
+    const imgSrc = postService.isPostLiked(selectedPost)
+    ? 'src/imgs/HeartFull.png'
+    : 'src/assets/svgs/Heart.svg'
 
 
     useEffect(() => {
         getPostComments(selectedPost._id)
-        if (selectedPost) {
-            document.body.classList.add('no-scroll')
-        } else {
-            document.body.classList.remove('no-scroll')
-        }
-
-        return () => {
-            document.body.classList.remove('no-scroll')
-        }
-    }, [selectedPost])
+      
+    }, [])
 
     useEffect(() => {
         loadUsers(selectedPost.likes)
@@ -46,9 +41,10 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
             .catch(err => {
                 console.error('Failed to load users', err)
             })
-    }, [])
+    }, [selectedPost.likes])
 
-  ;
+ 
+  
     
 
     function handleCommentBtnClick() {
@@ -80,6 +76,23 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
         setCommentText(event.target.value)
     }
 
+    function handlePostLike() {
+        const userId = userService.getLoggedInUser()._id
+    
+        togglePostLike(selectedPost._id) 
+    
+        setSelectedPost(prevState => {
+            const isLiked = prevState.likes.includes(userId) 
+            const updatedLikes = isLiked
+                ? prevState.likes.filter(id => id !== userId)
+                : [...prevState.likes, userId] 
+    
+            return {
+                ...prevState,
+                likes: updatedLikes
+            }
+        })
+    }
 
 
     return (
@@ -129,7 +142,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                             </div>
                         </section>
 
-                        {sortedComments.map((comment, index) => (
+                        {sortedComments.map((comment) => (
                             <CommentPreview key={comment._id}
                                 isCommentLoading={isCommentLoading}
                                 setModalData={setModalData}
@@ -142,7 +155,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
 
                     <section className="likes-and-actions">
                         <section className="actions">
-                            <img className='comment' src="src/assets/svgs/Heart.svg" alt="" />
+                            <img className='comment' src={imgSrc} alt=""  onClick={handlePostLike}/>
                             <img onClick={handleCommentBtnClick} className='like' src="src/assets/svgs/Comment.svg" alt="" />
                         </section>
 
@@ -163,7 +176,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                                             </>
                                         ) : (
                                             <>
-                                                and <h2 onClick={() => setModalData({ data: selectedPost.likes, dataType: 'likes' })}>{selectedPost.likes.length - 1} more</h2>
+                                                and <h2 onClick={() => setModalData({ data: selectedPost.likes, dataType: 'likes' })}>{selectedPost.likes.length } more</h2>
                                             </>
                                         )}
                                     </div>

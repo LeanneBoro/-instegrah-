@@ -17,11 +17,11 @@
         background-color: $cyan3;
     }
 
-    &.not-following {
+    &.following {
         background-color: $gray2;
 
         & h2 {
-            color: black;
+            // color: black;
         }
 
         &:hover {

@@ -1,6 +1,6 @@
 import { postService } from '../../services/post.local.service'
 import { userService } from '../../services/user.service'
-import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, TOGGLE_COMMENT_LIKE, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA, TOGGLE_POST_LIKE, TOGGLE_FOLLOW } from '../reducers/post.reducer'
+import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, TOGGLE_COMMENT_LIKE, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA, TOGGLE_POST_LIKE } from '../reducers/post.reducer'
 import { SET_IS_LOADING, SET_IS_COMMENTS_LOADING } from '../reducers/utility.reducer'
 import { store } from '../store'
 
@@ -146,13 +146,3 @@ export async function savePost(newPost) {
 
 }
 
-export async function toggleFollow(idToFollow) {
-  // const loggedinUserId = userService.getLoggedInUser()._id
-
-  // if (!loggedinUserId) return
-
-
-  // store.dispatch({ type: TOGGLE_FOLLOW, loggedinUserId, idToFollow })
-
-
-}

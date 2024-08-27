@@ -1,4 +1,5 @@
 import { userService } from "../../services/user.service";
+import { TOGGLE_FOLLOW } from "../reducers/user.reducer";
 import { SET_USER, SET_USER_POSTS, SET_USERS_DATA, } from '../reducers/user.reducer'
 
 import { store } from '../store'
@@ -41,6 +42,29 @@ export async function loadUsers(idArr) {
         console.log(err);
 
     }
+}
+
+
+export async function toggleFollow(idToFollow) {
+    const loggedinUserId = userService.getLoggedInUser()._id
+
+    if (!loggedinUserId) return
+
+    try {
+        const isFollowed = await userService.toggleFollow(idToFollow)
+        console.log("🚀 ~ toggleFollow ~ isFollowed:", isFollowed)
+
+        store.dispatch({ type: TOGGLE_FOLLOW, isFollowed, loggedinUserId, idToFollow })
+
+    } catch (err) {
+        console.log(err);
+    }
+
+
+
+    // store.dispatch({ type: TOGGLE_FOLLOW, loggedinUserId, idToFollow })
+
+
 }
 
 

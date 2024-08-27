@@ -7,7 +7,7 @@ export const ADD_POST = 'ADD_POST'
 export const SET_POST_COMMENTS = 'SET_POST_COMMENTS'
 export const TOGGLE_COMMENT_LIKE = 'TOGGLE_COMMENT_LIKE'
 export const TOGGLE_POST_LIKE = 'TOGGLE_POST_LIKE'
-export const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW'
+
 
 
 export const ADD_COMMENT = 'ADD_COMMENT'
@@ -87,12 +87,12 @@ export function postReducer(state = initialState, action = {}) {
         postComments: state.postComments.map(comment => {
           if (comment._id === action.comment._id) {
             const likedBy = [...comment.likedBy]
-            const userIndex = likedBy.findIndex(user => user._id === action.user._id)
+            const userIndex = likedBy.findIndex(id => id === action.user._id)
 
             if (userIndex !== -1) {
               likedBy.splice(userIndex, 1)
             } else {
-              likedBy.push(action.user)
+              likedBy.push(action.user._id)
             }
 
             return { ...comment, likedBy }
@@ -103,36 +103,49 @@ export function postReducer(state = initialState, action = {}) {
         })
 
       }
-    case TOGGLE_POST_LIKE:
-      return {
-        ...state,
-        posts: state.posts.map(post =>
-          post._id === action.postId
-            ? {
-              ...post,
-              
-              likes: (() => {
-                const userIndex = post.likes.findIndex(like => like === action.userId)
-             
-                
-
-                if (userIndex !== -1) {
-                  const updatedLikes = [...post.likes]
-                  updatedLikes.splice(userIndex, 1)
-                  return updatedLikes
-                } else {
-                  return [...post.likes, action.userId]
+      case TOGGLE_POST_LIKE:
+        return {
+          ...state,
+          posts: state.posts.map(post =>
+            post._id === action.postId
+              ? {
+                  ...post,
+                  likes: (() => {
+                    const userIndex = post.likes.findIndex(like => like === action.userId)
+      
+                    if (userIndex !== -1) {
+                      const updatedLikes = [...post.likes]
+                      updatedLikes.splice(userIndex, 1)
+                      return updatedLikes
+                    } else {
+                      return [...post.likes, action.userId]
+                    }
+                  })()
                 }
-              })()
-            }
-            : post
-        ),
-      }
+              : post
+          ),
+          profilePagePosts: state.profilePagePosts.map(post =>
+            post._id === action.postId
+              ? {
+                  ...post,
+                  likes: (() => {
+                    const userIndex = post.likes.findIndex(like => like === action.userId)
+      
+                    if (userIndex !== -1) {
+                      const updatedLikes = [...post.likes]
+                      updatedLikes.splice(userIndex, 1)
+                      return updatedLikes
+                    } else {
+                      return [...post.likes, action.userId]
+                    }
+                  })()
+                }
+              : post
+          )
+        }
+   
 
-    case TOGGLE_FOLLOW:
-      return {...state,
-
-      }
+      
     default:
       return state
   }

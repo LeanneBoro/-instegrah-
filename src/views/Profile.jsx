@@ -17,6 +17,8 @@ export function Profile() {
     const [modalData, setModalData] = useState(null)
 
 
+
+
     const navigate = useNavigate()
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
