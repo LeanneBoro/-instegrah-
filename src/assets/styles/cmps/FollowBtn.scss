@@ -4,10 +4,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5em 1em;
+    padding: 0.5em;
     width: max-content;
     height: max-content;
     border-radius: 5px;
+    gap: 0.5em;
 
     & h2 {
         color: white;
@@ -28,5 +29,24 @@
             background-color: $gray1;
         }
     }
+
+    & .loader-container {
+        width: 30px; /* Adjust to your desired width */
+        height: 20px; /* Adjust to your desired height */
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & .follow-loader {
+            width: 80px;
+            height: auto;
+            /* Ensure it maintains aspect ratio */
+            object-fit: cover;
+            /* Crop the sides */
+        }
+    }
+
 
 }

@@ -157,11 +157,17 @@ export function LoginSignUp({ setExpandedSection }) {
         []
     )
 
-    function onSignUp() {
-
-        userService.handleSignUp(newUser, signUpFeedback).then(result => {
-            setSignUpFeedback(result.feedback)
-        })
+    async function onSignUp() {
+        const result = await userService.handleSignUp(newUser, signUpFeedback)
+    
+        setSignUpFeedback(result.feedback)
+        console.log(result)
+    
+        if (result.success) {
+        
+            setExpandedSection(null)
+        }
+ 
     }
 
     function handleLogin() {
@@ -182,7 +188,7 @@ export function LoginSignUp({ setExpandedSection }) {
             ...newUser,
             profileImg: result
         }))
-    
+
 
     }
 

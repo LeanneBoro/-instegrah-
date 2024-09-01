@@ -16,6 +16,7 @@ export function Profile() {
     const [selectedPost, setSelectedPost] = useState(null)
     const [modalData, setModalData] = useState(null)
 
+console.log(posts);
 
 
 
@@ -30,6 +31,7 @@ export function Profile() {
 
     useEffect(() => {
         loadPostsByUser(userId)
+        
 
         const handleResize = () => {
             setScreenWidth(window.innerWidth)
@@ -97,7 +99,7 @@ export function Profile() {
                             <img src="src/assets/svgs/HeartBold.svg" alt="Heart Icon" />
                             <h1>{post.likes.length}</h1>
                             <img src="src/imgs/Comment-Bold.png" alt="" />
-                            <h1>{post.comments.length}</h1>
+                            <h1>{post.commentsCount}</h1>
                         </div>
                     </div>
                 ))}

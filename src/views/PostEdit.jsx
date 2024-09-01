@@ -10,8 +10,9 @@ import { FileUploader } from "../cmps/FileUploader";
 import { ProfileImg } from "../cmps/ProfileImg";
 import { postService } from "../services/post.local.service";
 import { savePost } from '../store/actions/post.actions'
+import { utilService } from "../services/util.service";
 
-export function PostEdit({dataState}) {
+export function PostEdit({ dataState }) {
     const croppieRef = useRef(null);
     const croppieInstance = useRef(null);
     const [imageUploaded, setImageUploaded] = useState(false)
@@ -24,22 +25,16 @@ export function PostEdit({dataState}) {
     }
 
     async function handlePublish() {
-        const post = {
-            by: {
-                fullname: "existing user",
-                id: "user id",
-                profileImg: "https://randomuser.me/api/portraits/women/96.jpg",
-                username: "laura_davis_pro"
-            },
-            comments: [],
-            postImg: imageCropped,
-            likedBy: [],
-            timeStamp: Date.now(),
-            txt: caption
-        }
+
+        const postFormData = new FormData()
+        const imageBlob = utilService.base64ToBlob(imageCropped)
+        
+        postFormData.append('title', caption)
+        postFormData.append('postImg', imageBlob, 'postImg.png')
+
 
         try {
-            savePost(post)
+            savePost(postFormData)
             dataState(null)
             navigate('/')
 
@@ -109,7 +104,7 @@ export function PostEdit({dataState}) {
     };
 
     const handleCrop = async () => {
-        
+
         if (croppieInstance.current) {
             const result = await croppieInstance.current.result({
                 type: "base64",

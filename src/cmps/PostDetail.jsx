@@ -12,6 +12,7 @@ import { addComment, removeComment } from '../store/actions/post.actions'
 import { postService } from '../services/post.local.service';
 import { loadUsers } from '../store/actions/user.actions';
 import { userService } from '../services/user.service';
+import { CommentPreviewPlaceholder } from './CommentPreviewPlaceholder';
 
 export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
     const { postComments } = useSelector(storeState => storeState.postModule)
@@ -24,28 +25,27 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
     const inputRef = useRef(null)
 
     const imgSrc = postService.isPostLiked(selectedPost)
-    ? 'src/imgs/HeartFull.png'
-    : 'src/assets/svgs/Heart.svg'
+        ? 'src/imgs/HeartFull.png'
+        : 'src/assets/svgs/Heart.svg'
 
 
     useEffect(() => {
         getPostComments(selectedPost._id)
-      
-    }, [])
+
+    }, [selectedPost._id])
 
     useEffect(() => {
         loadUsers(selectedPost.likes)
-            .then((fetchedUsers) => { 
-                setUsersData(fetchedUsers) 
+            .then((fetchedUsers) => {
+                setUsersData(fetchedUsers)
             })
             .catch(err => {
                 console.error('Failed to load users', err)
             })
     }, [selectedPost.likes])
 
- 
-  
-    
+
+
 
     function handleCommentBtnClick() {
         inputRef.current.focus()
@@ -71,6 +71,8 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
         }
     }
 
+    console.log(userData);
+    
 
     function handleCommentChange(event) {
         setCommentText(event.target.value)
@@ -78,15 +80,15 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
 
     function handlePostLike() {
         const userId = userService.getLoggedInUser()._id
-    
-        togglePostLike(selectedPost._id) 
-    
+
+        togglePostLike(selectedPost._id)
+
         setSelectedPost(prevState => {
-            const isLiked = prevState.likes.includes(userId) 
+            const isLiked = prevState.likes.includes(userId)
             const updatedLikes = isLiked
                 ? prevState.likes.filter(id => id !== userId)
-                : [...prevState.likes, userId] 
-    
+                : [...prevState.likes, userId]
+
             return {
                 ...prevState,
                 likes: updatedLikes
@@ -142,24 +144,31 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                             </div>
                         </section>
 
-                        {sortedComments.map((comment) => (
-                            <CommentPreview key={comment._id}
-                                isCommentLoading={isCommentLoading}
-                                setModalData={setModalData}
-                                postId={selectedPost._id}
-                                comment={comment}
-                                navigateToProfile={navigateToProfile}
-                            />
-                        ))}
+                        {isCommentLoading
+                            ? Array.from({ length: selectedPost.commentsCount }, (_, index) => (
+                                <CommentPreviewPlaceholder key={index} />
+                            ))
+                            : sortedComments.map((comment) => (
+                                <CommentPreview
+                                    key={comment._id}
+                                    isCommentLoading={isCommentLoading}
+                                    setModalData={setModalData}
+                                    postId={selectedPost._id}
+                                    comment={comment}
+                                    navigateToProfile={navigateToProfile}
+                                />
+                            ))
+                        }
+
                     </section>
 
                     <section className="likes-and-actions">
                         <section className="actions">
-                            <img className='comment' src={imgSrc} alt=""  onClick={handlePostLike}/>
+                            <img className='comment' src={imgSrc} alt="" onClick={handlePostLike} />
                             <img onClick={handleCommentBtnClick} className='like' src="src/assets/svgs/Comment.svg" alt="" />
                         </section>
 
-                        {selectedPost.likes.length > 0 && (
+                        {userData &&(
                             <section className="likes-and-date">
                                 <section className="likes">
                                     <div className="liked-by-profile">
@@ -169,14 +178,24 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                                     </div>
 
                                     <div className="amount">
-                                        liked by <h2>{selectedPost.likes[0].fullname} </h2>
-                                        {selectedPost.likes.length <= 2 ? (
+                                        liked by
+                                        {selectedPost.likes.length > 0 && (
                                             <>
-                                                and <h2>{selectedPost.likes[1].fullname}</h2>
-                                            </>
-                                        ) : (
-                                            <>
-                                                and <h2 onClick={() => setModalData({ data: selectedPost.likes, dataType: 'likes' })}>{selectedPost.likes.length } more</h2>
+                                                <h2> {userData[0].username}</h2>
+                                                {selectedPost.likes.length === 2 && (
+                                                    <>
+                                                        {' and '}
+                                                        <h2>{userData[1].username}</h2>
+                                                    </>
+                                                )}
+                                                {selectedPost.likes.length > 2 && (
+                                                    <>
+                                                        {' and '}
+                                                        <h2 onClick={() => setModalData({ data: selectedPost.likes, dataType: 'likes' })}>
+                                                            and {selectedPost.likes.length - 1} more
+                                                        </h2>
+                                                    </>
+                                                )}
                                             </>
                                         )}
                                     </div>
