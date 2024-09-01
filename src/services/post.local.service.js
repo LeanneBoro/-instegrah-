@@ -34,9 +34,9 @@ export const postService = {
 
 
 
-function query() {
-
-    return httpService.get(BASE_URL)
+function query(pagination) {
+    const { skip, limit } = pagination
+    return httpService.get(`${BASE_URL}?skip=${skip}&limit=${limit}`)
 }
 
 function queryPostsByUser(userId) {

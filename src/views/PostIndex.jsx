@@ -11,21 +11,48 @@ import { Loader } from "../cmps/Loader"
 export function PostIndex() {
     const { posts } = useSelector(storeState => storeState.postModule)
     const isLoading = useSelector(storeState => storeState.utilityModule.isLoading);
+    const [pagination, setPagination] = useState({ skip: 0, limit: 3 })
+    const [loader, displayLoader] = useState(false)
 
     useEffect(() => {
-        loadPosts()
+        loadPosts(pagination)
+
+
+    }, [pagination])
+
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-console.log(posts);
+    const handleScroll = () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            displayLoader(true)
+            setPagination(prevPagination => {
+                return { ...prevPagination, skip: prevPagination.skip + prevPagination.limit }
+
+            })
+        } else{
+            displayLoader(false)
+        }
+
+
+    }
+
+
 
     return (
 
         <section className="main-layout post-index">
-          
-                {isLoading && <div className='loader-container-index'><Loader /></div> }
-    
+
+            {isLoading && <div className='loader-container-index'><Loader /></div>}
+
 
             <PostList posts={posts} />
+            <div className="loader-container">
+               {loader && <img className="loader" src="src\imgs\InstagrahLoader.gif" alt="" />}
+            </div>
         </section>
     )
 }

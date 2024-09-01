@@ -6,12 +6,11 @@ import { store } from '../store'
 
 
 
-export async function loadPosts() {
+export async function loadPosts(pagination) {
   try {
-    store.dispatch({ type: SET_IS_LOADING, isLoading: true })
-    store.dispatch({ type: SET_POSTS, posts: [] })
+    if (pagination.skip === 0)   store.dispatch({ type: SET_IS_LOADING, isLoading: true })
 
-    const posts = await postService.query()
+    const posts = await postService.query(pagination)
     store.dispatch({ type: SET_POSTS, posts })
 
   } catch (err) {

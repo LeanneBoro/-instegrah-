@@ -52,8 +52,8 @@ export function postReducer(state = initialState, action = {}) {
       }
 
 
-    case SET_POSTS:
-      return { ...state, posts: action.posts }
+      case SET_POSTS:
+        return { ...state, posts: [...state.posts, ...action.posts] }
 
     case ADD_POST:
       return {
