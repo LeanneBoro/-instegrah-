@@ -46,9 +46,10 @@ export async function loadUsers(idArr) {
 
 
 export async function toggleFollow(idToFollow) {
-    const loggedinUserId = userService.getLoggedInUser()._id
+    const loggedinUser = userService.getLoggedInUser()
+    if (!loggedinUser) return
+    const loggedinUserId = loggedinUser._id
 
-    if (!loggedinUserId) return
 
     try {
         const isFollowed = await userService.toggleFollow(idToFollow)
@@ -59,10 +60,6 @@ export async function toggleFollow(idToFollow) {
     } catch (err) {
         console.log(err);
     }
-
-
-
-    // store.dispatch({ type: TOGGLE_FOLLOW, loggedinUserId, idToFollow })
 
 
 }

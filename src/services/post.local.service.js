@@ -4,6 +4,8 @@ import { demoDataService } from './demoData.service.js'
 import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
 import { userService } from './user.service.js'
+
+import objectId from 'objectid'
 // import { httpService } from './http.service.js'
 const POST_DB = 'post_db'
 const USER_DB = "user_db"
@@ -27,6 +29,8 @@ export const postService = {
 
 
 }
+
+
 
 
 
@@ -75,15 +79,16 @@ async function save(post) {
             const updatedPost = await storageService.put(POST_DB, post)
             return updatedPost
         } else {
-            post._id = utilService.makeId()
-            console.log(post._id);
-            const postToAdd = await storageService.post(POST_DB, post)
+            post.by = objectId().toString()  
+            console.log(post.by)
+            const postToAdd = await httpService.post(BASE_URL, post)
             return postToAdd
         }
     } catch (err) {
         console.log(err)
     }
 }
+
 
 
 
@@ -129,20 +134,16 @@ function isCommentLiked(comment) {
 
     const userId = loggedInUser._id
 
-    const isLiked = comment.likedBy.some(id => id === userId)
+    const isLiked = comment.likes.some(id => id === userId)
 
 
     return isLiked
 }
 
 function isPostLiked(post) {
-    // console.log("🚀 ~ isPostLiked ~ post:", post.likes)
     const loggedInUser = userService.getLoggedInUser()
-    // console.log("🚀 ~ isPostLiked ~ loggedInUser:", loggedInUser._id)
-    if (!loggedInUser) return
 
-    
-    
+    if (!loggedInUser ) return
 
     const userId = loggedInUser._id
 

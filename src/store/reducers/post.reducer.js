@@ -58,7 +58,7 @@ export function postReducer(state = initialState, action = {}) {
     case ADD_POST:
       return {
         ...state,
-        posts: [action.newPost, ...state.posts]
+        posts: [action.uploadedPost, ...state.posts]
       }
 
     case ADD_COMMENT:
@@ -86,18 +86,20 @@ export function postReducer(state = initialState, action = {}) {
         ...state,
         postComments: state.postComments.map(comment => {
           if (comment._id === action.comment._id) {
-            const likedBy = [...comment.likedBy]
-            const userIndex = likedBy.findIndex(id => id === action.user._id)
+            const likes = [...comment.likes]
+    
+            
+            const userIndex = likes.findIndex(id => id === action.user._id)
+            
 
             if (userIndex !== -1) {
-              likedBy.splice(userIndex, 1)
+              likes.splice(userIndex, 1)
             } else {
-              likedBy.push(action.user._id)
-            }
-
-            return { ...comment, likedBy }
+              likes.push(action.user._id)
+            }likes
+            console.log(likes);
+            return { ...comment, likes }
           }
-
 
           return comment
         })

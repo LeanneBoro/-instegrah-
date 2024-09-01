@@ -143,10 +143,11 @@ async function checkUsernameExists(username) {
 }
 
 async function toggleFollow(idToFollow) {
+
     try {
-       const isFollowing =  await httpService.get(`user/follow/${idToFollow}`)
-       console.log(isFollowing);
-       return isFollowing
+        const isFollowing = await httpService.get(`user/follow/${idToFollow}`)
+        console.log(isFollowing);
+        return isFollowing
     } catch (err) {
         console.error('Error following user:', err)
     }
@@ -154,11 +155,12 @@ async function toggleFollow(idToFollow) {
 }
 
 function checkIfFollowing(userFollowedList) {
+    const user = getLoggedInUser()
+    if (!user) return
+    const userId = user._id
 
-    const userId = getLoggedInUser()._id
-    
     const isFollowing = userFollowedList.some(id => id === userId)
-    return isFollowing 
+    return isFollowing
 
 }
 
@@ -169,7 +171,6 @@ function checkIfFollowing(userFollowedList) {
 
 async function handleSignUp(userData, currentFeedback) {
     const feedback = { ...currentFeedback }
-
 
     if (userData.username.trim() === '') {
         feedback.usernameFeedback = {
@@ -225,13 +226,11 @@ async function handleSignUp(userData, currentFeedback) {
         userData.password.trim().length >= 5 && userData.password.length <= 12
     ].every(condition => condition)
 
-
-
     if (isValid) {
         try {
             await signup(userData)
             console.log('signed up!');
-
+            return { success: true, feedback }
         } catch (error) {
             console.error('Sign up error:', error)
             return { success: false, feedback: { ...feedback, general: 'Error during sign up' } }

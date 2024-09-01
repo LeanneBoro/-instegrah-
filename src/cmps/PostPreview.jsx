@@ -103,7 +103,7 @@ export function PostPreview({ post, idx }) {
                         <h2 onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>{post.authorFullname}</h2>
                         <div>{post.txt}</div>
                     </div>
-                    <div className="view-all" onClick={() => setSelectedPost(post)}>view all {post.comments.length} comments </div>
+                    <div className="view-all" onClick={() => setSelectedPost(post)}>view all {post.commentsCount} comments </div>
                     <div className="latest-comment">
                         {/* Latest comment code */}
                     </div>

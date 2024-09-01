@@ -41,11 +41,7 @@ export async function togglePostLike(postId) {
 export async function toggleCommentLike(comment, postId) {
   const user = userService.getLoggedInUser()
 
-
   if (!user) return
-
-
-
 
   try {
     const commentId = comment._id
@@ -64,16 +60,17 @@ export async function getPostComments(postId) {
   try {
     store.dispatch({ type: SET_IS_COMMENTS_LOADING, isLoading: true })
 
+    // Clear existing comments before fetching new ones
+    store.dispatch({ type: SET_POST_COMMENTS, comments: [] })
+
     const comments = await postService.getPostComments(postId)
     store.dispatch({ type: SET_POST_COMMENTS, comments })
 
   } catch (err) {
-    console.log(err)
-  }
-  finally {
+    console.log('Failed to fetch comments:', err)
+  } finally {
     store.dispatch({ type: SET_IS_COMMENTS_LOADING, isLoading: false })
   }
-
 }
 
 export async function loadPostsByUser(userId) {
@@ -125,14 +122,19 @@ export async function removeComment(postId, commentId) {
 
 
 export async function savePost(newPost) {
+  const { profileImg, username } = userService.getLoggedInUser()
 
   try {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
-    await postService.save(newPost)
-    store.dispatch({
-      type: ADD_POST,
-      newPost
-    })
+    const uploadedPost = await postService.save(newPost)
+    uploadedPost.authorUsername = username,
+      uploadedPost.authorProfileImg = profileImg,
+
+
+      store.dispatch({
+        type: ADD_POST,
+        uploadedPost
+      })
 
   }
 

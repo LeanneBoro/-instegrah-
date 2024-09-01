@@ -19,7 +19,7 @@ export function ListModal({ content, setModalData }) {
     }, [content.data])
 
 
-console.log(usersData);
+
 
 
     return (
