@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: '../instegrah backend/public',
+    outDir: '../Instagram backend/public',
     emptyOutDir: true,
   }
 })
