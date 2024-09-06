@@ -224,18 +224,10 @@ export function LoginSignUp({ setExpandedSection }) {
                 className={`login-signup ${selectionModal ? 'extended' : ''}`}
                 onClick={handleModalClick}
             >
-          
-                    <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" onClick={() => setExpandedSection(null)} />
-                
-                {userService.getLoggedInUser() ? (
-                   <section className='log-out'>
-                    are you sure you want to log out?
-                    <button onClick={()=> userService.logout()}>Log out</button>
-                   </section>
-                ) : (
+                {!selectionModal && (
                     <>
                         <div className="logo"></div>
-                        <img src={cloudinaryLinks.logo} alt="Instagram Logo" />
+                        <img src="src/assets/svgs/IntagramLogo.svg" alt="Instagram Logo" />
                         <section className="login-input-container">
                             <input
                                 className={`${signUp ? feedbackConfig.username.className : loginFeedbackConfig.username.className}`}
@@ -246,11 +238,11 @@ export function LoginSignUp({ setExpandedSection }) {
                                 onChange={handleChange}
                                 required
                             />
-    
+
                             <span className='feedback'>
                                 {signUp ? feedbackConfig.username.text : loginFeedbackConfig.username.text}
                             </span>
-    
+
                             <input
                                 className={`${signUp ? feedbackConfig.password.className : loginFeedbackConfig.password.className}`}
                                 name="password"
@@ -263,7 +255,7 @@ export function LoginSignUp({ setExpandedSection }) {
                             <span className='feedback'>
                                 {signUp ? feedbackConfig.password.text : loginFeedbackConfig.password.text}
                             </span>
-    
+
                             {signUp && (
                                 <>
                                     <input
@@ -281,6 +273,7 @@ export function LoginSignUp({ setExpandedSection }) {
                             {signUp && (
                                 <section className='upload-profile'>
                                     <div className='image-container'>
+    
                                         <ProfileImg imgUrl={profileImg ? profileImg : cloudinaryLinks.profile} diameter={"100px"} />
                                     </div>
                                     <div onClick={() => openSelectionModal(true)} className='text'>
