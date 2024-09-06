@@ -1,14 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react'
 import { CommentPreview } from './CommentPreview';
 import { ProfileImg } from './ProfileImg';
 import { utilService } from '../services/util.service';
 import { ListModal } from './ListModal';
 import { BackDrop } from './BackDrop';
 import { useSelector } from 'react-redux';
-import { toggleCommentLike, togglePostLike } from "../store/actions/post.actions";
-import { getPostComments } from '../store/actions/post.actions';
-
-import { addComment, removeComment } from '../store/actions/post.actions'
+import { toggleCommentLike, togglePostLike, getPostComments, addComment, removeComment } from "../store/actions/post.actions";
 import { postService } from '../services/post.local.service';
 import { loadUsers } from '../store/actions/user.actions';
 import { userService } from '../services/user.service';
@@ -17,21 +14,17 @@ import { CommentPreviewPlaceholder } from './CommentPreviewPlaceholder';
 export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
     const { postComments } = useSelector(storeState => storeState.postModule)
     const { isCommentLoading } = useSelector(storeState => storeState.utilityModule)
-
-    const sortedComments = postComments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-    const [isBackdropDisabled, setIsBackdropDisabled] = useState(false)
     const [commentText, setCommentText] = useState('')
     const [userData, setUsersData] = useState('')
     const inputRef = useRef(null)
+    const commentListRef = useRef(null) // Ref for the comment list container
 
     const imgSrc = postService.isPostLiked(selectedPost)
         ? 'src/imgs/HeartFull.png'
         : 'src/assets/svgs/Heart.svg'
 
-
     useEffect(() => {
         getPostComments(selectedPost._id)
-
     }, [selectedPost._id])
 
     useEffect(() => {
@@ -44,8 +37,14 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
             })
     }, [selectedPost.likes])
 
-
-
+    useEffect(() => {
+        if (commentListRef.current) {
+            commentListRef.current.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    }, [postComments.length])
 
     function handleCommentBtnClick() {
         inputRef.current.focus()
@@ -53,26 +52,17 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
 
     function handleCommentSubmit(event) {
         event.preventDefault()
+        const user = userService.getLoggedInUser()
+        if (!user) return
 
         if (commentText.trim()) {
             const newComment = {
-                txt: commentText,
-                timeStamp: Date.now(),
-                by: {
-                    id: 'currentUserId',
-                    fullname: 'Current User',
-                    username: 'currentUser',
-                    imgUrl: 'https://randomuser.me/api/portraits/men/86.jpg',
-                },
-                likes: []
+                text: commentText,
             }
 
             addComment(selectedPost._id, newComment)
         }
     }
-
-    console.log(userData);
-    
 
     function handleCommentChange(event) {
         setCommentText(event.target.value)
@@ -96,10 +86,8 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
         })
     }
 
-
     return (
         <BackDrop disableAt={780} zIndex={1000} dataState={setSelectedPost}>
-
             <section className="post-details">
                 <section className="details-nav">
                     <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" onClick={() => setSelectedPost(null)} />
@@ -125,7 +113,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                         </section>
                     </section>
 
-                    <section className="comment-list">
+                    <section className="comment-list" ref={commentListRef}> {/* Added ref here */}
                         <section className="post-title">
                             <div onClick={() => navigateToProfile(selectedPost.by)} className='cursor-pointer'>
                                 <ProfileImg imgUrl={selectedPost.authorProfileImg} diameter={'35px'} />
@@ -148,7 +136,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                             ? Array.from({ length: selectedPost.commentsCount }, (_, index) => (
                                 <CommentPreviewPlaceholder key={index} />
                             ))
-                            : sortedComments.map((comment) => (
+                            : postComments.map((comment) => (
                                 <CommentPreview
                                     key={comment._id}
                                     isCommentLoading={isCommentLoading}
@@ -159,7 +147,6 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                                 />
                             ))
                         }
-
                     </section>
 
                     <section className="likes-and-actions">
@@ -168,7 +155,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                             <img onClick={handleCommentBtnClick} className='like' src="src/assets/svgs/Comment.svg" alt="" />
                         </section>
 
-                        {userData &&(
+                        {userData && (
                             <section className="likes-and-date">
                                 <section className="likes">
                                     <div className="liked-by-profile">
@@ -200,7 +187,6 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                                         )}
                                     </div>
                                 </section>
-
                             </section>
                         )}
                         <div className="date">
@@ -218,7 +204,6 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                                 onChange={handleCommentChange} />
                         </form>
                     </section>
-
                 </section>
             </section>
         </BackDrop>

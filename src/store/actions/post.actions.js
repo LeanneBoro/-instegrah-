@@ -6,12 +6,42 @@ import { store } from '../store'
 
 
 
-export async function loadPosts(pagination) {
+export async function loadPosts(pagination, userId = null) {
   try {
-    if (pagination.skip === 0)   store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+    let userFollowingList = []
+    if (userId) {
 
-    const posts = await postService.query(pagination)
-    store.dispatch({ type: SET_POSTS, posts })
+      const loggedInUser = await userService.getLoggedInUser()
+      userFollowingList = loggedInUser.following || []
+    }
+
+    if (pagination.skip === 0) store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+
+ 
+    const posts = await postService.query(pagination, userId)
+
+    let postsByFollowing = []
+    let suggestedPosts = []
+
+    if (userId) {
+    
+      ({ postsByFollowing, suggestedPosts } = posts.reduce(
+        (acc, post) => {
+          if (userFollowingList.includes(post.by)) {
+            acc.postsByFollowing.push(post)
+          } else {
+            acc.suggestedPosts.push(post)
+          }
+          return acc
+        },
+        { postsByFollowing: [], suggestedPosts: [] }
+      ))
+    } else {
+
+      suggestedPosts = posts
+    }
+
+    store.dispatch({ type: SET_POSTS, postsByFollowing, suggestedPosts })
 
   } catch (err) {
     console.log(err)
@@ -55,6 +85,21 @@ export async function toggleCommentLike(comment, postId) {
   }
 }
 
+export async function postComment(postId,comment,mentions){
+  const user = userService.getLoggedInUser()
+
+  if (!user) return
+
+  try {
+
+    
+    
+  } catch (err) {
+    console.log('Failed to comment on post :', err)
+    
+  }
+}
+
 export async function getPostComments(postId) {
   try {
     store.dispatch({ type: SET_IS_COMMENTS_LOADING, isLoading: true })
@@ -93,12 +138,15 @@ export function clearProfileData() {
 
 export async function addComment(postId, comment) {
 
+
   try {
     const updatedComment = await postService.addComment(postId, comment);
+    updatedComment.by = userService.getLoggedInUser()
+
     store.dispatch({
       type: ADD_COMMENT,
       postId,
-      comment: comment,
+      comment: updatedComment,
     })
   } catch (err) {
     console.error('Error in addComment action creator:', err);

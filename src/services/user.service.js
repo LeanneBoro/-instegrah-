@@ -14,6 +14,7 @@ export const userService = {
     getLoggedInUser,
     toggleFollow,
     checkIfFollowing,
+    updateLoggedInUser,
 }
 
 const USER_DB = "user_db"
@@ -120,6 +121,15 @@ function _setLoggedInUser(user) {
     return userToSave
 }
 
+async function updateLoggedInUser(updatedUserInfo) {
+    try {
+        // Ensure this correctly updates the user information
+        return _setLoggedInUser(updatedUserInfo)
+    } catch (err) {
+        console.error('Failed to update logged in user:', err)
+        throw new Error('Failed to update logged in user')
+    }
+}
 
 function getLoggedInUser() {
     const user = JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN))

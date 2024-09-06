@@ -34,9 +34,10 @@ export const postService = {
 
 
 
-function query(pagination) {
+function query(pagination, userId = null) {
     const { skip, limit } = pagination
-    return httpService.get(`${BASE_URL}?skip=${skip}&limit=${limit}`)
+
+    return httpService.get(`${BASE_URL}?skip=${skip}&limit=${limit}${userId ? `&userId=${userId}` : ''}`)
 }
 
 function queryPostsByUser(userId) {
@@ -79,7 +80,7 @@ async function save(post) {
             const updatedPost = await storageService.put(POST_DB, post)
             return updatedPost
         } else {
-            post.by = objectId().toString()  
+            post.by = objectId().toString()
             console.log(post.by)
             const postToAdd = await httpService.post(BASE_URL, post)
             return postToAdd
@@ -102,27 +103,27 @@ function getLatestComment(comments) {
     return latestComment
 }
 
-async function addComment(postId, comment) {
-
+async function addComment(postId,comment,mentions) {
+    console.log("🚀 ~ addComment ~ comment:", comment)
+    console.log("🚀 ~ addComment ~ postId:", postId)
     try {
-        comment.id = utilService.makeId()
+        if (comment._id) {
+            // const updatedPost = await storageService.put(POST_DB, post)
+            // return updatedPost
+        } else {
+   
+            const commentToAdd = await httpService.post(`${BASE_URL}/${postId}/comments`, { comment, mentions })
 
-        let post = await storageService.get(POST_DB, postId)
-        post.comments = post.comments ? [...post.comments, comment] : [comment]
-        const updatedPost = await storageService.put(POST_DB, post)
-        return updatedPost
+            return commentToAdd
+        }
+    } catch (err) {
+        console.log(err)
     }
-
-    catch (err) {
-        console.error('Error adding comment:', err);
-        throw err;  // Rethrow the error to be handled by the caller
-    }
-
 }
 
-async function togglePostLike(postId){
+async function togglePostLike(postId) {
     console.log(postId);
-    
+
     const response = await httpService.put(`post/likes/${postId}`)
     return response
 
@@ -134,7 +135,7 @@ function isCommentLiked(comment) {
 
     const userId = loggedInUser._id
 
-    const isLiked = comment.likes.some(id => id === userId)
+    const isLiked = comment.likedBy.some(id => id === userId)
 
 
     return isLiked
@@ -143,14 +144,14 @@ function isCommentLiked(comment) {
 function isPostLiked(post) {
     const loggedInUser = userService.getLoggedInUser()
 
-    if (!loggedInUser ) return
+    if (!loggedInUser) return
 
     const userId = loggedInUser._id
 
     const isLiked = post.likes.some(like => like === userId)
-   
 
-    
+
+
 
 
     return isLiked

@@ -40,7 +40,7 @@ export function PostPreview({ post, idx }) {
 
 
     }, [post.image, post.likes, post.comments, modalData])
-    
+
 
     function navigateToProfile(id) {
         navigate(`/profile/${id}`)
@@ -103,12 +103,12 @@ export function PostPreview({ post, idx }) {
                         <h2 onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>{post.authorFullname}</h2>
                         <div>{post.txt}</div>
                     </div>
-                    <div className="view-all" onClick={() => setSelectedPost(post)}>view all {post.commentsCount} comments </div>
+                    <div className="view-all" onClick={() => setSelectedPost(post)}>{post.commentsCount ? 'view all comments' : 'view post'} </div>
                     <div className="latest-comment">
                         {/* Latest comment code */}
                     </div>
 
-                 
+
                     {selectedPost && <PostDetail setModalData={setModalData} selectedPost={selectedPost} setSelectedPost={setSelectedPost} navigateToProfile={navigateToProfile} />}
                     {modalData && <ListModal content={modalData} setModalData={setModalData} />}
                 </>

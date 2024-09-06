@@ -7,6 +7,7 @@ import { userService } from "../services/user.service";
 
 export function CommentPreview({ setModalData, comment, navigateToProfile,isCommentLoading,postId }) {
 
+
     
     if (isCommentLoading) return <CommentPreviewPlaceholder />
     return (
@@ -26,9 +27,9 @@ export function CommentPreview({ setModalData, comment, navigateToProfile,isComm
                 </section>
                 <section className="details">
                         <div>{utilService.timeDifferenceUpToWeeks(comment.createdAt)}</div>
-                    <div onClick={() => setModalData({ data: comment.likes, dataType: 'likes' })}>
-                        {comment.likes.length > 0 &&
-                            `${comment.likes.length} ${comment.likes.length > 1 ? 'likes' : 'like'}`}
+                    <div onClick={() => setModalData({ data: comment.likedBy, dataType: 'likes' })}>
+                        {comment.likedBy.length > 0 &&
+                            `${comment.likedBy.length} ${comment.likedBy.length > 1 ? 'likes' : 'like'}`}
                     </div>
                     <div>reply</div>
                 </section>

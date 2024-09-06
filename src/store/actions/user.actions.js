@@ -1,6 +1,7 @@
 import { userService } from "../../services/user.service";
 import { TOGGLE_FOLLOW } from "../reducers/user.reducer";
 import { SET_USER, SET_USER_POSTS, SET_USERS_DATA, } from '../reducers/user.reducer'
+import { SET_FOLLOWING_BTNS } from "../reducers/utility.reducer";
 
 import { store } from '../store'
 
@@ -50,18 +51,28 @@ export async function toggleFollow(idToFollow) {
     if (!loggedinUser) return
     const loggedinUserId = loggedinUser._id
 
-
     try {
+        store.dispatch({ type: SET_FOLLOWING_BTNS, btnState: true })
+
         const isFollowed = await userService.toggleFollow(idToFollow)
         console.log("🚀 ~ toggleFollow ~ isFollowed:", isFollowed)
 
+        let updatedFollowing
+        if (isFollowed) {
+            updatedFollowing = [...loggedinUser.following, idToFollow]
+        } else {
+            updatedFollowing = loggedinUser.following.filter(userId => userId !== idToFollow)
+        }
+
+        // Ensure atomic update of user information
+        await userService.updateLoggedInUser({ ...loggedinUser, following: updatedFollowing })
         store.dispatch({ type: TOGGLE_FOLLOW, isFollowed, loggedinUserId, idToFollow })
 
     } catch (err) {
-        console.log(err);
+        console.log(err)
     }
-
-
+    finally{
+        store.dispatch({ type: SET_FOLLOWING_BTNS, btnState : false })
+    }
 }
-
 

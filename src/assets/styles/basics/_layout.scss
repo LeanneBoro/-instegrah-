@@ -1,6 +1,6 @@
 .main-layout {
     display: grid;
-    grid-template-columns: var(--post-list-positioning)
+    grid-template-columns: var(--post-list-positioning);
 }
 
 .main-layout>* {
@@ -11,6 +11,9 @@
     grid-column: 1/-1;
 }
 
+.main-layout .third-section-layout {
+    grid-column: 3; /* Ensure it spans the third column */
+}
 
 .profile-page-layout {
     display: grid;

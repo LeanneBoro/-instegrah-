@@ -6,25 +6,45 @@ import { useSelector } from 'react-redux'
 import { PostList } from "../cmps/PostList"
 import { postService } from "../services/post.local.service"
 import { Loader } from "../cmps/Loader"
-// import { userService } from "../services/demoData.service"
+import { userService } from "../services/user.service"
+
 
 export function PostIndex() {
-    const { posts } = useSelector(storeState => storeState.postModule)
+    const { postsByFollowing, suggestedPosts } = useSelector(storeState => storeState.postModule)
     const isLoading = useSelector(storeState => storeState.utilityModule.isLoading);
     const [pagination, setPagination] = useState({ skip: 0, limit: 3 })
     const [loader, displayLoader] = useState(false)
 
+    // const dividerText = 
+
+    const dividerText = userService.getLoggedInUser()
+        ? postsByFollowing > 0
+            ? "You're all caught up!\nFollow more users to see more posts"
+            : 'Follow users to see their posts in the Home page'
+        : (
+            <>
+
+                <h1 onClick={() => alert('Log In')} className="log-in-link">
+                    Log In {' '}
+                </h1>
+                to catch up with the users you are following!
+            </>
+        )
+
     useEffect(() => {
-        loadPosts(pagination)
+        const user = userService.getLoggedInUser()
+        user ? loadPosts(pagination, user._id) : loadPosts(pagination)
 
 
     }, [pagination])
 
 
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
+
+
+    // useEffect(() => {
+    //     window.addEventListener('scroll', handleScroll)
+    //     return () => window.removeEventListener('scroll', handleScroll)
+    // }, [])
 
     const handleScroll = () => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -33,7 +53,7 @@ export function PostIndex() {
                 return { ...prevPagination, skip: prevPagination.skip + prevPagination.limit }
 
             })
-        } else{
+        } else {
             displayLoader(false)
         }
 
@@ -41,18 +61,36 @@ export function PostIndex() {
     }
 
 
-
     return (
-
+        <>
         <section className="main-layout post-index">
 
             {isLoading && <div className='loader-container-index'><Loader /></div>}
 
+            {/* <section className="reloader third-section-layout">
+                <img className="open-img" src="src\imgs\openSlideIcon.webp" alt="" />
+                <img className="reload-img" src="src\imgs\Refresh.png" alt="" />
+               <h2>refresh posts</h2>
+            </section> */}
 
-            <PostList posts={posts} />
+
+            {postsByFollowing.length > 0 && <PostList posts={postsByFollowing} />}
+
+            {suggestedPosts.length > 0 && <section className="divider">
+                {postsByFollowing.length > 0 && <img src="src/imgs/CheckMark.png" alt="" />}
+                <h1>{dividerText}</h1>
+                <div> meanwhile, here are suggested posts by other users</div>
+            </section>}
+
+            {suggestedPosts && <PostList posts={suggestedPosts} />}
             <div className="loader-container">
-               {loader && <img className="loader" src="src\imgs\InstagrahLoader.gif" alt="" />}
+                {loader && <img className="loader" src="src\imgs\InstagrahLoader.gif" alt="" />}
             </div>
+          
         </section>
+
+
+        </>
     )
+    
 }

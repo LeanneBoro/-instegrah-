@@ -14,13 +14,13 @@ export const ADD_COMMENT = 'ADD_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 
 const initialState = {
-  posts: [],
+  postsByFollowing: [],
+  suggestedPosts: [],
   profilePagePosts: [],
   profilePostOwner: [],
   postComments: []
-
-
 }
+
 
 
 
@@ -52,77 +52,85 @@ export function postReducer(state = initialState, action = {}) {
       }
 
 
-      case SET_POSTS:
-        return { ...state, posts: [...state.posts, ...action.posts] }
+    case SET_POSTS:
+      return {
+        ...state,
+        postsByFollowing: [...state.postsByFollowing, ...action.postsByFollowing]
+        , suggestedPosts: [...state.suggestedPosts, ...action.suggestedPosts]
+      }
 
     case ADD_POST:
       return {
         ...state,
-        posts: [action.uploadedPost, ...state.posts]
+        posts: [action.uploadedPost, ...state.postsByFollowing, ...state.suggestedPosts]
       }
 
-    case ADD_COMMENT:
-      return {
-        ...state,
-        posts: state.posts.map(post =>
-
-          post._id === action.postId
-            ? { ...post, comments: [...post.comments, action.comment] }
-            : post
-        ),
-      }
-
-    case REMOVE_COMMENT:
-      return {
-        ...state,
-        posts: state.posts.map(post =>
-          post._id === action.postId
-            ? { ...post, comments: post.comments.filter(comment => comment.id !== action.commentId) }
-            : post
-        ),
-      }
-    case TOGGLE_COMMENT_LIKE:
-      return {
-        ...state,
-        postComments: state.postComments.map(comment => {
-          if (comment._id === action.comment._id) {
-            const likes = [...comment.likes]
+      case ADD_COMMENT:
+      
+        return {
+          ...state,
+          postComments: [action.comment, ...state.postComments,]
     
-            
-            const userIndex = likes.findIndex(id => id === action.user._id)
-            
-
-            if (userIndex !== -1) {
-              likes.splice(userIndex, 1)
-            } else {
-              likes.push(action.user._id)
-            }likes
-            console.log(likes);
-            return { ...comment, likes }
+        }
+        case TOGGLE_COMMENT_LIKE:
+          return {
+            ...state,
+            postComments: state.postComments.map(comment => {
+              if (comment._id === action.comment._id) {
+                const likedBy = [...comment.likedBy]
+        
+                
+                const userIndex = likedBy.findIndex(id => id === action.user._id)
+                console.log("🚀 ~ postReducer ~ userIndex:", userIndex)
+                
+    
+                if (userIndex !== -1) {
+                  likedBy.splice(userIndex, 1)
+                } else {
+                  likedBy.push(action.user._id)
+                }likedBy
+                console.log(likedBy);
+                return { ...comment, likedBy }
+              }
+    
+              return comment
+            })
           }
-
-          return comment
-        })
-
-      }
+  
+      case REMOVE_COMMENT:
+        return {
+          ...state,
+          postsByFollowing: state.postsByFollowing.map(post =>
+            post._id === action.postId
+              ? { ...post, comments: post.comments.filter(comment => comment.id !== action.commentId) }
+              : post
+          ),
+          suggestedPosts: state.suggestedPosts.map(post =>
+            post._id === action.postId
+              ? { ...post, comments: post.comments.filter(comment => comment.id !== action.commentId) }
+              : post
+          ),
+        }
       case TOGGLE_POST_LIKE:
         return {
           ...state,
-          posts: state.posts.map(post =>
+          postsByFollowing: state.postsByFollowing.map(post =>
             post._id === action.postId
               ? {
                   ...post,
-                  likes: (() => {
-                    const userIndex = post.likes.findIndex(like => like === action.userId)
-      
-                    if (userIndex !== -1) {
-                      const updatedLikes = [...post.likes]
-                      updatedLikes.splice(userIndex, 1)
-                      return updatedLikes
-                    } else {
-                      return [...post.likes, action.userId]
-                    }
-                  })()
+                  likes: post.likes.includes(action.userId)
+                    ? post.likes.filter(like => like !== action.userId)
+                    : [...post.likes, action.userId]
+                }
+              : post
+          ),
+          suggestedPosts: state.suggestedPosts.map(post =>
+            post._id === action.postId
+              ? {
+                  ...post,
+                  likes: post.likes.includes(action.userId)
+                    ? post.likes.filter(like => like !== action.userId)
+                    : [...post.likes, action.userId]
                 }
               : post
           ),
@@ -130,25 +138,17 @@ export function postReducer(state = initialState, action = {}) {
             post._id === action.postId
               ? {
                   ...post,
-                  likes: (() => {
-                    const userIndex = post.likes.findIndex(like => like === action.userId)
-      
-                    if (userIndex !== -1) {
-                      const updatedLikes = [...post.likes]
-                      updatedLikes.splice(userIndex, 1)
-                      return updatedLikes
-                    } else {
-                      return [...post.likes, action.userId]
-                    }
-                  })()
+                  likes: post.likes.includes(action.userId)
+                    ? post.likes.filter(like => like !== action.userId)
+                    : [...post.likes, action.userId]
                 }
               : post
-          )
+          ),
         }
-   
 
-      
-    default:
-      return state
-  }
+        
+        
+      default:
+        return state
+    }  
 }
