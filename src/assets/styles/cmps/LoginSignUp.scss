@@ -1,7 +1,7 @@
 .login-signup {
     grid-column: 2;
     width: 100%;
-    max-width:350px;
+    max-width: 350px;
     height: max-content;
     // min-height: 600px;
     background-color: white;
@@ -11,6 +11,13 @@
     align-items: center;
     z-index: 1001;
     border-radius: 20px;
+
+    & .back-btn {
+        display: none;
+       position: fixed;
+       top: 0;
+    }
+
 
     & img {
         width: 200px;
@@ -51,16 +58,16 @@
                 }
             }
 
-    
+
 
         }
 
-        & .feedback{
+        & .feedback {
             font-size: 0.7em;
             margin-bottom: 1em;
             height: 1.4em;
             width: 80%;
-        
+
         }
 
         & .upload-profile {
@@ -115,11 +122,11 @@
         & .btn-2 {
             cursor: pointer;
 
-            &:hover{
+            &:hover {
                 text-decoration: underline;
             }
-           
-            & h1{
+
+            & h1 {
                 font-size: 1em;
                 font-style: bold;
                 color: blue;

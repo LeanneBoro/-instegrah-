@@ -10,6 +10,7 @@ import { postService } from '../services/post.local.service';
 import { loadUsers } from '../store/actions/user.actions';
 import { userService } from '../services/user.service';
 import { CommentPreviewPlaceholder } from './CommentPreviewPlaceholder';
+import { cloudinaryLinks } from '../services/cloudinary.service';
 
 export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
     const { postComments } = useSelector(storeState => storeState.postModule)
@@ -20,8 +21,8 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
     const commentListRef = useRef(null) // Ref for the comment list container
 
     const imgSrc = postService.isPostLiked(selectedPost)
-        ? 'src/imgs/HeartFull.png'
-        : 'src/assets/svgs/Heart.svg'
+        ? cloudinaryLinks.heartFull
+        : cloudinaryLinks.heart
 
     useEffect(() => {
         getPostComments(selectedPost._id)
@@ -90,7 +91,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
         <BackDrop disableAt={780} zIndex={1000} dataState={setSelectedPost}>
             <section className="post-details">
                 <section className="details-nav">
-                    <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" onClick={() => setSelectedPost(null)} />
+                    <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" onClick={() => setSelectedPost(null)} />
                     <div>Post</div>
                 </section>
 
@@ -152,7 +153,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                     <section className="likes-and-actions">
                         <section className="actions">
                             <img className='comment' src={imgSrc} alt="" onClick={handlePostLike} />
-                            <img onClick={handleCommentBtnClick} className='like' src="src/assets/svgs/Comment.svg" alt="" />
+                            <img onClick={handleCommentBtnClick} className='like' src={cloudinaryLinks.comment} alt="" />
                         </section>
 
                         {userData && (

@@ -8,6 +8,7 @@ import { PostPreviewPlaceholder } from './PostPreviewPlaceholder'
 import { postService } from '../services/post.local.service'
 import { togglePostLike } from '../store/actions/post.actions'
 import { FollowBtn } from './FollowBtn'
+import { cloudinaryLinks } from '../services/cloudinary.service'
 
 export function PostPreview({ post, idx }) {
 
@@ -24,8 +25,8 @@ export function PostPreview({ post, idx }) {
     const navigate = useNavigate()
 
     const imgSrc = postService.isPostLiked(post)
-        ? 'src/imgs/HeartFull.png'
-        : 'src/assets/svgs/Heart.svg'
+        ? cloudinaryLinks.heartFull
+        : cloudinaryLinks.heart
 
 
     useEffect(() => {
@@ -89,7 +90,7 @@ export function PostPreview({ post, idx }) {
 
                             </span>
                             <span className="flex justify-center svg-container">
-                                <img src="src\assets\svgs\Comment.svg" alt="" />                            </span>
+                                <img src={cloudinaryLinks.comment} alt="" />                            </span>
                             <span className="flex justify-center svg-container">
                                 {/* <svg aria-label="Share Post" className="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Share Post</title><line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218" y1="3" y2="10.083"></line><polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon></svg> */}
                             </span>

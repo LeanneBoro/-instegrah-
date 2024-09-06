@@ -86,6 +86,16 @@ $gray5: #fafafa;
 
         @include mobile-login-singUp;
 
+.post-details,.login-signup{
+
+    & .back-btn {
+        display: block;
+        @include back-btn
+    }
+
+}
+        
+
         .post-details {
             flex-direction: column;
             width: 100vw;
@@ -106,9 +116,7 @@ $gray5: #fafafa;
                 background-color: $fully-white;
                 position: fixed;
 
-                & .back-btn {
-                    @include back-btn
-                }
+               
             }
 
 

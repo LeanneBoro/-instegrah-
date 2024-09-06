@@ -4,6 +4,7 @@ import { CommentPreviewPlaceholder } from "./CommentPreviewPlaceholder"
 import { ProfileImg } from "./ProfileImg"
 import { toggleCommentLike } from "../store/actions/post.actions";
 import { userService } from "../services/user.service";
+import { cloudinaryLinks } from "../services/cloudinary.service";
 
 export function CommentPreview({ setModalData, comment, navigateToProfile,isCommentLoading,postId }) {
 
@@ -38,8 +39,8 @@ export function CommentPreview({ setModalData, comment, navigateToProfile,isComm
            {userService.getLoggedInUser() && <div className="like" onClick={() => toggleCommentLike(comment,postId)}>
                 <img
                     src={postService.isCommentLiked(comment)
-                        ? 'src/imgs/HeartFull.png'
-                        : 'src/assets/svgs/Heart.svg'}
+                        ? cloudinaryLinks.heart
+                        : cloudinaryLinks.heartFull}
                     alt=""
                     
                 />

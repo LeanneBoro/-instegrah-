@@ -1,3 +1,5 @@
+import { cloudinaryLinks } from "../services/cloudinary.service";
+
 export function NotificationsModal({ expandedSection, setExpandedSection }) {
 
     return <section className={expandedSection === 'notifications' ? 'notifications-modal active' : 'notifications-modal'} >
@@ -5,7 +7,7 @@ export function NotificationsModal({ expandedSection, setExpandedSection }) {
 
         <section className="notifications-nav">
 
-            <img className="back-btn" src="src\assets\svgs\Close-Arrow.svg" alt="" onClick={() => setExpandedSection(null)} />
+            <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" onClick={() => setExpandedSection(null)} />
 
             <div>Notifications</div>
 

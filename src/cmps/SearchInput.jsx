@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from "react"
+import { cloudinaryLinks } from '../services/cloudinary.service';
 
 
 
@@ -17,7 +18,7 @@ export function SearchInput({ width = '', onSearch }) {
 
 
     return <section className="search-input-container" style={inputContainerStyle}>
-        <img className="search-icon" src="src\assets\svgs\Search.svg" alt="" />
+        <img className="search-icon" src={cloudinaryLinks.searchBold} alt="" />
 
         <input
             type="text"

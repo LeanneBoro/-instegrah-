@@ -4,6 +4,7 @@ import { UploadProfileImg } from './UploadProfileImg'
 import { userService } from '../services/user.service'
 import { utilService } from '../services/util.service'
 import { allPosts } from '../../everything-demodata/demoData'
+import { cloudinaryLinks } from '../services/cloudinary.service'
 
 
 // console.log(allPosts);
@@ -19,7 +20,7 @@ export function LoginSignUp({ setExpandedSection }) {
 
     const [signUp, setSignUp] = useState(false)
     const [selectionModal, openSelectionModal] = useState(false)
-    const [profileImg, setProfileImg] = useState('src/assets/svgs/Profile.svg')
+    const [profileImg, setProfileImg] = useState(null)
 
     const [newUser, editNewUser] = useState({
         username: '',
@@ -97,7 +98,7 @@ export function LoginSignUp({ setExpandedSection }) {
             username: '',
             password: '',
             fullname: '',
-            profileImg: 'src/assets/svgs/Profile.svg'
+            profileImg: null
         })
         setSignUpFeedback({
             usernameFeedback: { type: '', text: '' },
@@ -223,10 +224,18 @@ export function LoginSignUp({ setExpandedSection }) {
                 className={`login-signup ${selectionModal ? 'extended' : ''}`}
                 onClick={handleModalClick}
             >
-                {!selectionModal && (
+          
+                    <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" onClick={() => setExpandedSection(null)} />
+                
+                {userService.getLoggedInUser() ? (
+                   <section className='log-out'>
+                    are you sure you want to log out?
+                    <button onClick={()=> userService.logout()}>Log out</button>
+                   </section>
+                ) : (
                     <>
                         <div className="logo"></div>
-                        <img src="src/assets/svgs/IntagramLogo.svg" alt="Instagram Logo" />
+                        <img src={cloudinaryLinks.logo} alt="Instagram Logo" />
                         <section className="login-input-container">
                             <input
                                 className={`${signUp ? feedbackConfig.username.className : loginFeedbackConfig.username.className}`}
@@ -237,11 +246,11 @@ export function LoginSignUp({ setExpandedSection }) {
                                 onChange={handleChange}
                                 required
                             />
-
+    
                             <span className='feedback'>
                                 {signUp ? feedbackConfig.username.text : loginFeedbackConfig.username.text}
                             </span>
-
+    
                             <input
                                 className={`${signUp ? feedbackConfig.password.className : loginFeedbackConfig.password.className}`}
                                 name="password"
@@ -254,7 +263,7 @@ export function LoginSignUp({ setExpandedSection }) {
                             <span className='feedback'>
                                 {signUp ? feedbackConfig.password.text : loginFeedbackConfig.password.text}
                             </span>
-
+    
                             {signUp && (
                                 <>
                                     <input
@@ -272,7 +281,7 @@ export function LoginSignUp({ setExpandedSection }) {
                             {signUp && (
                                 <section className='upload-profile'>
                                     <div className='image-container'>
-                                        <ProfileImg imgUrl={profileImg} diameter={"100px"} />
+                                        <ProfileImg imgUrl={profileImg ? profileImg : cloudinaryLinks.profile} diameter={"100px"} />
                                     </div>
                                     <div onClick={() => openSelectionModal(true)} className='text'>
                                         {buttonText}
@@ -299,4 +308,5 @@ export function LoginSignUp({ setExpandedSection }) {
             </section>
         </section>
     )
+    
 }

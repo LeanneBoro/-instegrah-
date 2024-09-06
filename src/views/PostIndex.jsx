@@ -7,6 +7,7 @@ import { PostList } from "../cmps/PostList"
 import { postService } from "../services/post.local.service"
 import { Loader } from "../cmps/Loader"
 import { userService } from "../services/user.service"
+import { cloudinaryLinks } from "../services/cloudinary.service"
 
 
 export function PostIndex() {
@@ -41,10 +42,10 @@ export function PostIndex() {
 
 
 
-    // useEffect(() => {
-    //     window.addEventListener('scroll', handleScroll)
-    //     return () => window.removeEventListener('scroll', handleScroll)
-    // }, [])
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     const handleScroll = () => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -77,14 +78,14 @@ export function PostIndex() {
             {postsByFollowing.length > 0 && <PostList posts={postsByFollowing} />}
 
             {suggestedPosts.length > 0 && <section className="divider">
-                {postsByFollowing.length > 0 && <img src="src/imgs/CheckMark.png" alt="" />}
+                {postsByFollowing.length > 0 && <img src={cloudinaryLinks.checkMark} alt="" />}
                 <h1>{dividerText}</h1>
                 <div> meanwhile, here are suggested posts by other users</div>
             </section>}
 
             {suggestedPosts && <PostList posts={suggestedPosts} />}
             <div className="loader-container">
-                {loader && <img className="loader" src="src\imgs\InstagrahLoader.gif" alt="" />}
+                {loader && <img className="loader" src={cloudinaryLinks.loadingGif} alt="" />}
             </div>
           
         </section>

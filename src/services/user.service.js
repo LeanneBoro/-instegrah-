@@ -11,6 +11,7 @@ export const userService = {
     checkUsernameExists,
     handleSignUp,
     signup,
+    logout,
     getLoggedInUser,
     toggleFollow,
     checkIfFollowing,
@@ -82,9 +83,11 @@ async function signup({ username, password, fullname, profileImg, isAdmin = fals
         formData.append('password', password)
         formData.append('fullname', fullname)
 
+if (profileImg){
+    const profileImgBlob = utilService.base64ToBlob(profileImg)
+    formData.append('profileImg', profileImgBlob, 'profileImg.png')
+}
 
-        const profileImgBlob = utilService.base64ToBlob(profileImg)
-        formData.append('profileImg', profileImgBlob, 'profileImg.png')
 
         const response = await httpService.post(BASE_AUTH_URL + 'signup', formData)
         const profileImgUrl = response.profileImg
@@ -98,6 +101,8 @@ async function signup({ username, password, fullname, profileImg, isAdmin = fals
         throw err
     }
 }
+
+
 
 async function logout() {
     try {

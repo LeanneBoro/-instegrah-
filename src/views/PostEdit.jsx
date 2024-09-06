@@ -11,6 +11,7 @@ import { ProfileImg } from "../cmps/ProfileImg";
 import { postService } from "../services/post.local.service";
 import { savePost } from '../store/actions/post.actions'
 import { utilService } from "../services/util.service";
+import { cloudinaryLinks } from "../services/cloudinary.service";
 
 export function PostEdit({ dataState }) {
     const croppieRef = useRef(null);
@@ -119,7 +120,7 @@ export function PostEdit({ dataState }) {
     return (
         <section className={`post-edit ${imageCropped ? "expanded" : ""}`}>
             <section className="header">
-                <img className="back-btn" src="src/assets/svgs/Close-Arrow.svg" alt="" />
+                <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" />
                 <h2>Create a new Post</h2>
                 <h2
                     title={nextButtonTitle}

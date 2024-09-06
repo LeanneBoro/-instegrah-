@@ -1,9 +1,10 @@
+import { cloudinaryLinks } from "../services/cloudinary.service";
 import { SearchInput } from "./SearchInput";
 
 export function HeaderNav() {
     return <section className="header-nav">
 
-        <img className="logo" src="src\assets\svgs\IntagramLogo.svg" alt="" />
+        <img className="logo" src={cloudinaryLinks.loadingGif} alt="" />
 
         <div>
 
@@ -12,7 +13,7 @@ export function HeaderNav() {
 
 
             <div>
-                <img className="notifications" src="src\assets\svgs\heart.svg" alt="" />
+                <img className="notifications" src={cloudinaryLinks.heart} alt="" />
             </div>
 
         </div>

@@ -6,6 +6,7 @@ import { ProfileImg } from '../cmps/ProfileImg'
 import { PostDetail } from '../cmps/PostDetail'
 import { Loader } from '../cmps/Loader'
 import { ListModal } from '../cmps/ListModal'
+import { cloudinaryLinks } from '../services/cloudinary.service'
 
 export function Profile() {
     const { userId } = useParams()
@@ -96,9 +97,9 @@ console.log(posts);
                         <img className='post-img' src={post.image} alt="" />
                         <div className='back-drop'></div>
                         <div className='details'>
-                            <img src="src/assets/svgs/HeartBold.svg" alt="Heart Icon" />
+                            <img src={cloudinaryLinks.heart} alt="Heart Icon" />
                             <h1>{post.likes.length}</h1>
-                            <img src="src/imgs/Comment-Bold.png" alt="" />
+                            <img src={cloudinaryLinks.comment} alt="" />
                             <h1>{post.commentsCount}</h1>
                         </div>
                     </div>

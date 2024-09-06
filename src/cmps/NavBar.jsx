@@ -8,6 +8,7 @@ import { PostEdit } from '../views/PostEdit';
 import { BackDrop } from './BackDrop';
 import { LoginSignUp } from './LoginSignup';
 import { userService } from '../services/user.service';
+import { cloudinaryLinks } from '../services/cloudinary.service';
 
 
 
@@ -18,7 +19,7 @@ export function NavBar() {
     const navigate = useNavigate();
     const location = useLocation()
     const currentLocation = location.pathname
-
+    const user = userService.getLoggedInUser()
 
 
 
@@ -37,10 +38,10 @@ export function NavBar() {
         }
     }, [])
 
-    function handleProfileNavigate(){
-        userService.getLoggedInUser() 
-        ? navigate('/profile/' + userService.getLoggedInUser()._id) 
-        : setExpandedSection("login")
+    function handleProfileNavigate() {
+        user
+            ? navigate('/profile/' + user._id)
+            : setExpandedSection("login")
     }
 
 
@@ -58,11 +59,11 @@ export function NavBar() {
                     }}>
 
                     <div className="logo" >
-                        <img src="src\assets\svgs\IntagramLogo.svg" alt="" />
+                        <img src={cloudinaryLinks.logo} alt="" />
                     </div>
 
                     <div className="small-logo">
-                        <img src="src\assets\svgs\instagramsmallLogo.svg" alt="" />
+                        <img src={cloudinaryLinks.smallLogo} alt="" />
                     </div>
 
                 </div>
@@ -70,15 +71,16 @@ export function NavBar() {
                 <section className="options">
 
 
-                {/* <div onClick={() => } className='login-btn'>Log In</div> */}
+                    {/* <div onClick={() => } className='login-btn'>Log In</div> */}
 
 
 
-                <div title='Log-in' className="login-btn" onClick={() => {
-                    setExpandedSection("login")
+                    <div title='Log-in' className="login-btn" onClick={() => {
+                        setExpandedSection("login")
                     }}>
-                        <img className="icon" src="src\imgs\login-icon.png" alt="" />
-                        <div className="title">Log in</div>
+
+                        <img className="icon" src={user ? cloudinaryLinks.logout : cloudinaryLinks.login} alt="" />
+                        <div className="title">{user ? 'Log out' : "Log in"} </div>
                     </div>
 
 
@@ -88,7 +90,8 @@ export function NavBar() {
                         navigate('/')
                         setExpandedSection(null)
                     }}>
-                        <img className="icon" src={`src/assets/svgs/Home${currentLocation === "/" && expandedSection !== 'search' ? "Bold" : ""}.svg`} alt="" />
+                    
+                        <img className="icon" src={ currentLocation === "/" && expandedSection !== 'search' ?cloudinaryLinks.homeBold : cloudinaryLinks.home} alt="" />
                         <div className="title">Home</div>
                     </div>
 
@@ -96,33 +99,33 @@ export function NavBar() {
                     <div className={`search expandedSection === 'search' ? 'open' : ''`}
                         onClick={() => setExpandedSection(expandedSection === 'search' ? null : 'search')}>
                         <img className="icon"
-                            src={`src/assets/svgs/Search${expandedSection === 'search' ? 'Bold' : ''}.svg`} />
+                            src={expandedSection === 'search' ? cloudinaryLinks.searchBold : cloudinaryLinks.search} />
                         <div className="title">Search</div>
                     </div>
 
                     <div className={`notifications expandedSection === 'notifications' ? 'open' : ''`}
                         onClick={() => setExpandedSection(expandedSection === 'notifications' ? null : 'notifications')}>
                         <img className="icon"
-                            src={`src/assets/svgs/Heart${expandedSection === 'notifications' ? 'Bold' : ''}.svg`} />
+                            src={expandedSection === 'notifications' ? cloudinaryLinks.heartBold : cloudinaryLinks.heart} />
                         <div className="title">Notifications</div>
                     </div>
 
                     <div onClick={() => setExpandedSection(expandedSection === 'upload' ? null : 'upload')} >
-                        <img className="icon" src="src\assets\svgs\Create.svg" alt="" />
+                        <img className="icon" src={cloudinaryLinks.create} alt="" />
                         <div className="title">Create</div>
                     </div>
 
 
-                  
+
                     <div onClick={handleProfileNavigate} >
-                        <img className="icon " src={userService.getLoggedInUser() ? userService.getLoggedInUser().profileImg  : "src/assets/svgs/Profile.svg"} alt="" />
+                        <img className="icon " src={user ? user.profileImg : cloudinaryLinks.profile} alt="" />
                         <div className="title">Profile</div>
                     </div>
 
 
 
                     <div>
-                        <img className="icon" src="src\assets\svgs\More.svg" alt="" />
+                        <img className="icon" src={cloudinaryLinks.more} alt="" />
                         <div className="title">More</div>
                     </div>
 
@@ -147,7 +150,7 @@ export function NavBar() {
         }
 
         {expandedSection === "login" &&
-            <BackDrop  dataState={setExpandedSection}>
+            <BackDrop dataState={setExpandedSection}>
                 <LoginSignUp setExpandedSection={setExpandedSection} />
             </BackDrop>}
 

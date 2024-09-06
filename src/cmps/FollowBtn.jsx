@@ -4,6 +4,7 @@ import { userService } from "../services/user.service";
 import { toggleFollow } from "../store/actions/user.actions";
 import { Loader } from "./Loader";
 import { useSelector } from "react-redux";
+import { cloudinaryLinks } from "../services/cloudinary.service";
 
 export function FollowBtn({ profile }) {
     const { disableFollowingBtn } = useSelector(storeState => storeState.utilityModule)
@@ -39,7 +40,7 @@ export function FollowBtn({ profile }) {
         </h2>
 
         {followingLoading &&
-            <div className="loader-container"><img className="follow-loader" src="src\imgs\InstagrahLoader.gif" alt="" /></div>
+            <div className="loader-container"><img className="follow-loader" src={cloudinaryLinks.loadingGif} alt="" /></div>
         }
 
 
