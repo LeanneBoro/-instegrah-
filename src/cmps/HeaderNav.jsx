@@ -4,7 +4,7 @@ import { SearchInput } from "./SearchInput";
 export function HeaderNav() {
     return <section className="header-nav">
 
-        <img className="logo" src={cloudinaryLinks.loadingGif} alt="" />
+        <img className="logo" src={cloudinaryLinks.logo} alt="" />
 
         <div>
 

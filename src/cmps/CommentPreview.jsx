@@ -39,8 +39,8 @@ export function CommentPreview({ setModalData, comment, navigateToProfile,isComm
            {userService.getLoggedInUser() && <div className="like" onClick={() => toggleCommentLike(comment,postId)}>
                 <img
                     src={postService.isCommentLiked(comment)
-                        ? cloudinaryLinks.heart
-                        : cloudinaryLinks.heartFull}
+                        ? cloudinaryLinks.heartFull
+                        : cloudinaryLinks.heart}
                     alt=""
                     
                 />

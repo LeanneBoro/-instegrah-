@@ -227,7 +227,7 @@ export function LoginSignUp({ setExpandedSection }) {
                 {!selectionModal && (
                     <>
                         <div className="logo"></div>
-                        <img src="src/assets/svgs/IntagramLogo.svg" alt="Instagram Logo" />
+                        <img src={cloudinaryLinks.logo} alt="Instagram Logo" />
                         <section className="login-input-container">
                             <input
                                 className={`${signUp ? feedbackConfig.username.className : loginFeedbackConfig.username.className}`}
