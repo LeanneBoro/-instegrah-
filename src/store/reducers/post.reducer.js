@@ -62,7 +62,7 @@ export function postReducer(state = initialState, action = {}) {
     case ADD_POST:
       return {
         ...state,
-        posts: [action.uploadedPost, ...state.postsByFollowing, ...state.suggestedPosts]
+        postsByFollowing: [action.uploadedPost, ...state.postsByFollowing]
       }
 
       case ADD_COMMENT:

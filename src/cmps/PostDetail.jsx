@@ -14,6 +14,7 @@ import { cloudinaryLinks } from '../services/cloudinary.service';
 
 export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
     const { postComments } = useSelector(storeState => storeState.postModule)
+    console.log("🚀 ~ PostDetail ~ postComments:", postComments)
     const { isCommentLoading } = useSelector(storeState => storeState.utilityModule)
     const [commentText, setCommentText] = useState('')
     const [userData, setUsersData] = useState('')

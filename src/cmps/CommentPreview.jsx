@@ -7,6 +7,7 @@ import { userService } from "../services/user.service";
 import { cloudinaryLinks } from "../services/cloudinary.service";
 
 export function CommentPreview({ setModalData, comment, navigateToProfile,isCommentLoading,postId }) {
+// console.log("🚀 ~ CommentPreview ~ comment:", comment)
 
 
     
@@ -20,7 +21,7 @@ export function CommentPreview({ setModalData, comment, navigateToProfile,isComm
             <section className="comment">
                 <section className="content">
                     <div className="text">
-                        <h2 onClick={() => navigateToProfile(comment._id)} className="username cursor-pointer">
+                        <h2 onClick={() => navigateToProfile(comment.by._id)} className="username cursor-pointer">
                             {comment.by.username}
                         </h2>
                         <span>{comment.text}</span>

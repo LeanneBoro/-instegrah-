@@ -49,7 +49,7 @@ $gray5: #fafafa;
     --post-edit-layout: 75px minmax(50px, 1fr) minmax(0, 800px) minmax(50px, 1fr);
 
     --placeholder-min-width: 500px;
-
+    --pop-up-modal-height: 70px;
 
 
     @media (width < 1250px) {
@@ -61,6 +61,8 @@ $gray5: #fafafa;
 
         --profile-positioning: minmax(72px, 1fr) minmax(0, 935px) minmax(auto, 1fr);
         --profile-grid-placement: 2;
+
+     
     }
 
     @media (width < 780px) {
@@ -80,21 +82,24 @@ $gray5: #fafafa;
 
         --placeholder-min-width: none;
 
+        --pop-up-modal-height: 130px;
+
         @include bottom-bar;
 
         @include mobile-post-edit;
 
         @include mobile-login-singUp;
 
-.post-details,.login-signup{
+        .post-details,
+        .login-signup {
 
-    & .back-btn {
-        display: block;
-        @include back-btn
-    }
+            & .back-btn {
+                display: block;
+                @include back-btn
+            }
 
-}
-        
+        }
+
 
         .post-details {
             flex-direction: column;
@@ -104,7 +109,7 @@ $gray5: #fafafa;
             overflow-y: scroll;
 
 
- 
+
 
             & .details-nav {
                 display: flex;
@@ -116,7 +121,7 @@ $gray5: #fafafa;
                 background-color: $fully-white;
                 position: fixed;
 
-               
+
             }
 
 
@@ -152,4 +157,3 @@ $gray5: #fafafa;
     }
 
 }
-

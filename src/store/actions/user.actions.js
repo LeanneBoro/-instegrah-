@@ -1,5 +1,5 @@
 import { userService } from "../../services/user.service";
-import { TOGGLE_FOLLOW } from "../reducers/user.reducer";
+import { SET_LOGGED_IN_USER, TOGGLE_FOLLOW } from "../reducers/user.reducer";
 import { SET_USER, SET_USER_POSTS, SET_USERS_DATA, } from '../reducers/user.reducer'
 import { SET_FOLLOWING_BTNS } from "../reducers/utility.reducer";
 
@@ -45,6 +45,19 @@ export async function loadUsers(idArr) {
     }
 }
 
+export async function signUp(userData){
+    try {
+        const loggedInUser = await userService.signup(userData)
+        store.dispatch({ type: SET_LOGGED_IN_USER, loggedInUser })
+        return loggedInUser
+    } catch (err) {
+        
+    }
+
+}
+
+
+
 
 export async function toggleFollow(idToFollow) {
     const loggedinUser = userService.getLoggedInUser()
@@ -71,8 +84,8 @@ export async function toggleFollow(idToFollow) {
     } catch (err) {
         console.log(err)
     }
-    finally{
-        store.dispatch({ type: SET_FOLLOWING_BTNS, btnState : false })
+    finally {
+        store.dispatch({ type: SET_FOLLOWING_BTNS, btnState: false })
     }
 }
 

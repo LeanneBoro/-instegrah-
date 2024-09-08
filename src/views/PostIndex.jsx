@@ -15,6 +15,7 @@ export function PostIndex() {
     const isLoading = useSelector(storeState => storeState.utilityModule.isLoading);
     const [pagination, setPagination] = useState({ skip: 0, limit: 3 })
     const [loader, displayLoader] = useState(false)
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser);
 
     // const dividerText = 
 
@@ -37,7 +38,7 @@ export function PostIndex() {
         user ? loadPosts(pagination, user._id) : loadPosts(pagination)
 
 
-    }, [pagination])
+    }, [pagination,loggedInUser])
 
 
 

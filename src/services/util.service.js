@@ -1,3 +1,5 @@
+import { userService } from "./user.service"
+
 export const utilService = {
     makeId,
     makeLorem,
@@ -11,7 +13,8 @@ export const utilService = {
     getRandomDate,
     timeDifferenceUpToWeeks,
     debounce,
-    base64ToBlob
+    base64ToBlob,
+    validateUserData
 }
 
 function makeId(length = 6) {
@@ -173,4 +176,64 @@ function timeDifferenceUpToWeeks(timestamp, length = "short") {
     }
     const byteArray = new Uint8Array(byteNumbers)
     return new Blob([byteArray], { type: mimeType })
+}
+
+ async function validateUserData(userData, currentFeedback) {
+  const feedback = { ...currentFeedback }
+
+  if (userData.username.trim() === '') {
+      feedback.usernameFeedback = {
+          type: 'denied',
+          text: '* username must be between 3 and 25 characters'
+      }
+  } else if (userData.username.length < 3 || userData.username.length > 25) {
+      feedback.usernameFeedback = {
+          type: 'denied',
+          text: '* username must be between 3 and 25 characters'
+      }
+  } else {
+      feedback.usernameFeedback = {
+          type: currentFeedback.usernameFeedback.type === 'approved' ? 'approved' : '',
+          text: currentFeedback.usernameFeedback.type === 'approved' ? currentFeedback.usernameFeedback.text : ''
+      }
+  }
+
+  if (userData.fullname.trim() === '') {
+      feedback.fullnameFeedback = {
+          type: 'denied',
+          text: '* full name must be at least 1 character'
+      }
+  } else {
+      feedback.fullnameFeedback = {
+          type: currentFeedback.fullnameFeedback.type === 'approved' ? 'approved' : '',
+          text: currentFeedback.fullnameFeedback.type === 'approved' ? currentFeedback.fullnameFeedback.text : ''
+      }
+  }
+
+  if (userData.password.trim() === '') {
+      feedback.passwordFeedback = {
+          type: 'denied',
+          text: '* password must be between 5 and 12 characters'
+      }
+  } else if (userData.password.length < 5 || userData.password.length > 12) {
+      feedback.passwordFeedback = {
+          type: 'denied',
+          text: '* password must be between 5 and 12 characters'
+      }
+  } else {
+      feedback.passwordFeedback = {
+          type: currentFeedback.passwordFeedback.type === 'approved' ? 'approved' : '',
+          text: currentFeedback.passwordFeedback.type === 'approved' ? currentFeedback.passwordFeedback.text : ''
+      }
+  }
+
+  const usernameExists = await userService.checkUsernameExists(userData.username)
+  const isValid = [
+      !usernameExists,
+      userData.username.trim().length >= 3 && userData.username.length <= 25,
+      userData.fullname.trim() !== '',
+      userData.password.trim().length >= 5 && userData.password.length <= 12
+  ].every(condition => condition)
+
+  return { isValid, feedback }
 }

@@ -63,7 +63,7 @@ console.log(posts);
                 <section className="actions-and-details">
                     <section className="actions">
                         <div className="username">{user.username}</div>
-                        <button>Edit Profile</button>
+                        {/* <button>Edit Profile</button> */}
                     </section>
 
                     <section className="metrics">

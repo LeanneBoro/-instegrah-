@@ -84,7 +84,7 @@
     }
 
     & .divider {
-        // margin-top: 20px;
+       margin-top: var(--list-margin-top);
         border-block-end: solid $gray3 1px;
         gap: 15px;
         height: max-content;

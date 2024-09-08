@@ -5,6 +5,7 @@ import { userService } from '../services/user.service'
 import { utilService } from '../services/util.service'
 import { allPosts } from '../../everything-demodata/demoData'
 import { cloudinaryLinks } from '../services/cloudinary.service'
+import { signUp } from '../store/actions/user.actions'
 
 
 // console.log(allPosts);
@@ -18,7 +19,7 @@ export function LoginSignUp({ setExpandedSection }) {
     const debounceRef = useRef(null)
 
 
-    const [signUp, setSignUp] = useState(false)
+    const [signUpState, setSignUpState] = useState(false)
     const [selectionModal, openSelectionModal] = useState(false)
     const [profileImg, setProfileImg] = useState(null)
 
@@ -45,16 +46,16 @@ export function LoginSignUp({ setExpandedSection }) {
     const buttonConfig = {
         btn1: {
             class: 'pink-btn',
-            text: signUp ? 'Complete Sign Up' : 'Sign Up'
+            text: signUpState ? 'Complete Sign Up' : 'Sign Up'
         },
         btn2: {
             class: 'cyan-btn',
-            text: signUp ? 'Already Signed up' : 'Log In'
+            text: signUpState ? 'Already Signed up' : 'Log In'
         }
     }
 
-    const btn1Config = signUp ? buttonConfig.btn1 : buttonConfig.btn2
-    const btn2Config = signUp ? buttonConfig.btn2 : buttonConfig.btn1
+    const btn1Config = signUpState ? buttonConfig.btn1 : buttonConfig.btn2
+    const btn2Config = signUpState ? buttonConfig.btn2 : buttonConfig.btn1
 
     const feedbackConfig = {
         username: {
@@ -93,7 +94,7 @@ export function LoginSignUp({ setExpandedSection }) {
 
 
     function handleBtn2() {
-        setSignUp(!signUp)
+        setSignUpState(!signUpState)
         editNewUser({
             username: '',
             password: '',
@@ -159,16 +160,25 @@ export function LoginSignUp({ setExpandedSection }) {
     )
 
     async function onSignUp() {
-        const result = await userService.handleSignUp(newUser, signUpFeedback)
-    
-        setSignUpFeedback(result.feedback)
-        console.log(result)
-    
-        if (result.success) {
-        
-            setExpandedSection(null)
+
+        try {
+            const result = await utilService.validateUserData(newUser, signUpFeedback)
+            console.log("🚀 ~ onSignUp ~ result:", result)
+            setSignUpFeedback(result.feedback)
+
+            if (result.isValid) {
+                signUp(newUser)
+                setExpandedSection(null)
+            }
+
+        } catch (err) {
+            console.error('Error signing up:', err)
         }
- 
+
+
+
+
+
     }
 
     function handleLogin() {
@@ -230,7 +240,7 @@ export function LoginSignUp({ setExpandedSection }) {
                         <img src={cloudinaryLinks.logo} alt="Instagram Logo" />
                         <section className="login-input-container">
                             <input
-                                className={`${signUp ? feedbackConfig.username.className : loginFeedbackConfig.username.className}`}
+                                className={`${signUpState ? feedbackConfig.username.className : loginFeedbackConfig.username.className}`}
                                 name="username"
                                 placeholder="Enter username"
                                 type="text"
@@ -240,11 +250,11 @@ export function LoginSignUp({ setExpandedSection }) {
                             />
 
                             <span className='feedback'>
-                                {signUp ? feedbackConfig.username.text : loginFeedbackConfig.username.text}
+                                {signUpState ? feedbackConfig.username.text : loginFeedbackConfig.username.text}
                             </span>
 
                             <input
-                                className={`${signUp ? feedbackConfig.password.className : loginFeedbackConfig.password.className}`}
+                                className={`${signUpState ? feedbackConfig.password.className : loginFeedbackConfig.password.className}`}
                                 name="password"
                                 placeholder="Enter password"
                                 type="password"
@@ -253,10 +263,10 @@ export function LoginSignUp({ setExpandedSection }) {
                                 required
                             />
                             <span className='feedback'>
-                                {signUp ? feedbackConfig.password.text : loginFeedbackConfig.password.text}
+                                {signUpState ? feedbackConfig.password.text : loginFeedbackConfig.password.text}
                             </span>
 
-                            {signUp && (
+                            {signUpState && (
                                 <>
                                     <input
                                         className={`${feedbackConfig.fullname.className}`}
@@ -270,10 +280,10 @@ export function LoginSignUp({ setExpandedSection }) {
                                     <span className='feedback'>{feedbackConfig.fullname.text}</span>
                                 </>
                             )}
-                            {signUp && (
+                            {signUpState && (
                                 <section className='upload-profile'>
                                     <div className='image-container'>
-    
+
                                         <ProfileImg imgUrl={profileImg ? profileImg : cloudinaryLinks.profile} diameter={"100px"} />
                                     </div>
                                     <div onClick={() => openSelectionModal(true)} className='text'>
@@ -283,14 +293,14 @@ export function LoginSignUp({ setExpandedSection }) {
                             )}
                         </section>
                         <section className="login-btn-container">
-                            <div onClick={signUp ? onSignUp : handleLogin}
+                            <div onClick={signUpState ? onSignUp : handleLogin}
                                 className={`btn-1 ${btn1Config.class}`}>{btn1Config.text}
                             </div>
-                            {!signUp && <div className={`btn-2 ${btn2Config.class}`}
+                            {!signUpState && <div className={`btn-2 ${btn2Config.class}`}
                                 onClick={handleBtn2}>
                                 Don't have an Account?
                                 <h1> Sign up!</h1></div>}
-                            {signUp && <div className={`btn-2 ${btn2Config.class}`}
+                            {signUpState && <div className={`btn-2 ${btn2Config.class}`}
                                 onClick={handleBtn2}>
                                 Already have an Account?
                                 <h1> Log in!</h1></div>}
@@ -301,5 +311,5 @@ export function LoginSignUp({ setExpandedSection }) {
             </section>
         </section>
     )
-    
+
 }

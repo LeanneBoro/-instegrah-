@@ -1,6 +1,7 @@
 import { storageService } from './async-storage.service.js'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
+import { showSuccessMsg, showErrorMsg } from './event-bus.service.js'
 
 
 
@@ -83,10 +84,10 @@ async function signup({ username, password, fullname, profileImg, isAdmin = fals
         formData.append('password', password)
         formData.append('fullname', fullname)
 
-if (profileImg){
-    const profileImgBlob = utilService.base64ToBlob(profileImg)
-    formData.append('profileImg', profileImgBlob, 'profileImg.png')
-}
+        if (profileImg) {
+            const profileImgBlob = utilService.base64ToBlob(profileImg)
+            formData.append('profileImg', profileImgBlob, 'profileImg.png')
+        }
 
 
         const response = await httpService.post(BASE_AUTH_URL + 'signup', formData)
@@ -95,6 +96,7 @@ if (profileImg){
 
 
         _setLoggedInUser({ _id: _id, username, password, fullname, profileImg: profileImgUrl, isAdmin, followers, following })
+        showSuccessMsg(`${username} has signed in`, profileImgUrl)
         return { username, password, fullname, profileImg: profileImgUrl, isAdmin }
     } catch (err) {
         console.log(err)
