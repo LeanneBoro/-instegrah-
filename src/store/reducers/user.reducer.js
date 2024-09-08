@@ -3,6 +3,7 @@ export const SET_LOGGED_IN_USER = 'SET_LOGGED_IN_USER'
 export const SET_USER_POSTS = 'SET_USER_POSTS'
 export const SET_USERS_DATA = 'SET_USERS_DATA'
 export const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW'
+export const LOGOUT = 'LOGOUT'
 
 
 const initialState = {
@@ -18,6 +19,9 @@ export function userReducer(state = initialState, action) {
     switch (action.type) {
         case SET_USER:
             return { ...state, user: action.user }
+
+        case LOGOUT:
+            return { ...state, loggedInUser: '' }
 
         case SET_LOGGED_IN_USER:
             return { ...state, loggedInUser: action.loggedInUser }

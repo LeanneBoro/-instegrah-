@@ -17,6 +17,8 @@ export const userService = {
     toggleFollow,
     checkIfFollowing,
     updateLoggedInUser,
+    login,
+    getGuestUser,
 }
 
 const USER_DB = "user_db"
@@ -63,19 +65,19 @@ async function getUsersByUsername() {
 
 
 
-async function login({ username, password }) {
-    try {
-        const user = await httpService.post(BASE_AUTH_URL + 'login', { username, password })
-        if (user) {
-            return _setLoggedInUser(user)
-        } else {
-            return Promise.reject('Invalid login')
-        }
-    } catch (err) {
-        console.error('Error occurred during login:', err)
-        throw err
-    }
-}
+// async function login({ username, password }) {
+//     try {
+//         const user = await httpService.post(BASE_AUTH_URL + 'login', { username, password })
+//         if (user) {
+//             return _setLoggedInUser(user)
+//         } else {
+//             return Promise.reject('Invalid login')
+//         }
+//     } catch (err) {
+//         console.error('Error occurred during login:', err)
+//         throw err
+//     }
+// }
 
 async function signup({ username, password, fullname, profileImg, isAdmin = false, }) {
     try {
@@ -104,12 +106,30 @@ async function signup({ username, password, fullname, profileImg, isAdmin = fals
     }
 }
 
+async function login({ username, password }) {
+    try {
+        const user = await httpService.post(BASE_AUTH_URL + 'login', { username, password })
+
+        if (user) {
+
+            showSuccessMsg(`${username} has signed in`, user.profileImg)
+            return _setLoggedInUser(user)
+
+        } else {
+            return Promise.reject('Invalid login')
+        }
+    } catch (error) {
+        console.error('Error occurred during login:', error)
+        throw error
+    }
+}
 
 
 async function logout() {
     try {
         await httpService.post(BASE_AUTH_URL + 'logout')
         sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+        showSuccessMsg(`You have  signed out`,)
     } catch (err) {
         console.log(err)
     }
@@ -167,6 +187,16 @@ async function toggleFollow(idToFollow) {
         return isFollowing
     } catch (err) {
         console.error('Error following user:', err)
+    }
+
+}
+
+function getGuestUser() {
+    return {
+        username: 'Guest_Account',
+        password: '12345',
+        fullname: 'Guest Account',
+        profileImg: 'https://res.cloudinary.com/db7t5amdv/image/upload/v1725829145/Assets/GuestImage_dupcmy.jpg',
     }
 
 }

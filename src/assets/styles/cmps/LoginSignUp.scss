@@ -14,8 +14,8 @@
 
     & .back-btn {
         display: none;
-       position: fixed;
-       top: 0;
+        position: fixed;
+        top: 0;
     }
 
 
@@ -64,9 +64,12 @@
 
         & .feedback {
             font-size: 0.7em;
-            margin-bottom: 1em;
+            margin-bottom: 1.5em;
             height: 1.4em;
+            max-width: 350px;
             width: 80%;
+
+
 
         }
 
@@ -114,6 +117,17 @@
         align-items: center;
         justify-content: center;
         gap: 30px;
+
+        & .guest {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & input {
+                padding: 0;
+                margin: 0 0 0 0.5em
+            }
+        }
 
         & .btn-1 {
             @include pink-btn-1;

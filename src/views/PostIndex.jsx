@@ -17,7 +17,7 @@ export function PostIndex() {
     const [loader, displayLoader] = useState(false)
     const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser);
 
-    // const dividerText = 
+
 
     const dividerText = userService.getLoggedInUser()
         ? postsByFollowing > 0

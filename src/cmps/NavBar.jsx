@@ -9,6 +9,7 @@ import { BackDrop } from './BackDrop';
 import { LoginSignUp } from './LoginSignup';
 import { userService } from '../services/user.service';
 import { cloudinaryLinks } from '../services/cloudinary.service';
+import { logout } from '../store/actions/user.actions';
 
 
 
@@ -20,6 +21,7 @@ export function NavBar() {
     const location = useLocation()
     const currentLocation = location.pathname
     const user = userService.getLoggedInUser()
+    console.log("🚀 ~ NavBar ~ user:", user)
 
 
 
@@ -76,7 +78,11 @@ export function NavBar() {
 
 
                     <div title='Log-in' className="login-btn" onClick={() => {
-                        setExpandedSection("login")
+                        if (user) {
+                            logout()
+                        } else {
+                            setExpandedSection("login")
+                        }
                     }}>
 
                         <img className="icon" src={user ? cloudinaryLinks.logout : cloudinaryLinks.login} alt="" />
@@ -90,8 +96,8 @@ export function NavBar() {
                         navigate('/')
                         setExpandedSection(null)
                     }}>
-                    
-                        <img className="icon" src={ currentLocation === "/" && expandedSection !== 'search' ?cloudinaryLinks.homeBold : cloudinaryLinks.home} alt="" />
+
+                        <img className="icon" src={currentLocation === "/" && expandedSection !== 'search' ? cloudinaryLinks.homeBold : cloudinaryLinks.home} alt="" />
                         <div className="title">Home</div>
                     </div>
 

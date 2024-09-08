@@ -1,5 +1,5 @@
 import { userService } from "../../services/user.service";
-import { SET_LOGGED_IN_USER, TOGGLE_FOLLOW } from "../reducers/user.reducer";
+import { LOGOUT, SET_LOGGED_IN_USER, TOGGLE_FOLLOW } from "../reducers/user.reducer";
 import { SET_USER, SET_USER_POSTS, SET_USERS_DATA, } from '../reducers/user.reducer'
 import { SET_FOLLOWING_BTNS } from "../reducers/utility.reducer";
 
@@ -45,15 +45,38 @@ export async function loadUsers(idArr) {
     }
 }
 
-export async function signUp(userData){
+export async function signUp(credentials){
     try {
-        const loggedInUser = await userService.signup(userData)
+        const loggedInUser = await userService.signup(credentials)
         store.dispatch({ type: SET_LOGGED_IN_USER, loggedInUser })
         return loggedInUser
     } catch (err) {
         
     }
 
+}
+
+export async function login(credentials) {
+    try {
+        const loggedInUser = await userService.login(credentials)
+   
+        store.dispatch( {type: SET_LOGGED_IN_USER, loggedInUser} )
+        return loggedInUser
+    } catch (err) {
+        console.log('err', err)
+        console.error('Login failed:', err.message)
+    }
+}
+
+export async function logout() {
+    try {
+        await userService.logout()
+        store.dispatch({ type: LOGOUT })
+        window.location.reload()
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
 }
 
 
