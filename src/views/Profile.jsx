@@ -46,6 +46,19 @@ console.log(posts);
         }
     }, [userId])
 
+    useEffect(() => {
+        if (selectedPost) {
+            document.body.classList.add('body-no-scroll')
+        } else {
+            document.body.classList.remove('body-no-scroll')
+        }
+
+        // Clean up the class when the component unmounts
+        return () => {
+            document.body.classList.remove('body-no-scroll')
+        }
+    }, [selectedPost])
+
 
     if (isLoading || !user || !user.following || !user.followers) {
         return (

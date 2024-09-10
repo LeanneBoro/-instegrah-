@@ -23,22 +23,20 @@ export function PostPreview({ post, idx }) {
         comments: false
     })
     const navigate = useNavigate()
-
+    const isDataLoaded = loadingStates.image && loadingStates.likes && loadingStates.comments
     const imgSrc = postService.isPostLiked(post)
         ? cloudinaryLinks.heartFull
         : cloudinaryLinks.heart
 
 
     useEffect(() => {
-        // Load image
+
         const img = new Image()
         img.src = post.image
         img.onload = () => setLoadingStates(prev => ({ ...prev, image: true }))
         img.onerror = () => setLoadingStates(prev => ({ ...prev, image: true }))
 
         setLoadingStates(prev => ({ ...prev, likes: true, comments: true }))
-
-
 
     }, [post.image, post.likes, post.comments, modalData])
 
@@ -48,7 +46,20 @@ export function PostPreview({ post, idx }) {
         setSelectedPost(null)
     }
 
-    const isDataLoaded = loadingStates.image && loadingStates.likes && loadingStates.comments
+    
+    useEffect(() => {
+        if (selectedPost) {
+            document.body.classList.add('body-no-scroll')
+        } else {
+            document.body.classList.remove('body-no-scroll')
+        }
+
+        // Clean up the class when the component unmounts
+        return () => {
+            document.body.classList.remove('body-no-scroll')
+        }
+    }, [selectedPost])
+  
 
     return (
         <section className="post-preview">

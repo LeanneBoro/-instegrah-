@@ -45,8 +45,7 @@ span{
     font-size: 14px;
 }
 
-.no-scroll {
-    overflow: hidden; /* Hide scrollbars */
-    position: fixed;  /* Fix position to prevent scrolling */
-    top: 0; left: 0; right: 0; bottom: 0; /* Ensure full coverage */
+
+  .body-no-scroll {
+    overflow: hidden;
   }

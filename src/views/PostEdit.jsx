@@ -13,7 +13,7 @@ import { savePost } from '../store/actions/post.actions'
 import { utilService } from "../services/util.service";
 import { cloudinaryLinks } from "../services/cloudinary.service";
 
-export function PostEdit({ dataState }) {
+export function PostEdit({ dataState, }) {
     const croppieRef = useRef(null);
     const croppieInstance = useRef(null);
     const [imageUploaded, setImageUploaded] = useState(false)
@@ -29,7 +29,7 @@ export function PostEdit({ dataState }) {
 
         const postFormData = new FormData()
         const imageBlob = utilService.base64ToBlob(imageCropped)
-        
+
         postFormData.append('title', caption)
         postFormData.append('postImg', imageBlob, 'postImg.png')
 
@@ -120,7 +120,9 @@ export function PostEdit({ dataState }) {
     return (
         <section className={`post-edit ${imageCropped ? "expanded" : ""}`}>
             <section className="header">
-                <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" />
+                <img className="back-btn" src={cloudinaryLinks.closeArrow} alt=""
+                    onClick={() => dataState(null)}
+                />
                 <h2>Create a new Post</h2>
                 <h2
                     title={nextButtonTitle}

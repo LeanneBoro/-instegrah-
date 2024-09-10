@@ -50,7 +50,7 @@ $gray5: #fafafa;
 
     --placeholder-min-width: 500px;
     --pop-up-modal-height: 70px;
-
+    --add-details-image-width : 100%;
 
     @media (width < 1250px) {
         @include compact-side-bar;
@@ -83,7 +83,7 @@ $gray5: #fafafa;
         --placeholder-min-width: none;
 
         --pop-up-modal-height: 130px;
-
+        --add-details-image-width : 80%;
         @include bottom-bar;
 
         @include mobile-post-edit;

@@ -1,3 +1,5 @@
+
+
 .login-signup {
     grid-column: 2;
     width: 100%;
@@ -13,9 +15,7 @@
     border-radius: 20px;
 
     & .back-btn {
-        display: none;
-        position: fixed;
-        top: 0;
+        @include back-btn
     }
 
 

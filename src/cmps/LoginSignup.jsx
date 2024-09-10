@@ -160,7 +160,7 @@ export function LoginSignUp({ setExpandedSection }) {
     async function onLogin() {
         try {
             isGuest ? await login(userService.getGuestUser()) : await login(newUser)
-            
+
             setExpandedSection(null)
         } catch (err) {
             console.error('Login failed:', err.message)
@@ -204,6 +204,7 @@ export function LoginSignUp({ setExpandedSection }) {
         <section
             onClick={handleLayoutClick}
             className="login-signup-layout"
+
         >
             <section
                 ref={modalRef}
@@ -212,6 +213,7 @@ export function LoginSignUp({ setExpandedSection }) {
             >
                 {!selectionModal && (
                     <>
+                    {/* <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" /> */}
                         <div className="logo"></div>
                         <img src={cloudinaryLinks.logo} alt="Instagram Logo" />
                         <section className="login-input-container">

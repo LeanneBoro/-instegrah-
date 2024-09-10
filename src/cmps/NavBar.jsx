@@ -40,6 +40,18 @@ export function NavBar() {
         }
     }, [])
 
+    useEffect(() => {
+        if (expandedSection === 'login' || expandedSection ===  'upload') {
+            document.body.classList.add('body-no-scroll')
+        } else {
+            document.body.classList.remove('body-no-scroll')
+        }
+
+        return () => {
+            document.body.classList.remove('body-no-scroll')
+        }
+    }, [expandedSection])
+
     function handleProfileNavigate() {
         user
             ? navigate('/profile/' + user._id)
