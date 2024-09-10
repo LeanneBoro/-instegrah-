@@ -28,7 +28,7 @@ const debouncedPerformSearch = utilService.debounce(async (query, setSearchResul
     await performSearch(query, setSearchResults, setLoading)
 }, 1000)
 
-export function SearchModal({ expandedSection }) {
+export function SearchModal({ navBarSection }) {
     const [searchResults, setSearchResults] = useState([])
     const [searchQuery, setSearchQuery] = useState('')
     const [loading, setLoading] = useState(false)
@@ -44,7 +44,7 @@ export function SearchModal({ expandedSection }) {
     }, [searchQuery])
 
     return (
-        <section className={expandedSection === 'search' ? 'search-modal active' : 'search-modal'}>
+        <section className={navBarSection === 'search' ? 'search-modal active' : 'search-modal'}>
             <section className='input-field'>
                 <div>Search</div>
                 <SearchInput onSearch={setSearchQuery} />

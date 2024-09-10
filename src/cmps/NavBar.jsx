@@ -10,24 +10,29 @@ import { LoginSignUp } from './LoginSignup';
 import { userService } from '../services/user.service';
 import { cloudinaryLinks } from '../services/cloudinary.service';
 import { logout } from '../store/actions/user.actions';
+import { useSelector } from 'react-redux';
+import { setNavBarSection } from '../store/actions/utility.actions';
 
 
 
 
 export function NavBar() {
-    const [expandedSection, setExpandedSection] = useState('')
+    // const [navBarSection, setNavBarSection] = useState('')
+    const navBarSection = useSelector(storeState => storeState.utilityModule.navBarSection);
+    console.log("🚀 ~ NavBar ~ navBarSection:", navBarSection)
+    console.log("🚀 ~ NavBar ~ navBarSection:", navBarSection)
     const navBarRef = useRef(null)
     const navigate = useNavigate();
     const location = useLocation()
     const currentLocation = location.pathname
     const user = userService.getLoggedInUser()
-    console.log("🚀 ~ NavBar ~ user:", user)
+
 
 
 
     function handleOutsideClick(event) {
         if (navBarRef.current && !navBarRef.current.contains(event.target)) {
-            setExpandedSection('');
+            setNavBarSection('');
         }
     }
 
@@ -41,7 +46,7 @@ export function NavBar() {
     }, [])
 
     useEffect(() => {
-        if (expandedSection === 'login' || expandedSection ===  'upload') {
+        if (navBarSection === 'login' || navBarSection ===  'upload') {
             document.body.classList.add('body-no-scroll')
         } else {
             document.body.classList.remove('body-no-scroll')
@@ -50,26 +55,26 @@ export function NavBar() {
         return () => {
             document.body.classList.remove('body-no-scroll')
         }
-    }, [expandedSection])
+    }, [navBarSection])
 
     function handleProfileNavigate() {
         user
             ? navigate('/profile/' + user._id)
-            : setExpandedSection("login")
+            : setNavBarSection("login")
     }
 
 
 
     return <react-fragment ref={navBarRef}>
 
-        <section className={"nav-bar" + (expandedSection === "search" || expandedSection === "notifications" ? " compact-nav-bar no-border" : "")}>
+        <section className={"nav-bar" + (navBarSection === "search" || navBarSection === "notifications" ? " compact-nav-bar no-border" : "")}>
 
             <div className="content">
 
                 <div className='logo-container'
                     onClick={() => {
                         navigate('/')
-                        setExpandedSection(null)
+                        setNavBarSection(null)
                     }}>
 
                     <div className="logo" >
@@ -93,7 +98,7 @@ export function NavBar() {
                         if (user) {
                             logout()
                         } else {
-                            setExpandedSection("login")
+                            setNavBarSection("login")
                         }
                     }}>
 
@@ -106,29 +111,29 @@ export function NavBar() {
 
                     <div onClick={() => {
                         navigate('/')
-                        setExpandedSection(null)
+                        setNavBarSection(null)
                     }}>
 
-                        <img className="icon" src={currentLocation === "/" && expandedSection !== 'search' ? cloudinaryLinks.homeBold : cloudinaryLinks.home} alt="" />
+                        <img className="icon" src={currentLocation === "/" && navBarSection !== 'search' ? cloudinaryLinks.homeBold : cloudinaryLinks.home} alt="" />
                         <div className="title">Home</div>
                     </div>
 
 
-                    <div className={`search expandedSection === 'search' ? 'open' : ''`}
-                        onClick={() => setExpandedSection(expandedSection === 'search' ? null : 'search')}>
+                    <div className={`search navBarSection === 'search' ? 'open' : ''`}
+                        onClick={() => setNavBarSection(navBarSection === 'search' ? null : 'search')}>
                         <img className="icon"
-                            src={expandedSection === 'search' ? cloudinaryLinks.searchBold : cloudinaryLinks.search} />
+                            src={navBarSection === 'search' ? cloudinaryLinks.searchBold : cloudinaryLinks.search} />
                         <div className="title">Search</div>
                     </div>
 
-                    <div className={`notifications expandedSection === 'notifications' ? 'open' : ''`}
-                        onClick={() => setExpandedSection(expandedSection === 'notifications' ? null : 'notifications')}>
+                    <div className={`notifications navBarSection === 'notifications' ? 'open' : ''`}
+                        onClick={() => setNavBarSection(navBarSection === 'notifications' ? null : 'notifications')}>
                         <img className="icon"
-                            src={expandedSection === 'notifications' ? cloudinaryLinks.heartBold : cloudinaryLinks.heart} />
+                            src={navBarSection === 'notifications' ? cloudinaryLinks.heartBold : cloudinaryLinks.heart} />
                         <div className="title">Notifications</div>
                     </div>
 
-                    <div onClick={() => setExpandedSection(expandedSection === 'upload' ? null : 'upload')} >
+                    <div onClick={() => setNavBarSection(navBarSection === 'upload' ? null : 'upload')} >
                         <img className="icon" src={cloudinaryLinks.create} alt="" />
                         <div className="title">Create</div>
                     </div>
@@ -158,18 +163,18 @@ export function NavBar() {
 
         </section>
 
-        <SearchModal expandedSection={expandedSection} />
-        <NotificationsModal expandedSection={expandedSection} setExpandedSection={setExpandedSection} />
+        <SearchModal navBarSection={navBarSection} />
+        <NotificationsModal navBarSection={navBarSection} setNavBarSection={setNavBarSection} />
 
-        {expandedSection === "upload" &&
-            <BackDrop zIndex={1100} dataState={setExpandedSection}>
-                <PostEdit dataState={setExpandedSection} />
+        {navBarSection === "upload" &&
+            <BackDrop zIndex={1100} dataState={setNavBarSection}>
+                <PostEdit dataState={setNavBarSection} />
             </BackDrop>
         }
 
-        {expandedSection === "login" &&
-            <BackDrop dataState={setExpandedSection}>
-                <LoginSignUp setExpandedSection={setExpandedSection} />
+        {navBarSection === "login" &&
+            <BackDrop dataState={setNavBarSection}>
+                <LoginSignUp setNavBarSection={setNavBarSection} />
             </BackDrop>}
 
     </react-fragment>

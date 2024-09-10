@@ -8,7 +8,7 @@ import { postService } from "../services/post.local.service"
 import { Loader } from "../cmps/Loader"
 import { userService } from "../services/user.service"
 import { cloudinaryLinks } from "../services/cloudinary.service"
-
+import { setNavBarSection } from "../store/actions/utility.actions"
 
 export function PostIndex() {
     const { postsByFollowing, suggestedPosts } = useSelector(storeState => storeState.postModule)
@@ -26,7 +26,7 @@ export function PostIndex() {
         : (
             <>
 
-                <h1 onClick={() => alert('Log In')} className="log-in-link">
+                <h1 onClick={handleLoginAttempt} className="log-in-link">
                     Log In {' '}
                 </h1>
                 to catch up with the users you are following!
@@ -41,7 +41,10 @@ export function PostIndex() {
     }, [pagination,loggedInUser])
 
 
-
+function handleLoginAttempt(event){
+    event.stopPropagation()
+    setNavBarSection('login')
+}
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll)

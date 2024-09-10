@@ -2,12 +2,14 @@ export const SET_IS_LOADING = 'SET_IS_LOADING'
 export const SET_IS_COMMENTS_LOADING = 'SET_IS_COMMENTS_LOADING'
 export const MODAL_CONTENT = 'MODAL_CONTENT'
 export const SET_FOLLOWING_BTNS = 'SET_FOLLOWING_BTNS'
+export const SET_NAVBAR_SECTION = 'SET_NAVBAR_SECTION'
 
 const initialState = {
   isLoading: false,
   isCommentLoading: false,
   disableFollowingBtn: false,
-  modalContent: {}
+  modalContent: {},
+  navBarSection: ''
 }
 
 export function utilityReducer(state = initialState, action = {}) {
@@ -18,6 +20,9 @@ export function utilityReducer(state = initialState, action = {}) {
       return { ...state, isCommentLoading: action.isLoading };
       case SET_FOLLOWING_BTNS:
         return { ...state, disableFollowingBtn: action.btnState };
+
+        case SET_NAVBAR_SECTION:
+          return { ...state, navBarSection: action.section };
     default:
       return state
   }

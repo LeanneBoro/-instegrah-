@@ -6,7 +6,7 @@ import { utilService } from '../services/util.service'
 import { cloudinaryLinks } from '../services/cloudinary.service'
 import { login, signUp } from '../store/actions/user.actions'
 
-export function LoginSignUp({ setExpandedSection }) {
+export function LoginSignUp({ setNavBarSection }) {
     const modalRef = useRef(null)
     const debounceRef = useRef(null)
 
@@ -70,7 +70,7 @@ export function LoginSignUp({ setExpandedSection }) {
     }
 
     const handleLayoutClick = () => {
-        setExpandedSection('')
+        setNavBarSection('')
     }
 
     const handleModalClick = (event) => {
@@ -149,7 +149,7 @@ export function LoginSignUp({ setExpandedSection }) {
 
             if (result.isValid) {
                 signUp(newUser)
-                setExpandedSection(null)
+                setNavBarSection(null)
             }
         } catch (err) {
             setSignUpFeedback(result.feedback)
@@ -161,7 +161,7 @@ export function LoginSignUp({ setExpandedSection }) {
         try {
             isGuest ? await login(userService.getGuestUser()) : await login(newUser)
 
-            setExpandedSection(null)
+            setNavBarSection(null)
         } catch (err) {
             console.error('Login failed:', err.message)
             setLoginFeedback({
