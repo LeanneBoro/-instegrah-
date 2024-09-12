@@ -19,6 +19,7 @@ export const userService = {
     updateLoggedInUser,
     login,
     getGuestUser,
+    checkPostOwner,
 }
 
 const USER_DB = "user_db"
@@ -209,6 +210,13 @@ function checkIfFollowing(userFollowedList) {
     const isFollowing = userFollowedList.some(id => id === userId)
     return isFollowing
 
+}
+
+function checkPostOwner(postById){
+    const user = getLoggedInUser()
+    if (!user) return
+    
+   return  user._id === postById ? true : false
 }
 
 

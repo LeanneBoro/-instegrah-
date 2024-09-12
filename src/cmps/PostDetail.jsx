@@ -39,6 +39,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                 console.error('Failed to load users', err)
             })
     }, [selectedPost.likes])
+        console.log("🚀 ~ useEffect ~ selectedPost.likes:", selectedPost.likes)
 
     useEffect(() => {
         if (commentListRef.current) {
@@ -123,7 +124,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                             <h2 className="username cursor-pointer" onClick={() => navigateToProfile(selectedPost.by.id)}>{selectedPost.authorUsername}</h2>
                         </section>
 
-                        {userService.getLoggedInUser()._id === selectedPost.by && <section className="options">
+                        {userService.checkPostOwner(selectedPost.by) && <section className="options">
                             <div onClick={handleRemovePost}>
                                 <h2>Delete post</h2>
                             </div>

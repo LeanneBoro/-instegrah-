@@ -6,11 +6,14 @@ import { Loader } from './Loader';
 import { FollowBtn } from './FollowBtn';
 import { loadUsers } from '../store/actions/user.actions';
 import { useSelector } from 'react-redux';
+import { CommentPreviewPlaceholder } from './CommentPreviewPlaceholder';
 
 export function ListModal({ content, setModalData }) {
-    const [loading, setIsLoading] = useState(false)
-    const usersData = useSelector(storeState => storeState.userModule.usersData);
 
+    const usersData = useSelector(storeState => storeState.userModule.usersData);
+    const { isListLoading } = useSelector(storeState => storeState.utilityModule)
+
+    console.log("🚀 ~ ListModal ~ usersData:", usersData)
 
 
     useEffect(() => {
@@ -26,31 +29,25 @@ export function ListModal({ content, setModalData }) {
         <BackDrop zIndex={5000000000000000} dataState={setModalData}>
             <section className="list-modal">
                 <h2 className="data-type">{content.dataType}</h2>
-                    {loading && <Loader/>}
-
+    
                 <section className="data-list">
-                    {usersData && usersData.map((profile,index) => {
+                    {isListLoading ? (
+                        Array.from({ length: content.data.length }, (_, index) => (
+                            <CommentPreviewPlaceholder key={index} />
+                        ))
+                    ) : (
+                        usersData && usersData.map((profile, index) => (
                         
-                        return  (
-                            <section className='item'>
-                            <ProfilePreview key={index} profile={profile}/>
-                            <FollowBtn profile={profile}/>
+                            <section className='item' key={index}>
+                                <ProfilePreview profile={profile} />
+                                <FollowBtn profile={profile} />
                             </section>
-                        )
-                        
-                        
-                       
-               
-                       
-                
-                    })}
-
+                        ))
+                    )}
                 </section>
-
-
-
-
             </section>
-        </BackDrop>)
+        </BackDrop>
+    )
+    
 
 }

@@ -1,7 +1,7 @@
 import { userService } from "../../services/user.service";
 import { LOGOUT, SET_LOGGED_IN_USER, TOGGLE_FOLLOW } from "../reducers/user.reducer";
 import { SET_USER, SET_USER_POSTS, SET_USERS_DATA, } from '../reducers/user.reducer'
-import { SET_FOLLOWING_BTNS } from "../reducers/utility.reducer";
+import { SET_FOLLOWING_BTNS, SET_IS_LIST_LOADING } from "../reducers/utility.reducer";
 
 import { store } from '../store'
 
@@ -36,12 +36,16 @@ export async function loadUser(userId) {
 
 export async function loadUsers(idArr) {
     try {
+        store.dispatch({ type: SET_IS_LIST_LOADING, isListLoading : true })
         const users = await userService.getUsersById(idArr)
         store.dispatch({ type: SET_USERS_DATA, users })
         return users
     } catch (err) {
         console.log(err);
 
+    }
+    finally {
+        store.dispatch({ type: SET_IS_LIST_LOADING, isListLoading : false })
     }
 }
 

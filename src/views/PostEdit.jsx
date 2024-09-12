@@ -12,6 +12,7 @@ import { postService } from "../services/post.local.service";
 import { savePost } from '../store/actions/post.actions'
 import { utilService } from "../services/util.service";
 import { cloudinaryLinks } from "../services/cloudinary.service";
+import { userService } from "../services/user.service";
 
 export function PostEdit({ dataState, }) {
     const croppieRef = useRef(null);
@@ -143,9 +144,9 @@ export function PostEdit({ dataState, }) {
                             <div className="username">
                                 <ProfileImg
                                     diameter={"40px"}
-                                    imgUrl={"https://randomuser.me/api/portraits/women/96.jpg"}
+                                    imgUrl={userService.getLoggedInUser().profileImg}
                                 />
-                                <h2>username</h2>
+                                <h2>{userService.getLoggedInUser().username}</h2>
                             </div>
                             <textarea
                                 placeholder="Write a caption"
