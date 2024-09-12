@@ -132,14 +132,17 @@
             transform: translate(-50%, -50%);
             z-index: 1;
 
+
             & img {
                 filter: invert(1);
-                width: 13%;
-                height: 13%;
+                width: 25%;
+                height: 25%;
             }
 
-            & h1 {
+            & .count {
                 color: white;
+                width: 25%;
+                height: 25%;
             }
 
         }

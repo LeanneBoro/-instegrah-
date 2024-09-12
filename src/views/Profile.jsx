@@ -111,9 +111,9 @@ console.log(posts);
                         <div className='back-drop'></div>
                         <div className='details'>
                             <img src={cloudinaryLinks.heart} alt="Heart Icon" />
-                            <h1>{post.likes.length}</h1>
+                            <h1 className='count'>{post.likes.length}</h1>
                             <img src={cloudinaryLinks.comment} alt="" />
-                            <h1>{post.commentsCount}</h1>
+                            <h1 className='count'>{post.commentsCount}</h1>
                         </div>
                     </div>
                 ))}

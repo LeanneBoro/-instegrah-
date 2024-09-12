@@ -218,7 +218,7 @@ export function LoginSignUp({ setNavBarSection }) {
                         <img src={cloudinaryLinks.logo} alt="Instagram Logo" />
                         <section className="login-input-container">
                             <input
-                                className={`${signUpState ? feedbackConfig.username.className : loginFeedbackConfig.className}`}
+                                className={`login-input ${signUpState ? feedbackConfig.username.className : loginFeedbackConfig.className}`}
                                 name="username"
                                 placeholder="Enter username"
                                 type="text"
@@ -232,7 +232,7 @@ export function LoginSignUp({ setNavBarSection }) {
                             </span>
 
                             <input
-                                className={`${signUpState ? feedbackConfig.password.className : loginFeedbackConfig.className}`}
+                                className={` login-input ${signUpState ? feedbackConfig.password.className : loginFeedbackConfig.className}`}
                                 name="password"
                                 placeholder="Enter password"
                                 type="password"
@@ -246,7 +246,7 @@ export function LoginSignUp({ setNavBarSection }) {
                             {signUpState && (
                                 <>
                                     <input
-                                        className={`${feedbackConfig.fullname.className}`}
+                                        className={`login-input ${feedbackConfig.fullname.className}`}
                                         name="fullname"
                                         placeholder="Enter Full Name"
                                         type="text"
@@ -302,6 +302,7 @@ export function LoginSignUp({ setNavBarSection }) {
                 {selectionModal && (
                     <UploadProfileImg
                         onSetProfileImg={onSetProfileImg}
+                        openSelectionModal={openSelectionModal}
                         onClose={() => openSelectionModal(false)}
                     />
                 )}
