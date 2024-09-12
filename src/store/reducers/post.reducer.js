@@ -4,6 +4,7 @@ export const SET_POSTS = 'SET_POSTS'
 export const SET_PROFILE_POSTS = 'SET_PROFILE_POSTS'
 export const CLEAR_PROFILE_DATA = 'CLEAR_PROFILE_DATA'
 export const ADD_POST = 'ADD_POST'
+export const DELETE_POST = 'DELETE_POST'
 export const SET_POST_COMMENTS = 'SET_POST_COMMENTS'
 export const TOGGLE_COMMENT_LIKE = 'TOGGLE_COMMENT_LIKE'
 export const TOGGLE_POST_LIKE = 'TOGGLE_POST_LIKE'
@@ -65,6 +66,14 @@ export function postReducer(state = initialState, action = {}) {
         postsByFollowing: [action.uploadedPost, ...state.postsByFollowing]
       }
 
+      case DELETE_POST:
+        return {
+          ...state,
+          postsByFollowing: state.postsByFollowing.filter(post => post._id !== action.postId),
+          suggestedPosts: state.suggestedPosts.filter(post => post._id !== action.postId),
+          profilePagePosts: state.profilePagePosts.filter(post => post._id !== action.postId)
+        }
+
       case ADD_COMMENT:
       
         return {
@@ -81,7 +90,7 @@ export function postReducer(state = initialState, action = {}) {
         
                 
                 const userIndex = likedBy.findIndex(id => id === action.user._id)
-                console.log("🚀 ~ postReducer ~ userIndex:", userIndex)
+  
                 
     
                 if (userIndex !== -1) {

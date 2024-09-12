@@ -22,7 +22,7 @@ export function setModalContent(content){
 }
 
 export function setNavBarSection(section){
-// console.log("🚀 ~ setNavBarSection ~ section:", section)
+
 
   store.dispatch({
     type: SET_NAVBAR_SECTION,

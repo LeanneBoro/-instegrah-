@@ -91,7 +91,7 @@ export async function toggleFollow(idToFollow) {
         store.dispatch({ type: SET_FOLLOWING_BTNS, btnState: true })
 
         const isFollowed = await userService.toggleFollow(idToFollow)
-        console.log("🚀 ~ toggleFollow ~ isFollowed:", isFollowed)
+  
 
         let updatedFollowing
         if (isFollowed) {

@@ -19,8 +19,7 @@ import { setNavBarSection } from '../store/actions/utility.actions';
 export function NavBar() {
     // const [navBarSection, setNavBarSection] = useState('')
     const navBarSection = useSelector(storeState => storeState.utilityModule.navBarSection);
-    console.log("🚀 ~ NavBar ~ navBarSection:", navBarSection)
-    console.log("🚀 ~ NavBar ~ navBarSection:", navBarSection)
+
     const navBarRef = useRef(null)
     const navigate = useNavigate();
     const location = useLocation()
@@ -46,7 +45,7 @@ export function NavBar() {
     }, [])
 
     useEffect(() => {
-        if (navBarSection === 'login' || navBarSection ===  'upload') {
+        if (navBarSection === 'login' || navBarSection === 'upload') {
             document.body.classList.add('body-no-scroll')
         } else {
             document.body.classList.remove('body-no-scroll')
@@ -127,13 +126,29 @@ export function NavBar() {
                     </div>
 
                     <div className={`notifications navBarSection === 'notifications' ? 'open' : ''`}
-                        onClick={() => setNavBarSection(navBarSection === 'notifications' ? null : 'notifications')}>
+                        onClick={() => {
+                            if (user) {
+                                setNavBarSection(navBarSection === 'notifications' ? null : 'notifications')
+                            }
+                            else {
+                                setNavBarSection('login')
+                            }
+                        }
+                        }>
                         <img className="icon"
                             src={navBarSection === 'notifications' ? cloudinaryLinks.heartBold : cloudinaryLinks.heart} />
                         <div className="title">Notifications</div>
                     </div>
 
-                    <div onClick={() => setNavBarSection(navBarSection === 'upload' ? null : 'upload')} >
+                    <div onClick={() => {
+                        if (user) {
+                            setNavBarSection(navBarSection === 'upload' ? null : 'upload')
+                        }
+                        else {
+                            setNavBarSection('login')
+                        }
+                    }
+                    } >
                         <img className="icon" src={cloudinaryLinks.create} alt="" />
                         <div className="title">Create</div>
                     </div>

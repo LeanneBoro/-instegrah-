@@ -1,6 +1,7 @@
+import { showSuccessMsg } from '../../services/event-bus.service'
 import { postService } from '../../services/post.local.service'
 import { userService } from '../../services/user.service'
-import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, TOGGLE_COMMENT_LIKE, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA, TOGGLE_POST_LIKE } from '../reducers/post.reducer'
+import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, TOGGLE_COMMENT_LIKE, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA, TOGGLE_POST_LIKE, DELETE_POST } from '../reducers/post.reducer'
 import { SET_IS_LOADING, SET_IS_COMMENTS_LOADING } from '../reducers/utility.reducer'
 import { store } from '../store'
 
@@ -17,14 +18,14 @@ export async function loadPosts(pagination, userId = null) {
 
     if (pagination.skip === 0) store.dispatch({ type: SET_IS_LOADING, isLoading: true })
 
- 
+
     const posts = await postService.query(pagination, userId)
 
     let postsByFollowing = []
     let suggestedPosts = []
 
     if (userId) {
-    
+
       ({ postsByFollowing, suggestedPosts } = posts.reduce(
         (acc, post) => {
           if (userFollowingList.includes(post.by)) {
@@ -85,18 +86,18 @@ export async function toggleCommentLike(comment, postId) {
   }
 }
 
-export async function postComment(postId,comment,mentions){
+export async function postComment(postId, comment, mentions) {
   const user = userService.getLoggedInUser()
 
   if (!user) return
 
   try {
 
-    
-    
+
+
   } catch (err) {
     console.log('Failed to comment on post :', err)
-    
+
   }
 }
 
@@ -193,5 +194,20 @@ export async function savePost(newPost) {
     store.dispatch({ type: SET_IS_LOADING, isLoading: false })
   }
 
+}
+
+export async function removePost(post) {
+  console.log("🚀 ~ removePost ~ post:", post)
+  const postId = post._id
+  try {
+    const removedPost = await postService.remove(postId)
+    showSuccessMsg(`Your post has been removed`, post.image)
+    store.dispatch({ type: DELETE_POST, postId })
+
+    return removedPost
+  } catch (err) {
+    console.log(err);
+
+  }
 }
 

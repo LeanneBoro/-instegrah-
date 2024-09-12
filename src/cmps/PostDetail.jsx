@@ -5,7 +5,7 @@ import { utilService } from '../services/util.service';
 import { ListModal } from './ListModal';
 import { BackDrop } from './BackDrop';
 import { useSelector } from 'react-redux';
-import { toggleCommentLike, togglePostLike, getPostComments, addComment, removeComment } from "../store/actions/post.actions";
+import { toggleCommentLike, togglePostLike, getPostComments, addComment, removeComment, removePost } from "../store/actions/post.actions";
 import { postService } from '../services/post.local.service';
 import { loadUsers } from '../store/actions/user.actions';
 import { userService } from '../services/user.service';
@@ -14,12 +14,13 @@ import { cloudinaryLinks } from '../services/cloudinary.service';
 
 export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
     const { postComments } = useSelector(storeState => storeState.postModule)
-    console.log("🚀 ~ PostDetail ~ postComments:", postComments)
+
     const { isCommentLoading } = useSelector(storeState => storeState.utilityModule)
     const [commentText, setCommentText] = useState('')
     const [userData, setUsersData] = useState('')
     const inputRef = useRef(null)
     const commentListRef = useRef(null) // Ref for the comment list container
+
 
     const imgSrc = postService.isPostLiked(selectedPost)
         ? cloudinaryLinks.heartFull
@@ -70,6 +71,18 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
         setCommentText(event.target.value)
     }
 
+    async function handleRemovePost() {
+        try {
+            const removedPost = removePost(selectedPost)
+            if (removedPost) {
+                setSelectedPost('')
+            }
+        } catch (err) {
+            console.log('failed to remove post with id:', selectedPost.by._id)
+
+        }
+    }
+
     function handlePostLike() {
         const userId = userService.getLoggedInUser()._id
 
@@ -110,9 +123,11 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                             <h2 className="username cursor-pointer" onClick={() => navigateToProfile(selectedPost.by.id)}>{selectedPost.authorUsername}</h2>
                         </section>
 
-                        <section className="options">
-                            ...
-                        </section>
+                        {userService.getLoggedInUser()._id === selectedPost.by && <section className="options">
+                            <div onClick={handleRemovePost}>
+                                <h2>Delete post</h2>
+                            </div>
+                        </section>}
                     </section>
 
                     <section className="comment-list" ref={commentListRef}> {/* Added ref here */}

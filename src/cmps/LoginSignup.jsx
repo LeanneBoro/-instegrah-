@@ -144,7 +144,7 @@ export function LoginSignUp({ setNavBarSection }) {
     async function onSignUp() {
         try {
             const result = await utilService.validateUserData(newUser, signUpFeedback)
-            console.log("🚀 ~ onSignUp ~ result:", result)
+       
             setSignUpFeedback(result.feedback)
 
             if (result.isValid) {

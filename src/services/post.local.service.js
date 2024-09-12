@@ -67,8 +67,12 @@ async function getPostsByUserId(userId) {
 }
 
 async function remove(postId) {
+
     try {
-        await storageService.remove(POST_DB, postId)
+        const removedPost = await httpService.delete(BASE_URL + postId)
+        console.log("🚀 ~ remove ~ removedPost:", removedPost)
+        // showSuccessMsg(`Your post has been removed`, removedPost)
+        return removedPost
     } catch (err) {
         console.log(err)
     }
@@ -103,15 +107,14 @@ function getLatestComment(comments) {
     return latestComment
 }
 
-async function addComment(postId,comment,mentions) {
-    console.log("🚀 ~ addComment ~ comment:", comment)
-    console.log("🚀 ~ addComment ~ postId:", postId)
+async function addComment(postId, comment, mentions) {
+
     try {
         if (comment._id) {
             // const updatedPost = await storageService.put(POST_DB, post)
             // return updatedPost
         } else {
-   
+
             const commentToAdd = await httpService.post(`${BASE_URL}/${postId}/comments`, { comment, mentions })
 
             return commentToAdd

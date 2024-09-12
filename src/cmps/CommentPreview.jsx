@@ -7,7 +7,7 @@ import { userService } from "../services/user.service";
 import { cloudinaryLinks } from "../services/cloudinary.service";
 
 export function CommentPreview({ setModalData, comment, navigateToProfile,isCommentLoading,postId }) {
-// console.log("🚀 ~ CommentPreview ~ comment:", comment)
+
 
 
     
