@@ -1,13 +1,14 @@
 .popup {
     position: fixed;
-    top: -70px;
+    top: var(--popup-top);
+    bottom:var(--popup-bottom) ;
     display: flex;
     justify-content: center;
     width: 100%;
     height: 70px;
     border-bottom: solid 1px $gray3;
     background-color: white;
-    z-index: 100000;
+    z-index: 100;
     transition: transform 0.3s ease;
 
     &.open {
@@ -24,9 +25,9 @@
     & .bar-container {
         width: 100%;
         height: 3px;
-        border-top: solid $gray3 1px;
+        // border-top: solid $gray3 1px;
         position: absolute;
-        bottom: 0;
+        bottom: var(--bar-placement);
 
         & .bar {
             background-color: $pink1;
