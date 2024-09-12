@@ -112,7 +112,7 @@ async function login({ username, password }) {
 
         if (user) {
 
-            
+            showSuccessMsg(`${username} has signed in`, user.profileImg)
             return _setLoggedInUser(user)
 
         } else {
