@@ -40,3 +40,24 @@
         @include headerBtns;
     }
 }
+
+:root {
+    --header-display: none;
+    --logo-width: 130px;
+    --header-alignment: space-between;
+    --logo-padding: 1em;
+
+    @media (width < 780px) {
+        --header-display: flex;
+
+    }
+
+    @media (width < 442px) {
+
+        --logo-width: 0;
+        --header-alignment: center;
+        --logo-padding: 0;
+
+    }
+
+}

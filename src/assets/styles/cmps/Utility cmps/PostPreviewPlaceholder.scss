@@ -47,3 +47,10 @@
         background-color: lighten($gray3, 10%);
     }
 }
+
+:root {
+    --placeholder-min-width: 500px;
+   @media (width < 780px) {
+     --placeholder-min-width: none;
+     }
+ }

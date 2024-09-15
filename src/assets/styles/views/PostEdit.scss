@@ -136,3 +136,12 @@
 
 
 }
+
+:root {
+    --add-details-image-width: 100%;
+
+    @media (width < 780px) {
+        --add-details-image-width: 80%;
+    }
+
+}

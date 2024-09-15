@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { CommentPreview } from './CommentPreview';
-import { ProfileImg } from './ProfileImg';
-import { utilService } from '../services/util.service';
-import { ListModal } from './ListModal';
-import { BackDrop } from './BackDrop';
+import { ProfileImg } from '../ProfileImg';
+import { utilService } from '../../services/util.service';
+import { ListModal } from '../ListModal';
+import { BackDrop } from '../BackDrop';
 import { useSelector } from 'react-redux';
-import { toggleCommentLike, togglePostLike, getPostComments, addComment, removeComment, removePost } from "../store/actions/post.actions";
-import { postService } from '../services/post.local.service';
-import { loadUsers } from '../store/actions/user.actions';
-import { userService } from '../services/user.service';
-import { CommentPreviewPlaceholder } from './CommentPreviewPlaceholder';
-import { cloudinaryLinks } from '../services/cloudinary.service';
+import { toggleCommentLike, togglePostLike, getPostComments, addComment, removeComment, removePost } from "../../store/actions/post.actions";
+import { postService } from '../../services/post.local.service';
+import { loadUsers } from '../../store/actions/user.actions';
+import { userService } from '../../services/user.service';
+import { CommentPreviewPlaceholder } from '../CommentPreviewPlaceholder';
+import { cloudinaryLinks } from '../../services/cloudinary.service';
 
 export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, setModalData }) {
     const { postComments } = useSelector(storeState => storeState.postModule)

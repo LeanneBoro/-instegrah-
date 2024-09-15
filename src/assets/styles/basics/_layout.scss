@@ -1,6 +1,6 @@
 .main-layout {
     display: grid;
-    grid-template-columns: var(--post-list-positioning);
+    grid-template-columns: var(--post-list-layout);
 }
 
 .main-layout>* {
@@ -17,7 +17,7 @@
 
 .profile-page-layout {
     display: grid;
-    grid-template-columns: var(--profile-positioning);
+    grid-template-columns: var(--profile-layout);
 }
 
 .profile-page-layout>* {
@@ -25,7 +25,7 @@
 }
 
 .profile-info-layout {
-    grid-template-columns: var(--profile-info-layout-positioning);
+    grid-template-columns: var(--profile-info-layout-layout);
 
     & .profile-container {
         grid-column: 1;

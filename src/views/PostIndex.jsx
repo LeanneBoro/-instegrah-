@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { loadPosts } from '../store/actions/post.actions'
 import { useSelector } from 'react-redux'
 
-import { PostList } from "../cmps/PostList"
+import { PostList } from "../cmps/post cmps/PostList"
 import { postService } from "../services/post.local.service"
 import { Loader } from "../cmps/Loader"
 import { userService } from "../services/user.service"

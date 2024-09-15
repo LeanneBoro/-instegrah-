@@ -1,5 +1,5 @@
 import { PostPreview } from "./PostPreview"
-import { PostPreviewPlaceholder } from "./PostPreviewPlaceholder"
+// import { PostPreviewPlaceholder } from "../PostPreviewPlaceholder"
 
 
 export function PostList({ posts }) {

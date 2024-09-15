@@ -1,10 +1,10 @@
-import { postService } from "../services/post.local.service"
-import { utilService } from "../services/util.service";
-import { CommentPreviewPlaceholder } from "./CommentPreviewPlaceholder"
-import { ProfileImg } from "./ProfileImg"
-import { toggleCommentLike } from "../store/actions/post.actions";
-import { userService } from "../services/user.service";
-import { cloudinaryLinks } from "../services/cloudinary.service";
+import { postService } from "../../services/post.local.service"
+import { utilService } from "../../services/util.service";
+import { CommentPreviewPlaceholder } from "../CommentPreviewPlaceholder"
+import { ProfileImg } from "../ProfileImg"
+import { toggleCommentLike } from "../../store/actions/post.actions";
+import { userService } from "../../services/user.service";
+import { cloudinaryLinks } from "../../services/cloudinary.service";
 
 export function CommentPreview({ setModalData, comment, navigateToProfile,isCommentLoading,postId }) {
 

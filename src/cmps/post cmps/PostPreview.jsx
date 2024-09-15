@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
 import { PostDetail } from './PostDetail'
-import { ProfileImg } from './ProfileImg'
-import { utilService } from '../services/util.service'
+import { ProfileImg } from '../ProfileImg'
+import { utilService } from '../../services/util.service'
 import { useNavigate } from 'react-router-dom'
-import { ListModal } from './ListModal'
-import { PostPreviewPlaceholder } from './PostPreviewPlaceholder'
-import { postService } from '../services/post.local.service'
-import { togglePostLike } from '../store/actions/post.actions'
-import { FollowBtn } from './FollowBtn'
-import { cloudinaryLinks } from '../services/cloudinary.service'
-import { setNavBarSection } from '../store/actions/utility.actions'
-import { userService } from '../services/user.service'
+import { ListModal } from '../ListModal'
+import { PostPreviewPlaceholder } from '../PostPreviewPlaceholder'
+import { postService } from '../../services/post.local.service'
+import { togglePostLike } from '../../store/actions/post.actions'
+
+import { cloudinaryLinks } from '../../services/cloudinary.service'
+import { setNavBarSection } from '../../store/actions/utility.actions'
+import { userService } from '../../services/user.service'
 
 
 export function PostPreview({ post, idx }) {

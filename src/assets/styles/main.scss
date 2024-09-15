@@ -9,18 +9,23 @@
 @import "basics/helpers";
 @import "basics/layout";
 
+//views
+@import "views/MainIndex.scss";
+@import "views/Profile";
+@import "views/PostEdit.scss";
+
+
 // Components
+@import "cmps/post cmps/PostList";
+@import "cmps/post cmps/postPreview";
+@import "cmps/post cmps/PostDetails";
+@import "cmps/post cmps/CommentPreview";
+
 @import "cmps/NavBar.scss";
 @import "cmps/HeaderNav.scss";
-@import "cmps/MainIndex.scss";
-@import "cmps/postPreview";
-@import "cmps/PostList";
-@import "cmps/PostDetails";
-@import "cmps/CommentPreview";
 @import "cmps/SearchModal";
 @import "cmps/NotificationsModal";
 @import "cmps/SearchInput";
-@import "cmps/Profile";
 @import "cmps/ProfileImg";
 @import "cmps/ListModal";
 @import "cmps/BackDrop";
@@ -33,4 +38,3 @@
 @import "cmps/FollowBtn";
 @import "cmps/Utility cmps/PostPreviewPlaceholder.scss";
 @import "cmps/Utility cmps/CommentPreviewPlaceholder.scss";
-@import "./basics/views/PostEdit.scss";

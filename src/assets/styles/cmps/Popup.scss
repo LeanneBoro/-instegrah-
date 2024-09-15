@@ -56,3 +56,17 @@
 .bar.open{
     animation: fillBar 3.6s linear
 }
+
+:root {   
+    --bar-placement : 0;
+    --pop-up-modal-height: 70px;
+    --popup-top: -70px;
+    --popup-bottom: none;
+
+     @media (width < 780px) {
+      --pop-up-modal-height: -115px;
+      --bar-placement : none;
+      --popup-top: none;
+      --popup-bottom: -70px;
+     }
+ }

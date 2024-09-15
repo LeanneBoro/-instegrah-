@@ -84,7 +84,7 @@
     }
 
     & .divider {
-       margin-top: var(--list-margin-top);
+        margin-top: var(--list-margin-top);
         border-block-end: solid $gray3 1px;
         gap: 15px;
         height: max-content;
@@ -146,5 +146,13 @@
     to {
         transform: rotate(360deg);
         /* Rotate to 360 degrees */
+    }
+}
+
+:root {
+    --list-margin-top: 30px;
+
+    @media (width < 780px) {
+        --list-margin-top: 80px;
     }
 }

@@ -215,13 +215,13 @@
 
 @keyframes zoomInFadeIn {
     0% {
-        transform: scale(1.1); // Slightly larger
-        opacity: 0; // Fully transparent
+        transform: scale(1.1); 
+        opacity: 0; 
     }
 
     100% {
-        transform: scale(1); // Normal size
-        opacity: 1; // Fully opaque
+        transform: scale(1);
+        opacity: 1;
     }
 }
 
@@ -252,7 +252,49 @@
 
 }
 
-// .post-details.no-scroll {
-//     overflow-y: hidden;
-    
-// }
+:root {
+
+    @media (width < 780px) {
+        .post-details {
+            flex-direction: column;
+            width: 100vw;
+            height: auto;
+            max-height: 100vh;
+            overflow-y: scroll;
+
+
+
+
+            & .details-nav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 3.75em;
+                border-bottom: solid $gray3 1px;
+                background-color: $fully-white;
+                position: fixed;
+
+
+            }
+
+
+            & .post-img-container {
+                background-color: white;
+                margin-top: 3.75em;
+                padding: 10px;
+                width: 100%;
+                height: 500px;
+                object-fit: cover;
+            }
+
+            & .media {
+                margin-top: auto;
+                min-width: 0;
+
+            }
+        }
+    }
+
+
+}

@@ -3,7 +3,7 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-columns: var(--post-list-positioning);
+    grid-template-columns: var(--post-list-layout);
 
     & img {
         grid-column: 2/3;

@@ -152,4 +152,27 @@
 .profile-post-layout {
     gap: 3px;
     margin-block: 10px;
+
+}
+
+:root {
+    --profile-margin-top: 10px;
+    --profile-container-size: 130px;
+    --profile-info-height: 250px;
+    --profile-container-size: 130px;
+    --profile-normal-metrics-display: flex;
+    --profile-compact-metrics-display: none;
+
+    @media (width < 1250px) {
+
+    }
+     @media (width < 780px) {
+        --profile-margin-top: 70px;
+        --profile-container-size: 80px;
+        --profile-info-height: 120px;
+        --profile-compact-metrics-display: flex;
+        --profile-normal-metrics-display: none;
+
+     }
+    
 }
