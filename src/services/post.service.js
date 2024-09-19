@@ -48,11 +48,9 @@ function queryPostsByUser(userId) {
 
 
 async function getPostById(postId) {
-    console.log("🚀 ~ getPostById ~ postId:", postId)
-    
+
     try {
         const post = await httpService.get(BASE_URL + postId)
-        console.log("🚀 ~ getPostById ~ post:", post)
         return post
     } catch (err) {
         console.log(err)
@@ -73,7 +71,7 @@ async function remove(postId) {
 
     try {
         const removedPost = await httpService.delete(BASE_URL + postId)
-        console.log("🚀 ~ remove ~ removedPost:", removedPost)
+
         // showSuccessMsg(`Your post has been removed`, removedPost)
         return removedPost
     } catch (err) {

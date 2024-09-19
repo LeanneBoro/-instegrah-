@@ -28,7 +28,7 @@ export function PostDetailsPage() {
                 try {
                     const post = await getPostById(postId)
                     setSelectedPost(post)  // Set the fetched post
-                    console.log("🚀 ~ PostDetailsPage ~ selectedPost:", post)
+
                 } catch (err) {
                     console.error('Failed to fetch post', err)
                 }

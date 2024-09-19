@@ -211,7 +211,7 @@ export async function savePost(newPost) {
 }
 
 export async function removePost(post) {
-  console.log("🚀 ~ removePost ~ post:", post)
+
   const postId = post._id
   try {
     const removedPost = await postService.remove(postId)

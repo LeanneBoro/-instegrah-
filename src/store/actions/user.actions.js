@@ -63,12 +63,11 @@ export async function signUp(credentials){
 export async function login(credentials) {
     try {
         const loggedInUser = await userService.login(credentials)
-   
-        store.dispatch( {type: SET_LOGGED_IN_USER, loggedInUser} )
+        store.dispatch({ type: SET_LOGGED_IN_USER, loggedInUser })
         return loggedInUser
     } catch (err) {
-        console.log('err', err)
         console.error('Login failed:', err.message)
+        throw err 
     }
 }
 

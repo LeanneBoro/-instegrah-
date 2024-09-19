@@ -119,12 +119,9 @@ async function signup({ username, password, fullname, profileImg, isAdmin = fals
 async function login({ username, password }) {
     try {
         const user = await httpService.post(BASE_AUTH_URL + 'login', { username, password })
-
         if (user) {
-
             showSuccessMsg(`${username} has signed in`, user.profileImg)
             return _setLoggedInUser(user)
-
         } else {
             return Promise.reject('Invalid login')
         }

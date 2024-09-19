@@ -124,16 +124,28 @@ export function LoginSignUp({ setNavBarSection }) {
 
     async function onLogin() {
         try {
-            isGuest ? await login(userService.getGuestUser()) : await login(newUser)
-            setNavBarSection(null)
+            if (isGuest) {
+                await login(userService.getGuestUser())
+                setNavBarSection(null)
+            } else if (newUser.username.length === 0 || newUser.password.length === 0) {
+                setLoginFeedback({
+                    type: 'denied',
+                    text: 'Please enter username and password'
+                })
+            } else {
+                await login(newUser)
+                setNavBarSection(null)
+            }
         } catch (err) {
-            console.error('Login failed:', err.message)
+            console.error('Login failed:', err)
+            const errorMessage = err.response?.data?.error || 'Invalid username or password'
             setLoginFeedback({
                 type: 'denied',
-                text: 'Invalid username or password'
+                text: errorMessage
             })
         }
     }
+    
 
     function onSetProfileImg(result) {
         setProfileImg(result)
@@ -177,7 +189,7 @@ export function LoginSignUp({ setNavBarSection }) {
             >
                 {!selectionModal && (
                     <>
-                    {/* <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" /> */}
+                        {/* <img className="back-btn" src={cloudinaryLinks.closeArrow} alt="" /> */}
                         <div className="logo"></div>
                         <img src={cloudinaryLinks.logo} alt="Instagram Logo" />
                         <section className="login-input-container">

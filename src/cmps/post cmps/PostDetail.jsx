@@ -39,7 +39,7 @@ export function PostDetail({ selectedPost, setSelectedPost, navigateToProfile, s
                 console.error('Failed to load users', err)
             })
     }, [selectedPost.likes])
-        console.log("🚀 ~ useEffect ~ selectedPost.likes:", selectedPost.likes)
+
 
     useEffect(() => {
         if (commentListRef.current) {
