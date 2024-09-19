@@ -6,7 +6,7 @@ import { ListModal } from '../ListModal';
 import { BackDrop } from '../BackDrop';
 import { useSelector } from 'react-redux';
 import { toggleCommentLike, togglePostLike, getPostComments, addComment, removeComment, removePost } from "../../store/actions/post.actions";
-import { postService } from '../../services/post.local.service';
+import { postService } from '../../services/post.service';
 import { loadUsers } from '../../store/actions/user.actions';
 import { userService } from '../../services/user.service';
 import { CommentPreviewPlaceholder } from '../CommentPreviewPlaceholder';

@@ -5,7 +5,7 @@ import { utilService } from '../../services/util.service'
 import { useNavigate } from 'react-router-dom'
 import { ListModal } from '../ListModal'
 import { PostPreviewPlaceholder } from '../PostPreviewPlaceholder'
-import { postService } from '../../services/post.local.service'
+import { postService } from '../../services/post.service'
 import { togglePostLike } from '../../store/actions/post.actions'
 
 import { cloudinaryLinks } from '../../services/cloudinary.service'
@@ -50,6 +50,11 @@ export function PostPreview({ post, idx }) {
         setSelectedPost(null)
     }
 
+    function handleSelectPost(post) {
+       
+
+        setSelectedPost(post)
+    }
 
     useEffect(() => {
         if (selectedPost) {
@@ -58,7 +63,7 @@ export function PostPreview({ post, idx }) {
             document.body.classList.remove('body-no-scroll')
         }
 
-        // Clean up the class when the component unmounts
+    
         return () => {
             document.body.classList.remove('body-no-scroll')
         }
@@ -125,7 +130,7 @@ export function PostPreview({ post, idx }) {
                         <h2 onClick={() => navigateToProfile(post.by.id)} className='cursor-pointer'>{post.authorFullname}</h2>
                         <div>{post.txt}</div>
                     </div>
-                    <div className="view-all" onClick={() => setSelectedPost(post)}>{post.commentsCount ? 'view all comments' : 'view post'} </div>
+                    <div className="view-all" onClick={() => handleSelectPost(post)}>{post.commentsCount ? 'view all comments' : 'view post'} </div>
                     <div className="latest-comment">
                         {/* Latest comment code */}
                     </div>

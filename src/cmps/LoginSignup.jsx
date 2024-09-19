@@ -5,6 +5,7 @@ import { userService } from '../services/user.service'
 import { utilService } from '../services/util.service'
 import { cloudinaryLinks } from '../services/cloudinary.service'
 import { login, signUp } from '../store/actions/user.actions'
+import { User } from '../models/user'
 
 export function LoginSignUp({ setNavBarSection }) {
     const modalRef = useRef(null)
@@ -98,53 +99,18 @@ export function LoginSignUp({ setNavBarSection }) {
 
     const debouncedCheckUsername = useCallback(
         utilService.debounce(async (username) => {
-            if (username.trim() === '') {
-                setSignUpFeedback(prevFeedback => ({
-                    ...prevFeedback,
-                    usernameFeedback: {
-                        type: '',
-                        text: ''
-                    }
-                }))
-                return
-            } else if (username.trim().length < 3 || username.trim().length > 25) {
-                setSignUpFeedback(prevFeedback => ({
-                    ...prevFeedback,
-                    usernameFeedback: {
-                        type: 'denied',
-                        text: '* username must be between 3 and 25 characters'
-                    }
-                }))
-                return
-            }
-
-            try {
-                const exists = await userService.checkUsernameExists(username)
-                setSignUpFeedback(prevFeedback => ({
-                    ...prevFeedback,
-                    usernameFeedback: {
-                        type: exists ? 'denied' : 'approved',
-                        text: exists ? '* username already exists' : '* username available'
-                    }
-                }))
-            } catch (err) {
-                console.error('Error checking username:', err)
-                setSignUpFeedback(prevFeedback => ({
-                    ...prevFeedback,
-                    usernameFeedback: {
-                        type: 'denied',
-                        text: 'Error checking username'
-                    }
-                }))
-            }
+            const feedback = await User.validateUsername(username)
+            setSignUpFeedback(prevFeedback => ({
+                ...prevFeedback,
+                usernameFeedback: feedback
+            }))
         }),
         []
     )
 
     async function onSignUp() {
         try {
-            const result = await utilService.validateUserData(newUser, signUpFeedback)
-       
+            const result = await User.validateUserData(newUser, signUpFeedback)
             setSignUpFeedback(result.feedback)
 
             if (result.isValid) {
@@ -152,7 +118,6 @@ export function LoginSignUp({ setNavBarSection }) {
                 setNavBarSection(null)
             }
         } catch (err) {
-            setSignUpFeedback(result.feedback)
             console.error('Error signing up:', err)
         }
     }
@@ -160,7 +125,6 @@ export function LoginSignUp({ setNavBarSection }) {
     async function onLogin() {
         try {
             isGuest ? await login(userService.getGuestUser()) : await login(newUser)
-
             setNavBarSection(null)
         } catch (err) {
             console.error('Login failed:', err.message)

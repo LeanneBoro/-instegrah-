@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
 import { NavBar } from './cmps/NavBar'
@@ -6,6 +6,7 @@ import { PostIndex } from './views/PostIndex'
 import { HeaderNav } from './cmps/HeaderNav'
 import { Profile } from './views/Profile'
 import { Popup } from './cmps/Popup'
+import { PostDetailsPage } from './views/PostDetailsPage'
 
 function App() {
   return (

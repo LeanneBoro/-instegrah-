@@ -8,11 +8,12 @@ import "croppie/croppie.css";
 
 import { FileUploader } from "../cmps/FileUploader";
 import { ProfileImg } from "../cmps/ProfileImg";
-import { postService } from "../services/post.local.service";
+import { postService } from "../services/post.service";
 import { savePost } from '../store/actions/post.actions'
 import { utilService } from "../services/util.service";
 import { cloudinaryLinks } from "../services/cloudinary.service";
 import { userService } from "../services/user.service";
+import Post from "../models/post";
 
 export function PostEdit({ dataState, }) {
     const croppieRef = useRef(null);
@@ -28,22 +29,29 @@ export function PostEdit({ dataState, }) {
 
     async function handlePublish() {
 
-        const postFormData = new FormData()
-        const imageBlob = utilService.base64ToBlob(imageCropped)
+        const post = new Post(caption, utilService.base64ToBlob(imageCropped))
 
-        postFormData.append('title', caption)
-        postFormData.append('postImg', imageBlob, 'postImg.png')
 
+        const errors = post.validate()
+        if (Object.keys(errors).length > 0) {
+            console.error('Validation errors:', errors)
+            return
+        }
+
+
+        const postFormData = post.toFormData()
 
         try {
-            savePost(postFormData)
+
+            await savePost(postFormData)
             dataState(null)
             navigate('/')
-
         } catch (err) {
-            console.error('Failed to publish post:', err);
+            console.error('Failed to publish post:', err)
         }
     }
+
+
 
     const nextButtonTitle = imageCropped
         ? "Publish"
@@ -83,15 +91,15 @@ export function PostEdit({ dataState, }) {
                     width: "100%",
                     height: "80%",
                 },
-            });
+            })
         }
 
         return () => {
             if (croppieInstance.current) {
                 croppieInstance.current.destroy();
             }
-        };
-    }, []);
+        }
+    }, [])
 
     const handleImageUpload = (file) => {
         const reader = new FileReader();

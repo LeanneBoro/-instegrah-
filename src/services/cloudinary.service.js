@@ -20,8 +20,4 @@ export const cloudinaryLinks ={
     checkMark : 'https://res.cloudinary.com/db7t5amdv/image/upload/v1725645047/Assets/CheckMark_z1qboz.png',
     loadingGif : 'https://res.cloudinary.com/db7t5amdv/image/upload/v1725645048/Assets/InstagrahLoader_ul8aa5.gif',
 
-
-
-
-
 }

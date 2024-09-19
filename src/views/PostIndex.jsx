@@ -4,7 +4,7 @@ import { loadPosts } from '../store/actions/post.actions'
 import { useSelector } from 'react-redux'
 
 import { PostList } from "../cmps/post cmps/PostList"
-import { postService } from "../services/post.local.service"
+import { postService } from "../services/post.service"
 import { Loader } from "../cmps/Loader"
 import { userService } from "../services/user.service"
 import { cloudinaryLinks } from "../services/cloudinary.service"

@@ -12,17 +12,10 @@ export function ListModal({ content, setModalData }) {
 
     const usersData = useSelector(storeState => storeState.userModule.usersData);
     const { isListLoading } = useSelector(storeState => storeState.utilityModule)
-
-    console.log("🚀 ~ ListModal ~ usersData:", usersData)
-
-
     useEffect(() => {
         loadUsers(content.data)
 
     }, [content.data])
-
-
-
 
 
     return (

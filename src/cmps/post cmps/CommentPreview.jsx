@@ -1,4 +1,4 @@
-import { postService } from "../../services/post.local.service"
+import { postService } from "../../services/post.service"
 import { utilService } from "../../services/util.service";
 import { CommentPreviewPlaceholder } from "../CommentPreviewPlaceholder"
 import { ProfileImg } from "../ProfileImg"

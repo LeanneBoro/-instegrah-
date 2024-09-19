@@ -15,7 +15,7 @@ const zBASE_URL = 'post/'
 export const postService = {
     query,
     queryPostsByUser,
-    getById,
+    getPostById,
     save,
     remove,
     getLatestComment,
@@ -42,14 +42,17 @@ function query(pagination, userId = null) {
 
 function queryPostsByUser(userId) {
 
-    return httpService.get(BASE_URL + userId)
+    return httpService.get(BASE_URL + 'profile/' + userId)
 }
 
 
 
-async function getById(postId) {
+async function getPostById(postId) {
+    console.log("🚀 ~ getPostById ~ postId:", postId)
+    
     try {
-        const post = await storageService.get(POST_DB, postId)
+        const post = await httpService.get(BASE_URL + postId)
+        console.log("🚀 ~ getPostById ~ post:", post)
         return post
     } catch (err) {
         console.log(err)

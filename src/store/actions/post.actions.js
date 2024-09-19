@@ -1,7 +1,7 @@
 import { showSuccessMsg } from '../../services/event-bus.service'
-import { postService } from '../../services/post.local.service'
+import { postService } from '../../services/post.service'
 import { userService } from '../../services/user.service'
-import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, TOGGLE_COMMENT_LIKE, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA, TOGGLE_POST_LIKE, DELETE_POST } from '../reducers/post.reducer'
+import { SET_POSTS, SET_POST_COMMENTS, ADD_POST, ADD_COMMENT, REMOVE_COMMENT, TOGGLE_COMMENT_LIKE, SET_PROFILE_POSTS, CLEAR_PROFILE_DATA, TOGGLE_POST_LIKE, DELETE_POST, SET_POST_FOR_PAGE } from '../reducers/post.reducer'
 import { SET_IS_LOADING, SET_IS_COMMENTS_LOADING } from '../reducers/utility.reducer'
 import { store } from '../store'
 
@@ -49,6 +49,20 @@ export async function loadPosts(pagination, userId = null) {
   } finally {
     store.dispatch({ type: SET_IS_LOADING, isLoading: false })
   }
+}
+
+export async function getPostById(postId) {
+  try {
+    store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+    const post = await postService.getPostById(postId)
+    store.dispatch({ type: SET_POST_FOR_PAGE, post })
+    return post
+  } catch (err) {
+    console.log(err)
+  } finally {
+    store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+  }
+  
 }
 
 export async function togglePostLike(postId) {

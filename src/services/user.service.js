@@ -6,6 +6,7 @@ import { showSuccessMsg, showErrorMsg } from './event-bus.service.js'
 
 
 export const userService = {
+    getLoggedInUser,
     getUserById,
     getUsersById,
     getUsersByUsername,
@@ -13,13 +14,21 @@ export const userService = {
     handleSignUp,
     signup,
     logout,
-    getLoggedInUser,
+    login,
     toggleFollow,
     checkIfFollowing,
     updateLoggedInUser,
-    login,
     getGuestUser,
     checkPostOwner,
+}
+
+class User {
+    constructor(username, password, fullname = '', profileImg = '') {
+        this.username = username
+        this.password = password
+        this.fullname = fullname
+        this.profileImg = profileImg
+    }
 }
 
 const USER_DB = "user_db"
@@ -212,11 +221,11 @@ function checkIfFollowing(userFollowedList) {
 
 }
 
-function checkPostOwner(postById){
+function checkPostOwner(postById) {
     const user = getLoggedInUser()
     if (!user) return
-    
-   return  user._id === postById ? true : false
+
+    return user._id === postById ? true : false
 }
 
 

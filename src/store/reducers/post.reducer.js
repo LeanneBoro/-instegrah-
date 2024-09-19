@@ -1,6 +1,7 @@
 import { userService } from "../../services/user.service"
 
 export const SET_POSTS = 'SET_POSTS'
+export const SET_POST_FOR_PAGE = 'SET_POST_FOR_PAGE'
 export const SET_PROFILE_POSTS = 'SET_PROFILE_POSTS'
 export const CLEAR_PROFILE_DATA = 'CLEAR_PROFILE_DATA'
 export const ADD_POST = 'ADD_POST'
@@ -19,7 +20,8 @@ const initialState = {
   suggestedPosts: [],
   profilePagePosts: [],
   profilePostOwner: [],
-  postComments: []
+  postComments: [],
+  postForPage : null,
 }
 
 
@@ -51,6 +53,13 @@ export function postReducer(state = initialState, action = {}) {
         ...state,
         postComments: action.comments
       }
+
+      case SET_POST_FOR_PAGE:
+        return {
+          ...state,
+          postForPage: action.post
+        }
+  
 
 
     case SET_POSTS:

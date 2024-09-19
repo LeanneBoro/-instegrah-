@@ -1,19 +1,27 @@
 import { useRef } from 'react';
+import Image from '../models/image';
 
 export function FileUploader({ handleFile, existingImage }) {
-    const hiddenFileInput = useRef(null);
+    const hiddenFileInput = useRef(null)
 
     const handleClick = () => {
-        hiddenFileInput.current.click();
+        hiddenFileInput.current.click()
     }
 
     const handleChange = (event) => {
         const fileUploaded = event.target.files[0]
         if (fileUploaded) {
+            const imageInstance = new Image(fileUploaded)
+            const validationErrors = imageInstance.validate()
+            if (Object.keys(validationErrors).length > 0) {
+
+                console.log(validationErrors.file)
+                return
+            }
+
             handleFile(fileUploaded)
         }
     }
-
     return (
         <>
             <button className="button-upload" onClick={handleClick}>
@@ -21,6 +29,7 @@ export function FileUploader({ handleFile, existingImage }) {
             </button>
             <input
                 type="file"
+                accept=".png, .jpg, .jpeg"
                 onChange={handleChange}
                 ref={hiddenFileInput}
                 style={{ display: 'none' }}
